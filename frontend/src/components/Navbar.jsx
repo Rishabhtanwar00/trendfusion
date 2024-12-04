@@ -10,9 +10,13 @@ const Navbar = () => {
 	const { setShowSearch, getCartCount, navigate } = useContext(ShopContext);
 
 	return (
-		<div className='flex items-center justify-between py-5 font-medium tracking-[0.5px]'>
+		<div className='flex items-center justify-between py-5 font-medium tracking-[0.5px] border-b-2'>
 			<Link to='/'>
-				<h1>TRENDFUSION</h1>
+				<img
+					className='h-11 w-fit'
+					src={assets.trendfusionLogo}
+					alt='TrendFusion logo'
+				/>
 			</Link>
 			<ul className='hidden sm:flex text-sm text-center gap-5 text-gray-700'>
 				<NavLink to='/' className='flex flex-col items-center gap-1'>

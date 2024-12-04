@@ -5,6 +5,7 @@ const Login = () => {
 
 	const submitHandler = (e) => {
 		e.preventDefault();
+		alert('kkdkd');
 	};
 
 	return (
@@ -47,15 +48,15 @@ const Login = () => {
 						{currentState === 'Sign Up' ? 'Login Here' : 'Create Account'}
 					</p>
 				</div>
+				<div className='flex justify-center'>
+					<button
+						type='submit'
+						className='bg-black text-white py-2 px-8 mt-5 w-fit active:scale-90 transition-all duration-200 ease-in-out'
+					>
+						{currentState === 'Sign Up' ? 'Sign Up' : 'Sign In'}
+					</button>
+				</div>
 			</form>
-			<div className='flex items-center'>
-				<button
-					type='submit'
-					className='bg-black text-white py-2 px-8 mt-5 w-fit active:scale-90 transition-all duration-200 ease-in-out'
-				>
-					{currentState === 'Sign Up' ? 'Sign Up' : 'Sign In'}
-				</button>
-			</div>
 		</div>
 	);
 };

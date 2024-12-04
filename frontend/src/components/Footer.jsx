@@ -1,11 +1,18 @@
+import { Link } from 'react-router-dom';
+import { assets } from '../assets/assets';
+
 const Footer = () => {
 	return (
 		<div>
-			<div className='py-5 flex flex-wrap justify-between text-gray-600 gap-3 text-sm'>
+			<div className='py-5 flex flex-wrap justify-between text-gray-600 gap-3 text-sm border-t-2'>
 				<div className='w-full sm:w-2/4'>
-					<h1 className='w-fit text-3xl font-medium text-black mb-3'>
-						TrendFusion
-					</h1>
+					<Link to='/'>
+						<img
+							className='h-10 w-fit mb-5'
+							src={assets.trendfusionLogo}
+							alt='TrendFusion logo'
+						/>
+					</Link>
 					<p className='w-full sm:w-3/4'>
 						Lorem ipsum, dolor sit amet consectetur adipisicing elit. Aperiam
 						obcaecati debitis harum enim ullam dicta ad, esse, voluptatibus

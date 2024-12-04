@@ -1,3 +1,4 @@
+import trendfusionLogo from './trendfusionlogo.png';
 import searchIcon from './searchicon.png';
 import userIcon from './usericon.png';
 import bagIcon from './bagicon.png';
@@ -55,6 +56,7 @@ import p_img34 from './p_img34.png';
 import p_img35 from './p_img35.png';
 
 export const assets = {
+	trendfusionLogo,
 	searchIcon,
 	userIcon,
 	bagIcon,
