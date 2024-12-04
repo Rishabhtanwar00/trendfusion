@@ -9,11 +9,11 @@ const Orders = () => {
 			<div className='text-2xl'>
 				<Title text1='MY' text2='ORDERS' />
 			</div>
-			<div className='flex flex-col gap-5 mt-5'>
+			<div className='flex flex-col gap-5 mt-5 '>
 				{products.slice(0, 4).map((item, index) => (
 					<div
 						key={index}
-						className='flex items-center justify-between border-y p-2 text-sm'
+						className='flex flex-col sm:flex-row items-start sm:items-center sm:justify-between border-y p-2 text-sm gap-3'
 					>
 						<div className='flex gap-3'>
 							<img
@@ -36,13 +36,15 @@ const Orders = () => {
 								</p>
 							</div>
 						</div>
-						<div className='flex items-center gap-3'>
-							<p className='h-2 w-2 rounded-full bg-green-500'></p>
-							<p>Ready to ship</p>
+						<div className='w-full md:w-1/2 flex justify-between'>
+							<div className='flex items-center gap-3 text-gray-500'>
+								<p className='h-2 w-2 rounded-full bg-green-500'></p>
+								<p>Ready to ship</p>
+							</div>
+							<button className='border bg-black text-white px-3 py-2 active:scale-90 transition-all duration-150 ease-in-out'>
+								Track Order
+							</button>
 						</div>
-						<button className='border bg-black text-white px-3 py-2 active:scale-90 transition-all duration-150 ease-in-out'>
-							Track Order
-						</button>
 					</div>
 				))}
 			</div>
