@@ -69,14 +69,11 @@ export const login = async (req, res) => {
 export const adminLogin = async (req, res) => {
 	try {
 		const { email, password } = req.body;
-		console.log(email, password);
-		console.log(process.env.ADMIN_EMAIL, process.env.ADMIN_PASSWORD);
 		if (
 			email !== process.env.ADMIN_EMAIL ||
 			password !== process.env.ADMIN_PASSWORD
 		) {
-			console.log('jjj');
-			return res.status(404).json({ error: 'Invalid credentials' });
+			return res.status(200).json({ error: 'Invalid credentials' });
 		}
 
 		const token = generateJWT({ id: email + password });
