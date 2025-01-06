@@ -22,7 +22,7 @@ const RelatedProducts = ({ productId, category, subCategory }) => {
 
 	useEffect(() => {
 		fetchRelatedProducts();
-	}, [productId]);
+	}, [productId, products]);
 
 	return (
 		relatedProducts && (

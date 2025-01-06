@@ -5,7 +5,7 @@ const adminAuth = (req, res, next) => {
 		const { token } = req.headers;
 
 		if (!token) {
-			return res.status(400).json({ error: 'Not Authorized' });
+			return res.status(200).json({ error: 'Not Authorized' });
 		}
 
 		const decoded_token = jwt.verify(token, process.env.JWT_SECRET_KEY);
@@ -14,7 +14,7 @@ const adminAuth = (req, res, next) => {
 			decoded_token !==
 			process.env.ADMIN_EMAIL + process.env.ADMIN_PASSWORD
 		) {
-			return res.status(400).json({ error: 'Not Authorized' });
+			return res.status(200).json({ error: 'Not Authorized' });
 		}
 
 		next();

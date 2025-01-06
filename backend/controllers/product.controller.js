@@ -76,7 +76,7 @@ export const listProducts = async (req, res) => {
 	try {
 		const allProducts = await Product.find({});
 
-		return res.status(200).json({ allProducts });
+		return res.status(200).json({ products: allProducts });
 	} catch (err) {
 		console.log('error in addProduct controller: ' + err.message);
 		return res.status(500).json({ error: 'Internal sever error' });

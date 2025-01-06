@@ -1,17 +1,37 @@
-import { createContext, useState } from 'react';
-import { products } from '../assets/assets';
+import { createContext, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 export const ShopContext = createContext();
 
 const ShopContextProvider = (props) => {
+	const backendUrl = import.meta.env.VITE_BACKEND_URL;
 	const currency = '$';
 	const deliveryFee = 10;
+
+	const [products, setProducts] = useState([]);
 	const [search, setSearch] = useState('');
 	const [showSearch, setShowSearch] = useState(false);
 	const [cartItems, setCartItems] = useState({});
 	const navigate = useNavigate();
+
+	useEffect(() => {
+		fetchAllProducts();
+	}, []);
+
+	const fetchAllProducts = async () => {
+		try {
+			const result = await axios.get(`${backendUrl}/api/product/list`);
+			result.data.products && setProducts(result.data.products);
+			console.log(result.data.products);
+		} catch (err) {
+			console.log(
+				'error in fetching all products in soap context: ' + err.message
+			);
+			toast.error(err.message);
+		}
+	};
 
 	const addToCart = (itemId, size) => {
 		if (!size) {
@@ -68,6 +88,7 @@ const ShopContextProvider = (props) => {
 	};
 
 	const value = {
+		backendUrl,
 		products,
 		currency,
 		deliveryFee,
