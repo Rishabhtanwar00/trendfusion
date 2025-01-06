@@ -127,11 +127,11 @@ const AddProduct = ({ token }) => {
 						value={productData.description}
 					/>
 				</div>
-				<div className='flex gap-5'>
-					<div className='flex flex-col gap-2'>
+				<div className='flex gap-5 flex-wrap sm:flex-nowrap'>
+					<div className='flex flex-col gap-2 w-full'>
 						<p className=''>Product Category</p>
 						<select
-							className='px-3 py-2 rounded'
+							className='px-3 py-2 rounded w-full sm:w-fit'
 							onChange={(e) => handleChange('category', e.target.value)}
 						>
 							<option value='Men'>Men</option>
@@ -139,10 +139,10 @@ const AddProduct = ({ token }) => {
 							<option value='Kids'>Kids</option>
 						</select>
 					</div>
-					<div className='flex flex-col gap-2'>
+					<div className='flex flex-col gap-2 w-full'>
 						<p className=''>Product SubCategory</p>
 						<select
-							className='px-3 py-2 rounded'
+							className='px-3 py-2 rounded w-full sm:w-fit'
 							onChange={(e) => handleChange('subCategory', e.target.value)}
 						>
 							<option value='Topwear'>Topwear</option>
@@ -150,7 +150,7 @@ const AddProduct = ({ token }) => {
 							<option value='Winterwear'>Winterwear</option>
 						</select>
 					</div>
-					<div className='flex flex-col gap-2'>
+					<div className='flex flex-col gap-2 w-full'>
 						<p className=''>Price</p>
 						<input
 							type='number'
