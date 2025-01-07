@@ -4,11 +4,92 @@ import { assets } from '../assets/assets';
 import { useState } from 'react';
 import { useContext } from 'react';
 import { ShopContext } from '../context/shopContext';
+import { toast } from 'react-toastify';
+import axios from 'axios';
 const PlaceOrder = () => {
-	const { navigate } = useContext(ShopContext);
+	const {
+		navigate,
+		products,
+		cartItems,
+		setCartItems,
+		getCartAmount,
+		deliveryFee,
+		token,
+		backendUrl,
+	} = useContext(ShopContext);
 	const [paymentMethod, setPaymentMethod] = useState('cod');
+
+	const [formData, setFormData] = useState({
+		firstname: '',
+		lastname: '',
+		email: '',
+		street: '',
+		city: '',
+		state: '',
+		pincode: '',
+		country: '',
+		phone: '',
+	});
+
+	const handleChange = (field, value) => {
+		setFormData((prev) => ({ ...prev, [field]: value }));
+	};
+
+	const handleSubmit = async (e) => {
+		e.preventDefault();
+		try {
+			const orderItems = [];
+
+			for (const items in cartItems) {
+				for (const item in cartItems[items]) {
+					if (cartItems[items][item] > 0) {
+						const itemInfo = structuredClone(
+							products.find((product) => product._id === items)
+						);
+						if (itemInfo) {
+							itemInfo.size = item;
+							itemInfo.quantity = cartItems[items][item];
+							orderItems.push(itemInfo);
+						}
+					}
+				}
+			}
+
+			const orderData = {
+				items: orderItems,
+				address: formData,
+				amount: getCartAmount() + deliveryFee,
+			};
+
+			let url = `${backendUrl}/api/order/`;
+
+			if (paymentMethod === 'stripe') {
+				url = url + 'stripe';
+			} else if (paymentMethod === 'razorpay') {
+				url = url + 'razorpay';
+			} else {
+				url = url + 'cod';
+			}
+
+			const { data } = await axios.post(url, orderData, { headers: { token } });
+			console.log(data);
+			if (data.error) {
+				toast.error(data.error);
+				return;
+			}
+
+			toast.success(data.mssg);
+
+			setCartItems({});
+			navigate('/orders');
+		} catch (err) {
+			console.log('error in handle submit of PlaceOrder: ' + err.message);
+			toast.error(err.message);
+		}
+	};
+
 	return (
-		<form className='my-10'>
+		<form onSubmit={handleSubmit} className='my-10'>
 			<div className='text-xl mb-4'>
 				<Title text1='DELIVERY' text2='INFORMATION' />
 			</div>
@@ -20,12 +101,14 @@ const PlaceOrder = () => {
 							type='text'
 							placeholder='First Name'
 							required
+							onChange={(e) => handleChange('firstname', e.target.value)}
 						/>
 						<input
 							className='px-4 py-1.5 border border-gray-400 rounded-md w-full'
 							type='text'
 							placeholder='Last Name'
 							required
+							onChange={(e) => handleChange('lastname', e.target.value)}
 						/>
 					</div>
 					<input
@@ -33,12 +116,14 @@ const PlaceOrder = () => {
 						type='email'
 						placeholder='Email Address'
 						required
+						onChange={(e) => handleChange('email', e.target.value)}
 					/>
 					<input
 						className='px-4 py-1.5 border border-gray-400 rounded-md w-full'
 						type='text'
 						placeholder='Street'
 						required
+						onChange={(e) => handleChange('street', e.target.value)}
 					/>
 					<div className='flex gap-4'>
 						<input
@@ -46,12 +131,14 @@ const PlaceOrder = () => {
 							type='text'
 							placeholder='City'
 							required
+							onChange={(e) => handleChange('city', e.target.value)}
 						/>
 						<input
 							className='px-4 py-1.5 border border-gray-400 rounded-md w-full'
 							type='text'
 							placeholder='State'
 							required
+							onChange={(e) => handleChange('state', e.target.value)}
 						/>
 					</div>
 					<div className='flex gap-4'>
@@ -60,12 +147,14 @@ const PlaceOrder = () => {
 							type='text'
 							placeholder='Zipcode'
 							required
+							onChange={(e) => handleChange('pincode', e.target.value)}
 						/>
 						<input
 							className='px-4 py-1.5 border border-gray-400 rounded-md w-full'
 							type='text'
 							placeholder='Country'
 							required
+							onChange={(e) => handleChange('country', e.target.value)}
 						/>
 					</div>
 					<input
@@ -73,6 +162,7 @@ const PlaceOrder = () => {
 						type='number'
 						placeholder='Phone'
 						required
+						onChange={(e) => handleChange('phone', e.target.value)}
 					/>
 				</div>
 				<div className='flex flex-col gap-5 w-full sm:w-auto'>
@@ -127,7 +217,6 @@ const PlaceOrder = () => {
 							</div>
 						</div>
 						<button
-							onClick={() => navigate('/orders')}
 							type='submit'
 							className='bg-black text-white px-10 py-2 mt-10 w-100% min-w-[250px] float-end active:scale-90 transition-all duration-150 ease-in-out'
 						>
