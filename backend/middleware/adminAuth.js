@@ -11,7 +11,7 @@ const adminAuth = (req, res, next) => {
 		const decoded_token = jwt.verify(token, process.env.JWT_SECRET_KEY);
 
 		if (
-			decoded_token !==
+			decoded_token.id !==
 			process.env.ADMIN_EMAIL + process.env.ADMIN_PASSWORD
 		) {
 			return res.status(200).json({ error: 'Not Authorized' });

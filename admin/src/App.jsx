@@ -44,7 +44,7 @@ function App() {
 									path='/list-products'
 									element={<ListProducts token={token} />}
 								/>
-								<Route path='/orders' element={<Orders />} />
+								<Route path='/orders' element={<Orders token={token} />} />
 							</Routes>
 						</div>
 					</div>

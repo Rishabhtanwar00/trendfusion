@@ -72,7 +72,7 @@ const PlaceOrder = () => {
 			}
 
 			const { data } = await axios.post(url, orderData, { headers: { token } });
-			console.log(data);
+
 			if (data.error) {
 				toast.error(data.error);
 				return;

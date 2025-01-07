@@ -46,8 +46,6 @@ export const login = async (req, res) => {
 	try {
 		const { email, password } = req.body;
 
-		
-
 		const user = await User.findOne({ email });
 
 		const comparePassword = await bcrypt.compare(
@@ -78,7 +76,7 @@ export const adminLogin = async (req, res) => {
 			return res.status(200).json({ error: 'Invalid credentials' });
 		}
 
-		const token = generateJWT({ id: email + password });
+		const token = generateJWT(email + password);
 
 		return res.status(200).json({ token });
 	} catch (err) {

@@ -4,9 +4,8 @@ import User from '../models/user.model.js';
 export const addToCart = async (req, res) => {
 	try {
 		const { userId, itemId, size } = req.body;
-		console.log(userId);
+
 		const user = await User.findById(userId);
-		console.log(user);
 		const cartData = user.cartData;
 
 		if (cartData[itemId]) {
@@ -33,9 +32,8 @@ export const addToCart = async (req, res) => {
 export const updateCart = async (req, res) => {
 	try {
 		const { userId, itemId, size, quantity } = req.body;
-		console.log(userId);
+		
 		const user = await User.findById(userId);
-		console.log(user);
 		const cartData = user.cartData;
 
 		cartData[itemId][size] = quantity;

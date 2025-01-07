@@ -18,7 +18,7 @@ router.post('/stripe', userAuth, placeOrderStripe);
 router.post('/razorpay', userAuth, placeOrderRazorpay);
 
 //for frontend user
-router.post('/user', userAuth, getUserOrders);
+router.post('/user-orders', userAuth, getUserOrders);
 
 //for admin
 router.post('/all', adminAuth, getAllOrders);

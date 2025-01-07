@@ -50,6 +50,9 @@ export const placeOrderRazorpay = async (req, res) => {
 //get all orders ( for admin )
 export const getAllOrders = async (req, res) => {
 	try {
+		const allOrders = await Order.find({});
+
+		return res.status(200).json({ orders: allOrders });
 	} catch (err) {
 		console.log('error in getAllOrders controller: ' + err.message);
 		return res.status(500).json({ error: 'Internal server error' });
@@ -59,6 +62,14 @@ export const getAllOrders = async (req, res) => {
 //get orders for user
 export const getUserOrders = async (req, res) => {
 	try {
+		const { userId } = req.body;
+		const userOrders = await Order.find({ userId });
+
+		if (!userOrders) {
+			return res.status(200).json({ error: 'No Orders found.' });
+		}
+
+		return res.status(200).json({ orders: userOrders });
 	} catch (err) {
 		console.log('error in getUserOrders controller: ' + err.message);
 		return res.status(500).json({ error: 'Internal server error' });
@@ -68,6 +79,11 @@ export const getUserOrders = async (req, res) => {
 //update order status ( for admin )
 export const updateOrderStatus = async (req, res) => {
 	try {
+		const { itemId, status } = req.body;
+
+		await Order.findByIdAndUpdate(itemId, { status });
+
+		return res.status(200).json({ mssg: 'Status Updated' });
 	} catch (err) {
 		console.log('error in updateOrderStatus controller: ' + err.message);
 		return res.status(500).json({ error: 'Internal server error' });
