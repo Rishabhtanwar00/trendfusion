@@ -9,16 +9,16 @@ export const register = async (req, res) => {
 
 		const isUserExists = await User.findOne({ email });
 		if (isUserExists) {
-			return res.status(400).json({ error: 'User already exists' });
+			return res.status(200).json({ error: 'User already exists' });
 		}
 
 		if (!validator.isEmail(email)) {
-			return res.status(400).json({ error: 'Enter valid email address' });
+			return res.status(200).json({ error: 'Enter valid email address' });
 		}
 
 		if (password.length < 8) {
 			return res
-				.status(400)
+				.status(200)
 				.json({ error: 'Password must be atleast 8 characters long' });
 		}
 
@@ -46,6 +46,8 @@ export const login = async (req, res) => {
 	try {
 		const { email, password } = req.body;
 
+		
+
 		const user = await User.findOne({ email });
 
 		const comparePassword = await bcrypt.compare(
@@ -54,7 +56,7 @@ export const login = async (req, res) => {
 		);
 
 		if (!user || !comparePassword) {
-			return res.status(404).json({ error: 'Invalid credentials' });
+			return res.status(200).json({ error: 'Invalid credentials' });
 		}
 
 		const token = generateJWT(user._id);

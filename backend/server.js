@@ -5,6 +5,7 @@ import ConnectToDB from './config/db.js';
 import ConnectToCloudinary from './config/cloudinary.js';
 import authRoutes from './routes/auth.routes.js';
 import productRoutes from './routes/product.routes.js';
+import cartRoutes from './routes/cart.routes.js';
 
 //app configuration
 const app = express();
@@ -21,6 +22,7 @@ app.use(cors());
 //api end points
 app.use('/api/auth', authRoutes);
 app.use('/api/product', productRoutes);
+app.use('/api/cart', cartRoutes);
 
 app.listen(port, () => {
 	console.log('server started at PORT: ' + port);
