@@ -35,6 +35,39 @@ const PlaceOrder = () => {
 		setFormData((prev) => ({ ...prev, [field]: value }));
 	};
 
+	const initPay = async (order) => {
+		const options = {
+			key: import.meta.env.VITE_RAZORPAY_KEY_ID,
+			amount: order.amount,
+			currency: order.currency,
+			name: 'Order Payment',
+			description: 'Order Payment',
+			order_id: order.id,
+			receipt: order.receipt,
+			handler: async (response) => {
+				try {
+					const { data } = await axios.post(
+						`${backendUrl}/api/order/verify-razorpay`,
+						{ razorpay_order_id: response.razorpay_order_id },
+						{ headers: { token } }
+					);
+
+					if (data.mssg) {
+						toast.success(data.mssg);
+						setCartItems({});
+						navigate('/orders');
+					}
+				} catch (err) {
+					console.log('error in razorpay handler: ' + err.message);
+					toast.error(err.message);
+				}
+			},
+		};
+
+		const rzp = new window.Razorpay(options);
+		rzp.open();
+	};
+
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		try {
@@ -62,7 +95,7 @@ const PlaceOrder = () => {
 			};
 
 			let url = `${backendUrl}/api/order/`;
-
+			console.log(paymentMethod);
 			if (paymentMethod === 'stripe') {
 				url = url + 'stripe';
 			} else if (paymentMethod === 'razorpay') {
@@ -71,6 +104,8 @@ const PlaceOrder = () => {
 				url = url + 'cod';
 			}
 
+			console.log(url);
+
 			const { data } = await axios.post(url, orderData, { headers: { token } });
 
 			if (data.error) {
@@ -78,10 +113,17 @@ const PlaceOrder = () => {
 				return;
 			}
 
-			toast.success(data.mssg);
-
-			setCartItems({});
-			navigate('/orders');
+			if (paymentMethod === 'cod') {
+				toast.success(data.mssg);
+				setCartItems({});
+				navigate('/orders');
+			} else if (paymentMethod === 'stripe') {
+				if (data.session_url) {
+					window.location.replace(data.session_url);
+				}
+			} else if (paymentMethod === 'razorpay') {
+				initPay(data.order);
+			}
 		} catch (err) {
 			console.log('error in handle submit of PlaceOrder: ' + err.message);
 			toast.error(err.message);

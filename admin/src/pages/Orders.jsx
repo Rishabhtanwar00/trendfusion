@@ -22,7 +22,7 @@ const Orders = ({ token }) => {
 				return;
 			}
 
-			setOrdersData(data.orders);
+			setOrdersData(data.orders.reverse());
 		} catch (err) {
 			console.log('error in fetching all orders: ' + err.message);
 			toast.error(err.message);

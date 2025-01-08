@@ -16,6 +16,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import './App.css';
+import Verify from './pages/Verify';
 function App() {
 	return (
 		<div className='px-4 sm:px-[5vw] md:px-[7vw] lg:px-[9vw]'>
@@ -32,6 +33,7 @@ function App() {
 				<Route path='/cart' element={<Cart />}></Route>
 				<Route path='/orders' element={<Orders />}></Route>
 				<Route path='/placeorder' element={<PlaceOrder />}></Route>
+				<Route path='/verify' element={<Verify />}></Route>
 			</Routes>
 			<Footer />
 		</div>
