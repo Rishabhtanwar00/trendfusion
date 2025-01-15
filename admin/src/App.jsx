@@ -9,6 +9,7 @@ import Login from './components/Login';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import LandingPage from './pages/LandingPage';
+import Loader from './components/Loader';
 
 export const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
@@ -17,12 +18,15 @@ function App() {
 		localStorage.getItem('token') ? localStorage.getItem('token') : ''
 	);
 
+	const [isLoading, setIsLoading] = useState(false);
+
 	useEffect(() => {
 		localStorage.setItem('token', token);
 	}, [token]);
 
 	return (
-		<div className='min-h-screen '>
+		<div className='min-h-screen'>
+			{isLoading && <Loader />}
 			<ToastContainer />
 			{!token ? (
 				<Login setToken={setToken} />
@@ -38,7 +42,9 @@ function App() {
 								<Route path='/' element={<LandingPage />} />
 								<Route
 									path='/add-product'
-									element={<AddProduct token={token} />}
+									element={
+										<AddProduct token={token} setIsLoading={setIsLoading} />
+									}
 								/>
 								<Route
 									path='/list-products'

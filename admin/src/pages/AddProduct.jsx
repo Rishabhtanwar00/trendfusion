@@ -25,7 +25,7 @@ const ImageUploader = ({ id, image, setImage }) => {
 	);
 };
 
-const AddProduct = ({ token }) => {
+const AddProduct = ({ token, setIsLoading }) => {
 	console.log(token);
 	const [productData, setProductData] = useState({
 		image1: null,
@@ -58,6 +58,7 @@ const AddProduct = ({ token }) => {
 	const handleSubmit = async (e) => {
 		try {
 			e.preventDefault();
+			setIsLoading(true);
 			const formData = new FormData();
 
 			Object.entries(productData).forEach(([key, value]) => {
@@ -80,10 +81,26 @@ const AddProduct = ({ token }) => {
 				toast.error(result.data.error);
 			} else {
 				toast.success(result.data.mssg);
+				setProductData({
+					image1: null,
+					image2: null,
+					image3: null,
+					image4: null,
+
+					name: '',
+					description: '',
+					price: '',
+					category: 'Men',
+					subCategory: 'Topwear',
+					bestseller: false,
+					sizes: [],
+				});
 			}
+			setIsLoading(false);
 		} catch (err) {
 			console.log('error in handlesubmit of add product: ' + err.message);
 			toast.error(err.message);
+			setIsLoading(false);
 		}
 	};
 
@@ -127,7 +144,7 @@ const AddProduct = ({ token }) => {
 						value={productData.description}
 					/>
 				</div>
-				<div className='flex gap-5 flex-wrap sm:flex-nowrap'>
+				<div className='flex gap-8 flex-wrap sm:flex-nowrap mr-auto'>
 					<div className='flex flex-col gap-2 w-full'>
 						<p className=''>Product Category</p>
 						<select
@@ -140,7 +157,7 @@ const AddProduct = ({ token }) => {
 						</select>
 					</div>
 					<div className='flex flex-col gap-2 w-full'>
-						<p className=''>Product SubCategory</p>
+						<p className=''> Sub category</p>
 						<select
 							className='px-3 py-2 rounded w-full sm:w-fit'
 							onChange={(e) => handleChange('subCategory', e.target.value)}
