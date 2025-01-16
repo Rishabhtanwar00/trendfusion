@@ -1,6 +1,6 @@
 import { toast } from 'react-toastify';
 import axios from 'axios';
-import { backendUrl } from '../app.jsx';
+import { backendUrl } from '../app';
 import { useEffect, useState } from 'react';
 
 const ListProducts = ({ token }) => {
