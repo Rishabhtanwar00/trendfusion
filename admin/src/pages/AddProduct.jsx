@@ -26,7 +26,6 @@ const ImageUploader = ({ id, image, setImage }) => {
 };
 
 const AddProduct = ({ token, setIsLoading }) => {
-	console.log(token);
 	const [productData, setProductData] = useState({
 		image1: null,
 		image2: null,

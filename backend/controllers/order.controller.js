@@ -4,7 +4,7 @@ import Stripe from 'stripe';
 import razorpay from 'razorpay';
 
 const currency = 'inr';
-const deliveryFee = 10;
+const deliveryFee = 30;
 
 //gateway initialize
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
@@ -82,8 +82,6 @@ export const placeOrderStripe = async (req, res) => {
 			quantity: 1,
 		});
 
-		console.log('new order: ' + newOrder);
-
 		const session = await stripe.checkout.sessions.create({
 			success_url: `${origin}/verify?success=true&orderId=${newOrder._id}`,
 			cancel_url: `${origin}/verify?success=false&orderId=${newOrder._id}`,
@@ -117,7 +115,7 @@ export const placeOrderRazorpay = async (req, res) => {
 		await newOrder.save();
 
 		const options = {
-			amount: amount,
+			amount: amount * 100,
 			currency: currency.toUpperCase(),
 			receipt: newOrder._id.toString(),
 		};
@@ -158,14 +156,9 @@ export const verifyRazorpayPayment = async (req, res) => {
 export const verifyStripePayment = async (req, res) => {
 	try {
 		const { userId, success, orderId } = req.body;
-		console.log('success' + success);
-		console.log('orderId: ' + orderId);
 		if (success === 'true') {
-			console.log('inside success');
 			await Order.findByIdAndUpdate(orderId, { payment: true });
-			console.log('inside success11');
 			await User.findByIdAndUpdate(userId, { cartData: {} });
-			console.log('inside success22');
 			return res.status(200).json({ mssg: 'Payment verified' });
 		} else {
 			return res.status(200).json({ err_msg: 'Payment not verified' });

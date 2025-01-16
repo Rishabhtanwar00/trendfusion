@@ -15,8 +15,6 @@ const Orders = ({ token }) => {
 				{ headers: { token } }
 			);
 
-			console.log(data);
-
 			if (data.error) {
 				toast.error(data.error);
 				return;
@@ -91,7 +89,10 @@ const Orders = ({ token }) => {
 							<p>Date: {new Date(order.date).toLocaleDateString()}</p>
 						</div>
 						<div className=''>
-							<p>{order.amount}$</p>
+							<p>
+								{'₹ '}
+								{order.amount}
+							</p>
 						</div>
 						<select
 							className='w-fit h-fit px-3 py-2 font-semibold'

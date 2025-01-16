@@ -32,7 +32,6 @@ const ShopContextProvider = (props) => {
 		try {
 			const result = await axios.get(`${backendUrl}/api/product/list`);
 			result.data.products && setProducts(result.data.products);
-			console.log(result.data.products);
 		} catch (err) {
 			console.log(
 				'error in fetching all products in soap context: ' + err.message
@@ -43,7 +42,6 @@ const ShopContextProvider = (props) => {
 
 	const fetchUserCart = async (token) => {
 		try {
-			console.log(token);
 			const { data } = await axios.post(
 				`${backendUrl}/api/cart/usercart`,
 				{},
@@ -52,7 +50,6 @@ const ShopContextProvider = (props) => {
 
 			if (data.error) {
 				toast.error(data.error);
-				console.log('ddk' + data.error);
 			} else {
 				setCartItems(data.cartData);
 			}

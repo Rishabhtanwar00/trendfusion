@@ -9,8 +9,7 @@ const Verify = () => {
 	const [searchParams, setSearchParams] = useSearchParams();
 	const success = searchParams.get('success');
 	const orderId = searchParams.get('orderId');
-	console.log('success' + success);
-	console.log('orderId' + orderId);
+
 	const verifyPayment = async () => {
 		try {
 			const result = await axios.post(
@@ -18,8 +17,6 @@ const Verify = () => {
 				{ success, orderId },
 				{ headers: { token } }
 			);
-
-			console.log('result: ' + result);
 
 			const { data } = result;
 

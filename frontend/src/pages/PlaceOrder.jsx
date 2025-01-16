@@ -95,7 +95,7 @@ const PlaceOrder = () => {
 			};
 
 			let url = `${backendUrl}/api/order/`;
-			console.log(paymentMethod);
+			
 			if (paymentMethod === 'stripe') {
 				url = url + 'stripe';
 			} else if (paymentMethod === 'razorpay') {
@@ -103,8 +103,6 @@ const PlaceOrder = () => {
 			} else {
 				url = url + 'cod';
 			}
-
-			console.log(url);
 
 			const { data } = await axios.post(url, orderData, { headers: { token } });
 

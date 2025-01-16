@@ -10,7 +10,6 @@ const ListProducts = ({ token }) => {
 		try {
 			const result = await axios.get(`${backendUrl}/api/product/list`);
 			result.data.products && setAllProducts(result.data.products);
-			console.log(result.data.products);
 		} catch (err) {
 			console.log(
 				'error in fetching products in list products page: ' + err.message
@@ -62,7 +61,10 @@ const ListProducts = ({ token }) => {
 							<img className='w-12' src={item.image[0]} alt='' />
 							<p>{item.name}</p>
 							<p>{item.category}</p>
-							<p>{item.price}</p>
+							<p>
+								{'₹ '}
+								{item.price}
+							</p>
 							<button
 								onClick={() => deleteProduct(item._id)}
 								className='text-center'
