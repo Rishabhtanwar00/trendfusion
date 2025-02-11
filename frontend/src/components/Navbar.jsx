@@ -15,6 +15,10 @@ const Navbar = () => {
 		localStorage.removeItem('token');
 	};
 
+	const openAdminPanel = (url) => {
+		window.open(url, '_blank', 'noreferrer');
+	};
+
 	return (
 		<div className='flex items-center justify-between py-5 font-medium tracking-[0.5px] border-b-2'>
 			<Link to='/'>
@@ -42,8 +46,13 @@ const Navbar = () => {
 					<hr className='w-1/2 border-none h-[1.5px] bg-gray-700 hidden' />
 				</NavLink>
 			</ul>
-
 			<div className='flex items-center gap-6'>
+				<button
+					onClick={() => openAdminPanel(import.meta.env.VITE_ADMIN_URL)}
+					className='hidden sm:block px-2 py-1 border-2 border-black bg-pink-300 outline-none rounded text-xs'
+				>
+					Admin Panel
+				</button>
 				<img
 					className='w-5 cursor-pointer'
 					src={assets.searchIcon}
@@ -59,7 +68,7 @@ const Navbar = () => {
 						className='w-5 cursor-pointer'
 						src={assets.userIcon}
 						alt='user icon'
-						onClick={!token ? navigate('/login') : null}
+						onClick={() => (!token ? navigate('/login') : null)}
 					/>
 					{token && (
 						<div className='group-hover:block hidden absolute dropdown-menu pt-4 right-0'>
@@ -138,6 +147,12 @@ const Navbar = () => {
 					>
 						CONTACT
 					</NavLink>
+					<button
+						onClick={() => openAdminPanel(import.meta.env.VITE_ADMIN_URL)}
+						className='px-5 py-1.5 border-2 border-black bg-pink-300 outline-none rounded text-base w-fit mt-5 mx-auto'
+					>
+						Admin Panel
+					</button>
 				</div>
 			</div>
 		</div>

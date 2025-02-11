@@ -16,11 +16,11 @@ const Contact = () => {
 					<div className='flex flex-col text-base text-gray-500 text-left gap-5 w-full sm:w-1/2'>
 						<p className='text-gray-800 font-semibold text-xl'>Our Store</p>
 						<div>
-							<p>54709 Willms Station </p>
-							<p>Suite 350, Washington, USA</p>
+							<p>203 Trend Tower</p>
+							<p>Suite 350, Mumbai, India</p>
 						</div>
 						<div>
-							<p>Tel: +91 02938383848 </p>
+							<p>Tel: +91 9292919121 </p>
 							<p>trandfusion@gmail.com</p>
 						</div>
 						<p className='text-gray-800 font-semibold text-xl'>

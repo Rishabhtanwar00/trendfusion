@@ -170,7 +170,7 @@ const Collection = () => {
 				<div className='flex justify-between text-xl w-full'>
 					<Title text1='ALL' text2='COLLECTIONS' />
 					<select
-						className='p-2 border border-black text-sm rounded-lg'
+						className='p-1 sm:p-2 border border-black text-xs sm:text-sm rounded-lg h-fit'
 						onChange={(e) => setSortType(e.target.value)}
 					>
 						<option value={'relavent'}>Sort by: Relavent</option>

@@ -4,8 +4,8 @@ import { backendUrl } from '../App';
 import { toast } from 'react-toastify';
 
 const Login = ({ setToken }) => {
-	const [email, setEmail] = useState('');
-	const [password, setPassword] = useState('');
+	const [email, setEmail] = useState('admin@trendfusion.com');
+	const [password, setPassword] = useState('admin1234');
 
 	const handleSubmit = async (e) => {
 		try {
@@ -46,6 +46,7 @@ const Login = ({ setToken }) => {
 							placeholder='Enter email address'
 							onChange={(e) => setEmail(e.target.value)}
 							required
+							defaultValue='admin@trendfusion.com'
 						/>
 					</div>
 					<div className='flex flex-col gap-2'>
@@ -53,11 +54,12 @@ const Login = ({ setToken }) => {
 							Password
 						</label>
 						<input
-							type='text'
+							type='password'
 							className='px-3 py-2 text-base border w-full sm:w-[320px] rounded border-gray-300'
 							placeholder='Enter password'
 							onChange={(e) => setPassword(e.target.value)}
 							required
+							defaultValue='admin1234'
 						/>
 					</div>
 					<input
