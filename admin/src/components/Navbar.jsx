@@ -6,7 +6,7 @@ const Navbar = ({ setToken }) => {
 		<div className='flex items-center justify-between px-[5vw] py-2 border-b-2'>
 			<Link to='/' className='flex flex-col mt-2'>
 				<img
-					className='h-[40px] w-fit'
+					className='h-auto w-auto max-h-[40px]'
 					src={assets.trendfusionLogo}
 					alt='Trendfusion Logo'
 				/>

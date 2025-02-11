@@ -23,7 +23,7 @@ const Navbar = () => {
 		<div className='flex items-center justify-between py-5 font-medium tracking-[0.5px] border-b-2'>
 			<Link to='/'>
 				<img
-					className='h-11 w-fit'
+					className='h-auto w-auto max-h-11'
 					src={assets.trendfusionLogo}
 					alt='TrendFusion logo'
 				/>
