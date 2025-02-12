@@ -34,14 +34,14 @@ const SearchBar = () => {
 						onChange={(e) => setSearch(e.target.value)}
 					/>
 					<img
-						className='w-4 h-fit'
+						className='max-w-4 w-auto h-auto'
 						src={assets.searchIcon}
 						alt='search icon'
 					/>
 				</div>
 				<img
 					onClick={() => setShowSearch(false)}
-					className='w-4 h-fit ml-3 cursor-pointer'
+					className='max-w-4 w-auto h-auto ml-3 cursor-pointer'
 					src={assets.crossIcon}
 					alt='cross icon'
 				/>
