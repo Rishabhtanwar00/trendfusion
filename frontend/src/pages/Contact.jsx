@@ -9,7 +9,7 @@ const Contact = () => {
 				<Title text1='CONTACT' text2='US' />
 				<div className='flex items-center justify-center gap-10 sm:gap-20 flex-wrap md:flex-nowrap my-10'>
 					<img
-						className='w-full sm:w-fit h-fit sm:h-[65vh] ml-0 sm:ml-[10vw]'
+						className='w-full sm:w-fit h-auto sm:h-[65vh] ml-0 sm:ml-[10vw]'
 						src={assets.contactImg}
 						alt='contact img'
 					/>

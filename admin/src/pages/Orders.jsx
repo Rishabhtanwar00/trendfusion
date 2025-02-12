@@ -60,7 +60,7 @@ const Orders = ({ token }) => {
 						key={index}
 						className='pt-8 px-5 pb-3 border border-gray-300 grid grid-cols-1 md:grid-cols-[0.5fr_2fr_1fr] lg:grid-cols-[0.5fr_2fr_1fr_1fr_1fr] mt-3'
 					>
-						<img className='w-12' src={assets.parcelIcon} alt='' />
+						<img className='w-12 mb-3' src={assets.parcelIcon} alt='' />
 						<div className='flex flex-col'>
 							{order.items.map((item, index) => (
 								<div key={index} className=''>
@@ -95,7 +95,7 @@ const Orders = ({ token }) => {
 							</p>
 						</div>
 						<select
-							className='w-fit h-fit px-3 py-2 font-semibold'
+							className='w-auto h-auto max-w-[150px] max-h-[40px] px-3 py-2 font-semibold mt-5 sm:mt-0'
 							onChange={(e) => handleOrderStatus(e, order._id)}
 							name=''
 							id=''

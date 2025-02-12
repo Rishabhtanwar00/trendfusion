@@ -53,7 +53,7 @@ const Cart = () => {
 							>
 								<div className='flex gap-5'>
 									<img
-										className='w-[80px] h-fit'
+										className='max-h-[120px] h-auto w-auto'
 										src={productData.image[0]}
 										alt=''
 									/>

@@ -58,7 +58,7 @@ const Orders = () => {
 					>
 						<div className='flex gap-3'>
 							<img
-								className='w-[80px] h-fit'
+								className='max-h-[120px] h-auto w-auto'
 								src={item.image[0]}
 								alt='product image'
 							/>

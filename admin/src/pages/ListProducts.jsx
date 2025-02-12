@@ -48,7 +48,7 @@ const ListProducts = ({ token }) => {
 		<div>
 			<p>All added Products list</p>
 			<div className=''>
-				<div className='w-full grid grid-cols-[1fr_3fr_1fr_1fr_1fr] bg-gray-200 px-2 py-1 mt-5 text-left'>
+				<div className='w-full hidden sm:grid grid-cols-[1fr_3fr_1fr_1fr_1fr] bg-gray-200 px-2 py-1 mt-5 text-left'>
 					<p>Image</p>
 					<p>Name</p>
 					<p>Category</p>
@@ -57,7 +57,7 @@ const ListProducts = ({ token }) => {
 				</div>
 				{allProducts.map((item, index) => (
 					<div key={index}>
-						<div className='w-full grid grid-cols-[1fr_3fr_1fr_1fr_1fr] border px-2 py-1 mt-5 text-left items-center'>
+						<div className='w-full hidden sm:grid grid-cols-[1fr_3fr_1fr_1fr_1fr] border px-2 py-1 mt-5 text-left text-base items-center'>
 							<img className='w-12' src={item.image[0]} alt='' />
 							<p>{item.name}</p>
 							<p>{item.category}</p>
@@ -67,10 +67,31 @@ const ListProducts = ({ token }) => {
 							</p>
 							<button
 								onClick={() => deleteProduct(item._id)}
-								className='text-center'
+								className='text-center px-2 py-0.5 bg-pink-300 rounded border-2 border-black'
 							>
-								&#10008;
+								Remove
 							</button>
+						</div>
+						<div className='w-full flex-col items-center justify-center sm:hidden border px-2 py-1 mt-5 text-left text-base'>
+							<div className='flex justify-start gap-5'>
+								<img className='w-12' src={item.image[0]} alt='' />
+								<div className=''>
+									<p>{item.name}</p>
+									<p className='text-gray-600'>Category: {item.category}</p>
+								</div>
+							</div>
+							<div className='flex justify-between mt-3 mb-1 pr-3'>
+								<p>
+									{'₹ '}
+									{item.price}
+								</p>
+								<button
+									onClick={() => deleteProduct(item._id)}
+									className='text-center px-2 py-0.5  bg-pink-300 rounded border-2 border-black'
+								>
+									Remove
+								</button>
+							</div>
 						</div>
 					</div>
 				))}

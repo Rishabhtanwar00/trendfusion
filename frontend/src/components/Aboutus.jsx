@@ -7,7 +7,7 @@ const Aboutus = () => {
 			<Title text1='ABOUT' text2='US' />
 			<div className='flex items-center justify-center gap-20 flex-wrap md:flex-nowrap my-10'>
 				<img
-					className='w-full sm:w-fit h-fit sm:h-[70vh]'
+					className='w-full sm:w-fit h-auto sm:h-[70vh]'
 					src={assets.aboutImg}
 					alt='about img'
 				/>
