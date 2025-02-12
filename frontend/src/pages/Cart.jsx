@@ -88,7 +88,7 @@ const Cart = () => {
 									/>
 									<img
 										onClick={() => updateQuantity(item._id, item.size, 0)}
-										className='w-5 h-fit cursor-pointer'
+										className='max-h-[26px] w-auto h-auto cursor-pointer mt-[4px] ml-[5px]'
 										src={assets.deleteIcon}
 										alt=''
 									/>

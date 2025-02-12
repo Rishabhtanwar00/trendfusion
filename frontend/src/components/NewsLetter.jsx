@@ -7,7 +7,7 @@ const NewsLetter = () => {
 		<div className='my-10 flex flex-col items-center text-center text-gray-800'>
 			<h3 className='font-semibold text-2xl'>Subscribe now & get 20% off</h3>
 			<p className='text-sm text-gray-500 mx-auto my-2'>
-				Lorem, ipsum dolor sit amet consectetur adipisicing elit. Aliquid.
+				Get e-mail updates about out latest shop and special offers.
 			</p>
 			<form className='flex my-6' onSubmit={handleSubmit}>
 				<input

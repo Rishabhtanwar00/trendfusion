@@ -14,10 +14,7 @@ const Footer = () => {
 						/>
 					</Link>
 					<p className='w-full sm:w-3/4'>
-						Lorem ipsum, dolor sit amet consectetur adipisicing elit. Aperiam
-						obcaecati debitis harum enim ullam dicta ad, esse, voluptatibus
-						inventore magni sit. Pariatur incidunt soluta voluptatem debitis
-						sequi architecto sed impedit!
+					TrendFusion – Your go-to fashion destination for the latest trends and timeless styles. Shop with ease, enjoy secure payments, fast delivery, and hassle-free returns!
 					</p>
 				</div>
 				<div>

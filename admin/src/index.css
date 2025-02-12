@@ -6,12 +6,14 @@
 * {
 	font-family: 'Outfit', sans-serif;
 }
-select,input,textarea {
+select,
+input,
+textarea {
 	border: 1px solid #c2c2c2;
-	outline-color: #c586a5;
+	outline-color: rgb(236 72 153);
 	border-radius: 4px;
 }
 .active {
-	background-color: #ffebf5;
-	border-color: #c586a5;
+	background-color: #ffc7e6;
+	border-color: #000;
 }
