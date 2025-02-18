@@ -18,6 +18,13 @@ a.active hr {
 	font-style: normal;
 }
 
+button:disabled{
+	background-color: gray;
+	color: #fff;
+	cursor: not-allowed;
+	
+}
+
 @media screen and (max-width: 640px) {
 	a.active {
 		background-color: #000;

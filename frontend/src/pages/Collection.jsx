@@ -13,6 +13,15 @@ const Collection = () => {
 	const [subCategory, setSubCategory] = useState([]);
 	const [sortType, setSortType] = useState('relavent');
 
+	const itemsPerPage = 12;
+	const [currentPage, setCurrentPage] = useState(1);
+	const [totalPages, setTotalPages] = useState(
+		Math.ceil(products.length / itemsPerPage)
+	);
+
+	const indexOfLastItem = currentPage * itemsPerPage;
+	const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+
 	const toogleFilter = () => {
 		setShowFilter(!showFilter);
 	};
@@ -53,8 +62,13 @@ const Collection = () => {
 				subCategory.includes(item.subCategory)
 			);
 		}
+		const filteredTotalPages = Math.ceil(productsCopy.length / itemsPerPage);
+		setTotalPages(filteredTotalPages);
+		if (currentPage > filteredTotalPages) setCurrentPage(1);
+		const currentItems = productsCopy.slice(indexOfFirstItem, indexOfLastItem);
+		setFilterProducts(currentItems);
 
-		setFilterProducts(productsCopy);
+		// setFilterProducts(productsCopy);
 	};
 
 	const sortProducts = () => {
@@ -73,11 +87,15 @@ const Collection = () => {
 
 	useEffect(() => {
 		applyFilter();
-	}, [category, subCategory, search, showFilter, products]);
+	}, [category, subCategory, search, showFilter, products, currentPage]);
 
 	useEffect(() => {
 		sortProducts();
 	}, [sortType]);
+
+	useEffect(() => {
+		window.scrollTo(0, 0);
+	}, [currentPage]);
 
 	return (
 		<div className='flex flex-col sm:flex-row gap-10 my-10'>
@@ -188,6 +206,26 @@ const Collection = () => {
 							price={item.price}
 						/>
 					))}
+				</div>
+				<div className='flex gap-5 mx-auto items-center justify-center my-10'>
+					<button
+						className='px-2 py-0.5 border border-black bg-pink-300 rounded'
+						disabled={currentPage === 1}
+						onClick={() => setCurrentPage(currentPage - 1)}
+					>
+						Prev
+					</button>
+					<p className='[word-spacing:8px]'>
+						Page <span className='font-bold'>{currentPage}</span> of{' '}
+						{totalPages}
+					</p>
+					<button
+						className='px-2 py-0.5 border border-black bg-pink-300 rounded'
+						disabled={currentPage === totalPages}
+						onClick={() => setCurrentPage(currentPage + 1)}
+					>
+						Next
+					</button>
 				</div>
 			</div>
 		</div>
