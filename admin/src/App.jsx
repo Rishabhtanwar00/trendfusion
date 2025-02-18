@@ -27,7 +27,7 @@ function App() {
 	return (
 		<div className='min-h-screen'>
 			{isLoading && <Loader />}
-			<ToastContainer />
+			<ToastContainer closeOnClick={true} autoClose={2000} />
 			{!token ? (
 				<Login setToken={setToken} />
 			) : (
