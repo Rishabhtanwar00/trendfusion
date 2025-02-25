@@ -4,9 +4,11 @@ import { useContext } from 'react';
 import { ShopContext } from '../context/shopContext.jsx';
 import Title from '../components/Title';
 import ProductItem from '../components/ProductItem';
+import Loader from '../components/Loader.jsx';
 
 const Collection = () => {
-	const { products, search, showSearch } = useContext(ShopContext);
+	const { products, search, showSearch, loading, setLoading } =
+		useContext(ShopContext);
 	const [showFilter, setShowFilter] = useState(false);
 	const [filterProducts, setFilterProducts] = useState([]);
 	const [category, setCategory] = useState([]);
@@ -43,6 +45,7 @@ const Collection = () => {
 	};
 
 	const applyFilter = () => {
+		setLoading(true);
 		let productsCopy = products.slice();
 
 		if (showSearch && search) {
@@ -69,6 +72,7 @@ const Collection = () => {
 		setFilterProducts(currentItems);
 
 		// setFilterProducts(productsCopy);
+		setLoading(false);
 	};
 
 	const sortProducts = () => {
@@ -196,37 +200,43 @@ const Collection = () => {
 						<option value={'high-low'}>Sort by: High to Low</option>
 					</select>
 				</div>
-				<div className='grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-5 my-10'>
-					{filterProducts.map((item) => (
-						<ProductItem
-							key={item._id}
-							id={item._id}
-							image={item.image}
-							name={item.name}
-							price={item.price}
-						/>
-					))}
-				</div>
-				<div className='flex gap-5 mx-auto items-center justify-center my-10'>
-					<button
-						className='px-2 py-0.5 border border-black bg-pink-300 rounded'
-						disabled={currentPage === 1}
-						onClick={() => setCurrentPage(currentPage - 1)}
-					>
-						Prev
-					</button>
-					<p className='[word-spacing:8px]'>
-						Page <span className='font-bold'>{currentPage}</span> of{' '}
-						{totalPages}
-					</p>
-					<button
-						className='px-2 py-0.5 border border-black bg-pink-300 rounded'
-						disabled={currentPage === totalPages}
-						onClick={() => setCurrentPage(currentPage + 1)}
-					>
-						Next
-					</button>
-				</div>
+				{!loading ? (
+					<>
+						<div className='grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-5 my-10'>
+							{filterProducts.map((item) => (
+								<ProductItem
+									key={item._id}
+									id={item._id}
+									image={item.image}
+									name={item.name}
+									price={item.price}
+								/>
+							))}
+						</div>
+						<div className='flex gap-5 mx-auto items-center justify-center my-10'>
+							<button
+								className='px-2 py-0.5 border border-black bg-pink-300 rounded'
+								disabled={currentPage === 1}
+								onClick={() => setCurrentPage(currentPage - 1)}
+							>
+								Prev
+							</button>
+							<p className='[word-spacing:8px]'>
+								Page <span className='font-bold'>{currentPage}</span> of{' '}
+								{totalPages}
+							</p>
+							<button
+								className='px-2 py-0.5 border border-black bg-pink-300 rounded'
+								disabled={currentPage === totalPages}
+								onClick={() => setCurrentPage(currentPage + 1)}
+							>
+								Next
+							</button>
+						</div>
+					</>
+				) : (
+					<Loader loaderText='Loading Collection...' />
+				)}
 			</div>
 		</div>
 	);

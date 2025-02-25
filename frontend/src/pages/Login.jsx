@@ -4,7 +4,8 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 
 const Login = () => {
-	const { backendUrl, token, setToken, navigate } = useContext(ShopContext);
+	const { backendUrl, token, setToken, navigate, loading, setLoading } =
+		useContext(ShopContext);
 	const [currentState, setCurrentState] = useState('Login');
 	const [userData, setUserData] = useState({
 		name: '',
@@ -12,6 +13,7 @@ const Login = () => {
 		password: '',
 	});
 	const submitHandler = async (e) => {
+		setLoading(true);
 		try {
 			e.preventDefault();
 
@@ -34,8 +36,10 @@ const Login = () => {
 			}
 		} catch (err) {
 			console.log('error in login user: ' + err.message);
-			toast.error(err.message);
+			toast.error('Error in ' + currentState + ' User');
+			setLoading(false);
 		}
+		setLoading(false);
 	};
 
 	const handleChange = (field, value) => {
@@ -92,9 +96,12 @@ const Login = () => {
 				<div className='flex justify-center'>
 					<button
 						type='submit'
+						disabled={loading}
 						className='bg-black text-white py-2 px-8 mt-5 w-fit active:scale-90 transition-all duration-200 ease-in-out'
 					>
-						{currentState === 'Sign Up' ? 'Sign Up' : 'Sign In'}
+						{currentState === 'Sign Up'
+							? `${loading ? 'Signing Up' : 'Sign Up'}`
+							: `${loading ? 'Signing In' : 'Sign In'}`}
 					</button>
 				</div>
 			</form>

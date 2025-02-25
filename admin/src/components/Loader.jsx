@@ -1,7 +1,7 @@
-const Loader = () => {
+const Loader = ({  loaderText }) => {
 	return (
-		<div className='absolute w-full h-[120%] flex items-center justify-center bg-gray-50'>
-			<h1 className='text-2xl font-semibold tracking-wider'>Processing...</h1>
+		<div className='loader-container flex items-center justify-center py-10'>
+			<div className='loader' data-attr={loaderText}></div>
 		</div>
 	);
 };

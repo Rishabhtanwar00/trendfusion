@@ -9,7 +9,6 @@ import Login from './components/Login';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import LandingPage from './pages/LandingPage';
-import Loader from './components/Loader';
 
 export const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
@@ -18,7 +17,7 @@ function App() {
 		localStorage.getItem('token') ? localStorage.getItem('token') : ''
 	);
 
-	const [isLoading, setIsLoading] = useState(false);
+	const [loading, setLoading] = useState(false);
 
 	useEffect(() => {
 		localStorage.setItem('token', token);
@@ -26,7 +25,6 @@ function App() {
 
 	return (
 		<div className='min-h-screen'>
-			{isLoading && <Loader />}
 			<ToastContainer closeOnClick={true} autoClose={2000} />
 			{!token ? (
 				<Login setToken={setToken} />
@@ -43,14 +41,33 @@ function App() {
 								<Route
 									path='/add-product'
 									element={
-										<AddProduct token={token} setIsLoading={setIsLoading} />
+										<AddProduct
+											token={token}
+											loading={loading}
+											setLoading={setLoading}
+										/>
 									}
 								/>
 								<Route
 									path='/list-products'
-									element={<ListProducts token={token} />}
+									element={
+										<ListProducts
+											token={token}
+											loading={loading}
+											setLoading={setLoading}
+										/>
+									}
 								/>
-								<Route path='/orders' element={<Orders token={token} />} />
+								<Route
+									path='/orders'
+									element={
+										<Orders
+											token={token}
+											loading={loading}
+											setLoading={setLoading}
+										/>
+									}
+								/>
 							</Routes>
 						</div>
 					</div>

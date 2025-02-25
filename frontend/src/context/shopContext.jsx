@@ -15,6 +15,7 @@ const ShopContextProvider = (props) => {
 	const [showSearch, setShowSearch] = useState(false);
 	const [cartItems, setCartItems] = useState({});
 	const [token, setToken] = useState('');
+	const [loading, setLoading] = useState(false);
 	const navigate = useNavigate();
 
 	useEffect(() => {
@@ -29,6 +30,7 @@ const ShopContextProvider = (props) => {
 	}, [token]);
 
 	const fetchAllProducts = async () => {
+		setLoading(true);
 		try {
 			const result = await axios.get(`${backendUrl}/api/product/list`);
 			result.data.products && setProducts(result.data.products);
@@ -36,8 +38,10 @@ const ShopContextProvider = (props) => {
 			console.log(
 				'error in fetching all products in soap context: ' + err.message
 			);
-			toast.error(err.message);
+			toast.error('Error in getting products :(');
+			setLoading(false);
 		}
+		setLoading(false);
 	};
 
 	const fetchUserCart = async (token) => {
@@ -57,7 +61,7 @@ const ShopContextProvider = (props) => {
 			console.log(
 				'error in fetching user cart in soap context: ' + err.message
 			);
-			toast.error(err.message);
+			// toast.error(err.message);
 		}
 	};
 
@@ -161,6 +165,8 @@ const ShopContextProvider = (props) => {
 		navigate,
 		token,
 		setToken,
+		loading,
+		setLoading,
 	};
 
 	return (

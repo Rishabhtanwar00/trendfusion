@@ -18,17 +18,52 @@ a.active hr {
 	font-style: normal;
 }
 
-button:disabled{
+button:disabled {
 	background-color: gray;
 	color: #fff;
 	cursor: not-allowed;
-	
+}
+
+.loader-container {
+	box-sizing: border-box;
+	width: 70vw;
+	height: fit-content;
+	background-color: rgba(255, 255, 255, 1);
+	/* position: absolute; */
+	z-index: 100;
+}
+.loader {
+	width: fit-content;
+	font-weight: bold;
+	font-size: 25px;
+	letter-spacing: 1px;
+	background: radial-gradient(circle closest-side, #000 94%, #0000)
+		right/calc(200% - 1em) 100%;
+	animation: l24 1s infinite alternate linear;
+}
+.loader::before {
+	content: attr(data-attr);
+	line-height: 1em;
+	color: #0000;
+	background: inherit;
+	background-image: radial-gradient(circle closest-side, #fff 94%, #000);
+	-webkit-background-clip: text;
+	background-clip: text;
+}
+
+@keyframes l24 {
+	100% {
+		background-position: left;
+	}
 }
 
 @media screen and (max-width: 640px) {
 	a.active {
 		background-color: #000;
 		color: #fff;
+	}
+	.loader-container {
+		width: 100%;
 	}
 }
 

@@ -25,7 +25,7 @@ const ImageUploader = ({ id, image, setImage }) => {
 	);
 };
 
-const AddProduct = ({ token, setIsLoading }) => {
+const AddProduct = ({ token, loading, setLoading }) => {
 	const [productData, setProductData] = useState({
 		image1: null,
 		image2: null,
@@ -57,8 +57,20 @@ const AddProduct = ({ token, setIsLoading }) => {
 	const handleSubmit = async (e) => {
 		try {
 			e.preventDefault();
-			setIsLoading(true);
+			setLoading(true);
 			const formData = new FormData();
+
+			if (productData.sizes.length === 0) {
+				toast.error('Select at least 1 size.');
+				setLoading(false);
+				return;
+			}
+
+			if (productData.image1 === null) {
+				toast.error('Upload at least 1 image.');
+				setLoading(false);
+				return;
+			}
 
 			Object.entries(productData).forEach(([key, value]) => {
 				if (key.startsWith('image') && value) {
@@ -95,12 +107,12 @@ const AddProduct = ({ token, setIsLoading }) => {
 					sizes: [],
 				});
 			}
-			setIsLoading(false);
 		} catch (err) {
 			console.log('error in handlesubmit of add product: ' + err.message);
 			toast.error(err.message);
-			setIsLoading(false);
+			setLoading(false);
 		}
+		setLoading(false);
 	};
 
 	const sizeOptions = ['S', 'M', 'L', 'XL', '2XL'];
@@ -132,6 +144,7 @@ const AddProduct = ({ token, setIsLoading }) => {
 						placeholder='Enter Product Name'
 						onChange={(e) => handleChange('name', e.target.value)}
 						value={productData.name}
+						required
 					/>
 				</div>
 				<div className='flex flex-col gap-2'>
@@ -141,6 +154,7 @@ const AddProduct = ({ token, setIsLoading }) => {
 						placeholder='Enter Product Description'
 						onChange={(e) => handleChange('description', e.target.value)}
 						value={productData.description}
+						required
 					/>
 				</div>
 				<div className='flex gap-8 flex-wrap sm:flex-nowrap mr-auto'>
@@ -174,6 +188,7 @@ const AddProduct = ({ token, setIsLoading }) => {
 							placeholder='200'
 							onChange={(e) => handleChange('price', e.target.value)}
 							value={productData.price}
+							required
 						/>
 					</div>
 				</div>
@@ -204,7 +219,8 @@ const AddProduct = ({ token, setIsLoading }) => {
 				<input
 					className='mt-3 px-8 py-2 bg-black text-white active:scale-95 transition-all duration-150 ease-in-out w-fit cursor-pointer'
 					type='submit'
-					value='Add Product'
+					value={loading ? 'Adding Product' : 'Add Product'}
+					disabled={loading}
 				/>
 			</form>
 		</div>
