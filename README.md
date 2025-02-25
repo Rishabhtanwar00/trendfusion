@@ -6,7 +6,13 @@ TrendFusion is a modern clothing e-commerce web application designed to deliver 
 
 ## 🚀 Project Description
 
-TrendFusion offers a user-friendly interface where customers can browse the latest fashion trends, view detailed product descriptions, and make secure purchases. The application is designed with scalability and performance in mind, providing an optimized frontend built with React and using MERN Stack for complete application. The architecture ensures reusability, maintainability, and responsiveness.
+TrendFusion offers a user-friendly interface where customers can browse the latest fashion trends, view detailed product descriptions, and make secure purchases. The application is designed with scalability and performance in mind, providing an optimized frontend built with React and used MERN Stack for complete application. The architecture ensures reusability, maintainability, and responsiveness.
+
+---
+
+## 🌐 Live Project
+
+Check out the live project here: https://trendfusion-frontend.vercel.app/
 
 ---
 
