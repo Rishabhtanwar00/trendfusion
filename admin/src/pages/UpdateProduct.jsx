@@ -1,46 +1,53 @@
-import { useState } from 'react';
-import { assets } from '../assets/assets.js';
-import { toast } from 'react-toastify';
+import { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
-import { backendUrl } from '../App.jsx';
+import { backendUrl } from '../App';
+import { toast } from 'react-toastify';
 
-const ImageUploader = ({ id, image, setImage }) => {
-	return (
-		<label htmlFor={id} className=''>
-			<img
-				className='w-20'
-				src={image ? URL.createObjectURL(image) : assets.uploadIcon}
-				alt=''
-				onError={(e) => {
-					e.target.src = assets.uploadIcon;
-				}}
-			/>
-			<input
-				onChange={(e) => setImage(e.target.files[0])}
-				id={id}
-				type='file'
-				hidden
-			/>
-		</label>
-	);
-};
-
-const AddProduct = ({ token, loading, setLoading }) => {
+const UpdateProduct = ({ token, loading, setLoading }) => {
+	const { productId } = useParams();
+	const navigate = useNavigate();
 	const [productData, setProductData] = useState({
-		image1: null,
-		image2: null,
-		image3: null,
-		image4: null,
-
 		name: '',
 		description: '',
 		price: '',
-		category: 'Men',
-		subCategory: 'Topwear',
+		category: '',
+		subCategory: '',
 		bestseller: false,
 		sizes: [],
 		quantity: '',
 	});
+
+	const fetchProductData = async () => {
+		const { data } = await axios.post(`${backendUrl}/api/product/single`, {
+			productId,
+		});
+		if (data.error) {
+			console.log(data.error);
+			return;
+		}
+		const {
+			name,
+			description,
+			price,
+			category,
+			subCategory,
+			bestseller,
+			sizes,
+			quantity,
+		} = data.product;
+
+		setProductData({
+			name,
+			description,
+			price,
+			category,
+			subCategory,
+			bestseller,
+			sizes,
+			quantity,
+		});
+	};
 
 	const handleChange = (field, value) => {
 		setProductData((prev) => ({ ...prev, [field]: value }));
@@ -67,24 +74,20 @@ const AddProduct = ({ token, loading, setLoading }) => {
 				return;
 			}
 
-			if (productData.image1 === null) {
-				toast.error('Upload at least 1 image.');
-				setLoading(false);
-				return;
-			}
-
 			Object.entries(productData).forEach(([key, value]) => {
-				if (key.startsWith('image') && value) {
-					formData.append(key, value);
-				} else if (key === 'sizes') {
+				if (key === 'sizes') {
 					formData.append(key, JSON.stringify(value));
 				} else {
 					formData.append(key, value);
 				}
 			});
+			formData.append('productId', productId);
+			Object.entries(productData).forEach(([key, value]) => {
+				console.log(key + ': ' + value);
+			});
 
 			const result = await axios.post(
-				`${backendUrl}/api/product/add`,
+				`${backendUrl}/api/product/update`,
 				formData,
 				{ headers: { token } }
 			);
@@ -93,21 +96,7 @@ const AddProduct = ({ token, loading, setLoading }) => {
 				toast.error(result.data.error);
 			} else {
 				toast.success(result.data.mssg);
-				setProductData({
-					image1: null,
-					image2: null,
-					image3: null,
-					image4: null,
-
-					name: '',
-					description: '',
-					price: '',
-					category: 'Men',
-					subCategory: 'Topwear',
-					bestseller: false,
-					sizes: [],
-					quantity: '',
-				});
+				navigate('/list-products');
 			}
 		} catch (err) {
 			console.log('error in handlesubmit of add product: ' + err.message);
@@ -117,27 +106,19 @@ const AddProduct = ({ token, loading, setLoading }) => {
 		setLoading(false);
 	};
 
+	useEffect(() => {
+		fetchProductData();
+	}, [productId]);
+
 	const sizeOptions = ['S', 'M', 'L', 'XL', '2XL'];
 
 	return (
-		<div className=''>
+		<div>
+			<p className='mb-5 text-2xl font-bold'>Edit Product</p>
 			<form
 				onSubmit={handleSubmit}
 				className='flex flex-col gap-5 text-base text-gray-700'
 			>
-				<div className=''>
-					<p className=''>Upload image</p>
-					<div className='flex gap-2 mt-3'>
-						{['image1', 'image2', 'image3', 'image4'].map((image) => (
-							<ImageUploader
-								key={image}
-								id={image}
-								image={productData[image]}
-								setImage={(value) => handleChange(image, value)}
-							/>
-						))}
-					</div>
-				</div>
 				<div className='flex flex-col gap-2'>
 					<p className=''>Product Name</p>
 					<input
@@ -237,7 +218,7 @@ const AddProduct = ({ token, loading, setLoading }) => {
 				<input
 					className='mt-3 px-8 py-2 bg-black text-white active:scale-95 transition-all duration-150 ease-in-out w-fit cursor-pointer'
 					type='submit'
-					value={loading ? 'Adding Product' : 'Add Product'}
+					value={loading ? 'Updating Product' : 'Update Product'}
 					disabled={loading}
 				/>
 			</form>
@@ -245,4 +226,4 @@ const AddProduct = ({ token, loading, setLoading }) => {
 	);
 };
 
-export default AddProduct;
+export default UpdateProduct;

@@ -12,6 +12,7 @@ export const addProduct = async (req, res) => {
 			subCategory,
 			sizes,
 			bestseller,
+			quantity,
 		} = req.body;
 
 		const image1 = req.files.image1 && req.files.image1[0];
@@ -39,6 +40,7 @@ export const addProduct = async (req, res) => {
 			image: imagesUrl,
 			category,
 			subCategory,
+			quantity: Number(quantity),
 			sizes: JSON.parse(sizes),
 			bestseller: bestseller === 'true' ? true : false,
 			date: Date.now(),
@@ -97,6 +99,44 @@ export const singleProduct = async (req, res) => {
 		return res.status(200).json({ product });
 	} catch (err) {
 		console.log('error in addProduct controller: ' + err.message);
+		return res.status(500).json({ error: 'Internal sever error' });
+	}
+};
+
+//to update product
+export const updateProduct = async (req, res) => {
+	try {
+		const {
+			name,
+			description,
+			price,
+			category,
+			subCategory,
+			sizes,
+			bestseller,
+			quantity,
+			productId,
+		} = req.body;
+
+		const productData = {
+			name,
+			description,
+			price: Number(price),
+			category,
+			subCategory,
+			quantity: Number(quantity),
+			sizes: JSON.parse(sizes),
+			bestseller: bestseller === 'true' ? true : false,
+			date: Date.now(),
+		};
+
+		await Product.findByIdAndUpdate(productId, productData);
+
+		return res
+			.status(200)
+			.json({ mssg: 'Product updated with id: ' + productId });
+	} catch (err) {
+		console.log('error in updateProduct controller: ' + err.message);
 		return res.status(500).json({ error: 'Internal sever error' });
 	}
 };

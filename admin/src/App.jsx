@@ -9,6 +9,7 @@ import Login from './components/Login';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import LandingPage from './pages/LandingPage';
+import UpdateProduct from './pages/UpdateProduct';
 
 export const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
@@ -68,6 +69,16 @@ function App() {
 										/>
 									}
 								/>
+								<Route
+									path='/update-product/:productId'
+									element={
+										<UpdateProduct
+											token={token}
+											loading={loading}
+											setLoading={setLoading}
+										/>
+									}
+								></Route>
 							</Routes>
 						</div>
 					</div>

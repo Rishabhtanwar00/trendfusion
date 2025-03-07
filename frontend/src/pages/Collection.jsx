@@ -112,7 +112,7 @@ const Collection = () => {
 					<img
 						className={`${
 							showFilter ? 'rotate-90' : ''
-						} sm:hidden max-w-[6px] w-auto h-auto ml-2 transition-all duration-75 ease-in-out`}
+						} sm:hidden max-w-[6px] w-auto h-auto ml-2 transition-all duration-75 ease-in-out cursor-pointer`}
 						src={assets.backIcon}
 						alt=''
 					/>
