@@ -1,9 +1,10 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import axios from 'axios';
-import { backendUrl } from '../App';
 import { toast } from 'react-toastify';
+import { ShopContext } from '../context/shopContext';
 
-const Login = ({ setToken }) => {
+const Login = () => {
+	const { backendUrl, setToken } = useContext(ShopContext);
 	const [email, setEmail] = useState('admin@trendfusion.com');
 	const [password, setPassword] = useState('admin1234');
 

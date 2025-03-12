@@ -1,11 +1,12 @@
-import { useEffect, useState } from 'react';
-import { backendUrl } from '../App.jsx';
+import { useContext, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import axios from 'axios';
 import { assets } from '../assets/assets.js';
 import Loader from '../components/Loader.jsx';
+import { ShopContext } from '../context/shopContext.jsx';
 
-const Orders = ({ token, loading, setLoading }) => {
+const Orders = () => {
+	const { backendUrl, token, loading, setLoading } = useContext(ShopContext);
 	const [ordersData, setOrdersData] = useState([]);
 
 	const fetchOrdersData = async () => {
@@ -57,13 +58,15 @@ const Orders = ({ token, loading, setLoading }) => {
 
 	return (
 		<div>
-			<p>Orders Page</p>
+			<div className='heading mb-10'>
+				<h1 style={{ '--bg-color': 'rgb(239 68 68)' }}>All Orders</h1>
+			</div>
 			<div className='text-sm sm:text-[15px] tracking-wide text-gray-700 mt-5'>
 				{!loading ? (
 					ordersData.map((order, index) => (
 						<div
 							key={index}
-							className='pt-8 px-5 pb-3 border border-gray-300 grid grid-cols-1 md:grid-cols-[0.5fr_2fr_1fr] lg:grid-cols-[0.5fr_2fr_1fr_1fr_1fr] mt-3'
+							className='pt-8 px-5 pb-3 border border-gray-300 grid grid-cols-1 md:grid-cols-[0.5fr_2fr_1fr] lg:grid-cols-[0.5fr_2fr_1fr_1fr_1fr] mt-3 bg-white rounded'
 						>
 							<img className='w-12 mb-3' src={assets.parcelIcon} alt='' />
 							<div className='flex flex-col'>
@@ -100,7 +103,7 @@ const Orders = ({ token, loading, setLoading }) => {
 								</p>
 							</div>
 							<select
-								className='w-auto h-auto max-w-[150px] max-h-[40px] px-3 py-2 font-semibold mt-5 sm:mt-0'
+								className='w-auto h-auto max-w-[160px] max-h-[40px] px-3 py-2 font-semibold mt-5 sm:mt-0 bg-slate-100'
 								onChange={(e) => handleOrderStatus(e, order._id)}
 								name=''
 								id=''

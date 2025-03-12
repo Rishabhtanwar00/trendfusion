@@ -1,12 +1,13 @@
-import { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useContext, useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import axios from 'axios';
-import { backendUrl } from '../App';
 import { toast } from 'react-toastify';
+import { ShopContext } from '../context/shopContext';
 
-const UpdateProduct = ({ token, loading, setLoading }) => {
+const UpdateProduct = () => {
+	const { backendUrl, navigate, token, loading, setLoading, categories } =
+		useContext(ShopContext);
 	const { productId } = useParams();
-	const navigate = useNavigate();
 	const [productData, setProductData] = useState({
 		name: '',
 		description: '',
@@ -17,6 +18,7 @@ const UpdateProduct = ({ token, loading, setLoading }) => {
 		sizes: [],
 		quantity: '',
 	});
+	const [subCategories, setSubCategories] = useState([]);
 
 	const fetchProductData = async () => {
 		const { data } = await axios.post(`${backendUrl}/api/product/single`, {
@@ -106,15 +108,61 @@ const UpdateProduct = ({ token, loading, setLoading }) => {
 		setLoading(false);
 	};
 
+	const fetchAllSubCategoriesAgainstCategory = async (category) => {
+		try {
+			const { data } = await axios.post(
+				`${backendUrl}/api/subcategory/all`,
+				{ category },
+				{ headers: { token } }
+			);
+
+			if (data.error) {
+				toast.error(data.error);
+				return;
+			}
+			const allSubCategories = data.subcategories;
+			console.log(allSubCategories);
+			setSubCategories(allSubCategories);
+			// if (allSubCategories.length > 0) {
+			// 	setProductData((prev) => ({
+			// 		...prev,
+			// 		subCategory: allSubCategories[0]?.name || '',
+			// 	}));
+			// }
+		} catch (err) {
+			console.log('error in getAllCategories: ' + err.message);
+		}
+	};
+	useEffect(() => {
+		// if (categories.length > 0) {
+		// 	setProductData((prev) => ({
+		// 		...prev,
+		// 		category: categories[0]?.name || '',
+		// 	}));
+		// }
+	}, [categories]);
+
+	useEffect(() => {
+		fetchAllSubCategoriesAgainstCategory(productData.category);
+	}, [productData.category]);
+
 	useEffect(() => {
 		fetchProductData();
 	}, [productId]);
+
+	const handleBack = () => {
+		navigate(-1); // Navigates back one step in history
+	};
 
 	const sizeOptions = ['S', 'M', 'L', 'XL', '2XL'];
 
 	return (
 		<div>
-			<p className='mb-5 text-2xl font-bold'>Edit Product</p>
+			<div className='flex gap-5 justify-center mb-5'>
+				<div className='heading'>
+					<h1 style={{ '--bg-color': 'rgb(5, 186, 5)' }}>Edit Product</h1>
+				</div>
+			</div>
 			<form
 				onSubmit={handleSubmit}
 				className='flex flex-col gap-5 text-base text-gray-700'
@@ -147,28 +195,34 @@ const UpdateProduct = ({ token, loading, setLoading }) => {
 						<select
 							className='px-3 py-2 rounded w-full sm:w-fit'
 							onChange={(e) => handleChange('category', e.target.value)}
+							value={productData.category}
 						>
-							<option value='Men'>Men</option>
-							<option value='Women'>Women</option>
-							<option value='Kids'>Kids</option>
+							{categories.map((category, index) => (
+								<option key={index} value={category.name}>
+									{category.name}
+								</option>
+							))}
 						</select>
 					</div>
 					<div className='flex flex-col gap-2 w-full'>
 						<p className=''> Sub category</p>
 						<select
-							className='px-3 py-2 rounded w-full sm:w-fit'
+							className='px-3 py-2 rounded w-full sm:w-fit min-w-[130px]'
 							onChange={(e) => handleChange('subCategory', e.target.value)}
+							value={productData.subCategory}
 						>
-							<option value='Topwear'>Topwear</option>
-							<option value='Bottomwear'>Bottomwear</option>
-							<option value='Winterwear'>Winterwear</option>
+							{subCategories.map((subCategory, index) => (
+								<option key={index} value={subCategory.name}>
+									{subCategory.name}
+								</option>
+							))}
 						</select>
 					</div>
 					<div className='flex flex-col gap-2 w-full'>
 						<p className=''>Price</p>
 						<input
 							type='number'
-							className='px-3 py-2 w-full sm:w-[150px] rounded'
+							className='px-3 py-2 w-full sm:w-fit min-w-[50px] rounded'
 							placeholder='e.g. 200'
 							onChange={(e) => handleChange('price', e.target.value)}
 							value={productData.price}

@@ -1,7 +1,10 @@
 import { Link } from 'react-router-dom';
 import { assets } from '../assets/assets.js';
+import { useContext } from 'react';
+import { ShopContext } from '../context/shopContext.jsx';
 
-const Navbar = ({ setToken }) => {
+const Navbar = () => {
+	const { setToken } = useContext(ShopContext);
 	return (
 		<div className='flex items-center justify-between px-[5vw] py-2 border-b-2'>
 			<Link to='/' className='flex flex-col mt-2'>

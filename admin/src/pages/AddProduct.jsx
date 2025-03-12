@@ -1,8 +1,8 @@
-import { useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { assets } from '../assets/assets.js';
 import { toast } from 'react-toastify';
 import axios from 'axios';
-import { backendUrl } from '../App.jsx';
+import { ShopContext } from '../context/shopContext.jsx';
 
 const ImageUploader = ({ id, image, setImage }) => {
 	return (
@@ -25,7 +25,9 @@ const ImageUploader = ({ id, image, setImage }) => {
 	);
 };
 
-const AddProduct = ({ token, loading, setLoading }) => {
+const AddProduct = () => {
+	const { backendUrl, navigate, token, loading, setLoading, categories } =
+		useContext(ShopContext);
 	const [productData, setProductData] = useState({
 		image1: null,
 		image2: null,
@@ -35,12 +37,13 @@ const AddProduct = ({ token, loading, setLoading }) => {
 		name: '',
 		description: '',
 		price: '',
-		category: 'Men',
-		subCategory: 'Topwear',
+		category: '',
+		subCategory: '',
 		bestseller: false,
 		sizes: [],
 		quantity: '',
 	});
+	const [subCategories, setSubCategories] = useState([]);
 
 	const handleChange = (field, value) => {
 		setProductData((prev) => ({ ...prev, [field]: value }));
@@ -102,8 +105,8 @@ const AddProduct = ({ token, loading, setLoading }) => {
 					name: '',
 					description: '',
 					price: '',
-					category: 'Men',
-					subCategory: 'Topwear',
+					category: '',
+					subCategory: '',
 					bestseller: false,
 					sizes: [],
 					quantity: '',
@@ -116,6 +119,45 @@ const AddProduct = ({ token, loading, setLoading }) => {
 		}
 		setLoading(false);
 	};
+
+	const fetchAllSubCategoriesAgainstCategory = async (category) => {
+		try {
+			const { data } = await axios.post(
+				`${backendUrl}/api/subcategory/all`,
+				{ category },
+				{ headers: { token } }
+			);
+
+			if (data.error) {
+				toast.error(data.error);
+				return;
+			}
+			const allSubCategories = data.subcategories;
+			console.log(allSubCategories);
+			setSubCategories(allSubCategories);
+			if (allSubCategories.length > 0) {
+				setProductData((prev) => ({
+					...prev,
+					subCategory: allSubCategories[0]?.name || '',
+				}));
+			}
+		} catch (err) {
+			console.log('error in getAllCategories: ' + err.message);
+		}
+	};
+
+	useEffect(() => {
+		if (categories.length > 0) {
+			setProductData((prev) => ({
+				...prev,
+				category: categories[0]?.name || '',
+			}));
+		}
+	}, [categories]);
+
+	useEffect(() => {
+		fetchAllSubCategoriesAgainstCategory(productData.category);
+	}, [productData.category]);
 
 	const sizeOptions = ['S', 'M', 'L', 'XL', '2XL'];
 
@@ -160,29 +202,46 @@ const AddProduct = ({ token, loading, setLoading }) => {
 						rows={3}
 					/>
 				</div>
-				<div className='flex gap-8 flex-wrap sm:flex-nowrap mr-auto'>
+				<div className='flex gap-8 items-end flex-wrap sm:flex-nowrap mr-auto'>
 					<div className='flex flex-col gap-2 w-full'>
 						<p className=''>Product Category</p>
 						<select
-							className='px-3 py-2 rounded w-full sm:w-fit'
+							className='px-3 py-2 rounded w-full sm:w-fit min-w-[130px]'
 							onChange={(e) => handleChange('category', e.target.value)}
 						>
-							<option value='Men'>Men</option>
-							<option value='Women'>Women</option>
-							<option value='Kids'>Kids</option>
+							{categories.map((category, index) => (
+								<option key={index} value={category.name}>
+									{category.name}
+								</option>
+							))}
 						</select>
 					</div>
 					<div className='flex flex-col gap-2 w-full'>
-						<p className=''> Sub category</p>
+						<p className=''> Sub Category</p>
 						<select
-							className='px-3 py-2 rounded w-full sm:w-fit'
+							className='px-3 py-2 rounded w-full sm:w-fit min-w-[130px]'
 							onChange={(e) => handleChange('subCategory', e.target.value)}
 						>
-							<option value='Topwear'>Topwear</option>
-							<option value='Bottomwear'>Bottomwear</option>
-							<option value='Winterwear'>Winterwear</option>
+							{subCategories.map((subCategory, index) => (
+								<option key={index} value={subCategory.name}>
+									{subCategory.name}
+								</option>
+							))}
 						</select>
 					</div>
+					<button
+						type='button'
+						onClick={() => navigate('/manage-category')}
+						className='px-2 py-2 h-fit bg-black text-white rounded min-w-[130px]'
+					>
+						Manage Categories
+					</button>
+				</div>
+				<p className='text-sm'>
+					*You can Add,Remove or Update Category/ Sub Category using Manage
+					Categories
+				</p>
+				<div className='flex gap-8 flex-wrap sm:flex-nowrap mr-auto'>
 					<div className='flex flex-col gap-2 w-full'>
 						<p className=''>Price</p>
 						<input
@@ -191,6 +250,17 @@ const AddProduct = ({ token, loading, setLoading }) => {
 							placeholder='e.g. 200'
 							onChange={(e) => handleChange('price', e.target.value)}
 							value={productData.price}
+							required
+						/>
+					</div>
+					<div className='flex flex-col gap-2 w-full'>
+						<p className=''>Quantity</p>
+						<input
+							type='number'
+							className='px-3 py-2 w-full sm:w-[150px] rounded'
+							placeholder='e.g. 5'
+							onChange={(e) => handleChange('quantity', e.target.value)}
+							value={productData.quantity}
 							required
 						/>
 					</div>
@@ -211,17 +281,6 @@ const AddProduct = ({ token, loading, setLoading }) => {
 					))}
 				</div>
 				<div className='flex gap-8 items-end flex-wrap sm:flex-nowrap mr-auto'>
-					<div className='flex flex-col gap-2'>
-						<p className=''>Quantity</p>
-						<input
-							type='number'
-							className='px-3 py-2 w-full sm:w-[150px] rounded'
-							placeholder='e.g. 5'
-							onChange={(e) => handleChange('quantity', e.target.value)}
-							value={productData.quantity}
-							required
-						/>
-					</div>
 					<div className='flex gap-2 items-center'>
 						<input
 							id='checkbox'

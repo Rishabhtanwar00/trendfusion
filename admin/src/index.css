@@ -15,12 +15,14 @@ textarea {
 	border-radius: 4px;
 }
 .active {
-	background-color: #ffc7e6;
+	background-color: rgb(34 197 94);
 	border-color: #000;
 }
-input:disabled {
-	background-color: gray;
-	color: #fff;
+input:disabled,
+select:disabled {
+	background-color: rgb(227, 227, 227);
+
+	color: #000;
 	cursor: not-allowed;
 }
 .loader-container {
@@ -54,6 +56,38 @@ input:disabled {
 	100% {
 		background-position: left;
 	}
+}
+
+.heading h1 {
+	font-size: 20px;
+	font-weight: 700;
+	letter-spacing: 1px;
+	text-transform: uppercase;
+	width: fit-content;
+	text-align: center;
+	margin: auto;
+	white-space: nowrap;
+	position: relative;
+	padding-bottom: 10px;
+}
+.heading h1:before {
+	background-color: var(--bg-color);
+	content: '';
+	display: block;
+	height: 3px;
+	width: 60px;
+	margin-bottom: 2px;
+}
+.heading h1:after {
+	background-color: var(--bg-color);
+	content: '';
+	display: block;
+	position: absolute;
+	right: 0;
+	bottom: 0;
+	height: 3px;
+	width: 60px;
+	margin-bottom: 5px;
 }
 
 @media only screen and (max-width: 480px) {

@@ -1,13 +1,13 @@
 import { assets } from '../assets/assets';
 
-const SearchBar = ({ search, setSearch }) => {
+const SearchBar = ({ search, setSearch, placeholder }) => {
 	return (
 		<div className='flex items-center justify-center'>
-			<div className='flex items-center px-5 py-1 border-2 border-gray-500 rounded-3xl'>
+			<div className='flex items-center px-2 py-1 border-2 border-gray-500 rounded'>
 				<input
-					className='outline-none border-none w-full sm:w-[25vw]'
+					className='outline-none border-none w-full sm:w-[250px] bg-transparent'
 					type='text'
-					placeholder='Search your product here'
+					placeholder={placeholder}
 					value={search}
 					onChange={(e) => setSearch(e.target.value)}
 				/>
@@ -17,12 +17,6 @@ const SearchBar = ({ search, setSearch }) => {
 					alt='search icon'
 				/>
 			</div>
-			<button
-				onClick={() => setSearch('')}
-				className='p-1.5 px-3 rounded-full bg-black text-white ml-3 cursor-pointer'
-			>
-				&#10008;
-			</button>
 		</div>
 	);
 };
