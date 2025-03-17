@@ -24,7 +24,7 @@ function App() {
 				<>
 					<Navbar />
 					<div className='flex w-full bg-slate-100'>
-						<div className='w-[18%] min-h-screen border-r-2 bg-white'>
+						<div className='w-[18%] min-h-screen border-r-2'>
 							<Sidebar />
 						</div>
 						<div className='w-[70%] mx-auto my-8 ml-[5vw]'>

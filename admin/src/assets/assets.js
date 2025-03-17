@@ -12,6 +12,11 @@ import categoryIcon from './categoryicon.png';
 import subcategoryIcon from './subcategoryicon.svg';
 import resetIcon from './reseticon.png';
 import minimizeIcon from './minimizeicon.png';
+import salesIcon from './salesicon.png';
+import customersIcon from './customersicon.png';
+import ordersIcon from './ordersicon.png';
+import revenueIcon from './revenueicon.png';
+import dashboardIcon from './dashboardicon.png';
 
 export const assets = {
 	trendfusionLogo,
@@ -27,5 +32,10 @@ export const assets = {
 	categoryIcon,
 	subcategoryIcon,
 	resetIcon,
-	minimizeIcon
+	minimizeIcon,
+	salesIcon,
+	customersIcon,
+	ordersIcon,
+	revenueIcon,
+	dashboardIcon,
 };
