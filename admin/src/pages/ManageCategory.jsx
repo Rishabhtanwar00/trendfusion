@@ -203,9 +203,9 @@ const ManageCategory = () => {
 									{category.name}
 								</p>
 							</div>
-							<div className='flex gap-5 my-auto items-center justify-center pl-4'>
+							<div className='flex gap-5 my-auto pl-4 items-center justify-end sm:justify-center flex-1 flex-wrap'>
 								<button
-									className='px-4 py-1.5 bg-green-500 text-white active:scale-95 transition-all duration-150 ease-in-out w-fit cursor-pointer shadow rounded'
+									className='px-4 py-1.5 bg-green-500 text-white active:scale-95 transition-all duration-150 ease-in-out cursor-pointer shadow rounded w-[90px]'
 									onClick={() => {
 										handleFocus(inputCatRef);
 										handleUpdateCategory(category._id, category.name);
@@ -214,7 +214,7 @@ const ManageCategory = () => {
 									Update
 								</button>
 								<button
-									className='px-4 py-1.5 bg-red-500 text-white active:scale-95 transition-all duration-150 ease-in-out w-fit cursor-pointer shadow rounded'
+									className='px-4 py-1.5 bg-red-500 text-white active:scale-95 transition-all duration-150 ease-in-out cursor-pointer shadow rounded w-[90px]'
 									onClick={() => handleRemoveCategory(category._id)}
 								>
 									Remove
@@ -244,7 +244,7 @@ const ManageCategory = () => {
 										</div>
 										<div className='flex gap-5 my-auto items-center justify-end sm:justify-center flex-1 flex-wrap'>
 											<button
-												className='px-4 py-1.5 bg-green-500 text-white active:scale-95 transition-all duration-150 ease-in-out w-fit cursor-pointer shadow rounded'
+												className='px-4 py-1.5 bg-green-500 text-white active:scale-95 transition-all duration-150 ease-in-out cursor-pointer shadow rounded w-[90px]'
 												onClick={() => {
 													handleFocus(inputSubRef);
 													handleUpdateSubCategory(category, subcategory);
@@ -253,7 +253,7 @@ const ManageCategory = () => {
 												Update
 											</button>
 											<button
-												className='px-4 py-1.5 bg-red-500 text-white active:scale-95 transition-all duration-150 ease-in-out w-fit cursor-pointer shadow rounded'
+												className='px-4 py-1.5 bg-red-500 text-white active:scale-95 transition-all duration-150 ease-in-out cursor-pointer shadow rounded w-[90px]'
 												onClick={() =>
 													handleRemoveSubCategory(category._id, subcategory._id)
 												}

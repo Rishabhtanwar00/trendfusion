@@ -45,14 +45,14 @@ const TrackOrder = () => {
 	}, [orderId]);
 
 	return (
-		<div className='max-w-4xl mx-auto my-10 p-6 bg-white shadow-lg border rounded-lg tracking-wide'>
+		<div className='max-w-4xl mx-auto my-10 p-4 sm:p-6 bg-white shadow-lg border rounded-lg tracking-wide'>
 			<div className='text-2xl'>
 				<Title text1='TRACK' text2='YOUR ORDER' />
 			</div>
 
-			<div className='my-4 flex gap-5 justify-start'>
+			<div className='my-4 flex flex-col sm:flex-row gap-5 justify-start'>
 				<div className='flex flex-col gap-5'>
-					<div className='min-w-[350px] border p-4 rounded-lg h-fit shadow-lg'>
+					<div className='w-full sm:min-w-[350px] border p-4 rounded-lg h-fit shadow-lg'>
 						<h2 className='text-lg font-semibold mb-3'>Order Details</h2>
 						<div className='flex flex-col gap-1'>
 							<p>
@@ -89,9 +89,9 @@ const TrackOrder = () => {
 						<h2 className='text-lg font-semibold mb-3'>Products in Order</h2>
 						<div className='space-y-4'>
 							{orderData &&
-								orderData.items.map((item) => (
+								orderData.items.map((item, index) => (
 									<div
-										key={item._id}
+										key={index}
 										className='flex items-center border p-3 rounded-lg'
 									>
 										<Link to={`/product/${item._id}`}>

@@ -5,7 +5,7 @@ const SearchBar = ({ search, setSearch, placeholder }) => {
 		<div className='flex items-center justify-center'>
 			<div className='flex items-center px-2 py-1 border-2 border-gray-500 rounded'>
 				<input
-					className='outline-none border-none w-full sm:w-[250px] bg-transparent'
+					className='outline-none border-none w-[150px] sm:w-[250px] bg-transparent'
 					type='text'
 					placeholder={placeholder}
 					value={search}

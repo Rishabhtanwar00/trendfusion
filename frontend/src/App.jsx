@@ -19,6 +19,7 @@ import './App.css';
 import Verify from './pages/Verify';
 import PrivateRoute from './components/PrivateRoute';
 import TrackOrder from './pages/TrackOrder';
+import Profile from './pages/Profile';
 function App() {
 	return (
 		<div className='px-4 sm:px-[5vw] md:px-[7vw] lg:px-[9vw]'>
@@ -64,6 +65,7 @@ function App() {
 						</PrivateRoute>
 					}
 				></Route>
+				<Route path='/profile' element={<Profile />}></Route>
 				<Route path='/verify' element={<Verify />}></Route>
 			</Routes>
 			<Footer />

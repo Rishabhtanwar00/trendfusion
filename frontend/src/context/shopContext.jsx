@@ -10,6 +10,7 @@ const ShopContextProvider = (props) => {
 	const currency = '₹';
 	const deliveryFee = 30;
 
+	const [userData, setUserData] = useState(false);
 	const [products, setProducts] = useState([]);
 	const [search, setSearch] = useState('');
 	const [showSearch, setShowSearch] = useState(false);
@@ -26,6 +27,7 @@ const ShopContextProvider = (props) => {
 		if (!token && localStorage.getItem('token')) {
 			setToken(localStorage.getItem('token'));
 			fetchUserCart(localStorage.getItem('token'));
+			fetchUserData(localStorage.getItem('token'));
 		}
 	}, [token]);
 
@@ -56,6 +58,27 @@ const ShopContextProvider = (props) => {
 				toast.error(data.error);
 			} else {
 				setCartItems(data.cartData);
+			}
+		} catch (err) {
+			console.log(
+				'error in fetching user cart in soap context: ' + err.message
+			);
+			// toast.error(err.message);
+		}
+	};
+
+	const fetchUserData = async (token) => {
+		try {
+			const { data } = await axios.post(
+				`${backendUrl}/api/auth/user`,
+				{},
+				{ headers: { token } }
+			);
+
+			if (data.error) {
+				toast.error(data.error);
+			} else {
+				setUserData(data.user);
 			}
 		} catch (err) {
 			console.log(
@@ -149,6 +172,7 @@ const ShopContextProvider = (props) => {
 
 	const value = {
 		backendUrl,
+		userData,
 		products,
 		currency,
 		deliveryFee,
