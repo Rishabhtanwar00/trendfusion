@@ -96,9 +96,10 @@ const PlaceOrder = () => {
 
 			let url = `${backendUrl}/api/order/`;
 			
-			if (paymentMethod === 'stripe') {
-				url = url + 'stripe';
-			} else if (paymentMethod === 'razorpay') {
+			// if (paymentMethod === 'stripe') {
+			// 	url = url + 'stripe';
+			// } else
+			 if (paymentMethod === 'razorpay') {
 				url = url + 'razorpay';
 			} else {
 				url = url + 'cod';
@@ -115,11 +116,13 @@ const PlaceOrder = () => {
 				toast.success(data.mssg);
 				setCartItems({});
 				navigate('/orders');
-			} else if (paymentMethod === 'stripe') {
-				if (data.session_url) {
-					window.location.replace(data.session_url);
-				}
-			} else if (paymentMethod === 'razorpay') {
+			} 
+			// else if (paymentMethod === 'stripe') {
+			// 	if (data.session_url) {
+			// 		window.location.replace(data.session_url);
+			// 	}
+			// } 
+			else if (paymentMethod === 'razorpay') {
 				initPay(data.order);
 			}
 		} catch (err) {
@@ -212,7 +215,7 @@ const PlaceOrder = () => {
 					<div className='w-full'>
 						<Title text1='PAYMENT' text2='METHOD' />
 						<div className='flex flex-col sm:flex-row gap-3 mt-3'>
-							<div
+							{/* <div
 								onClick={() => setPaymentMethod('stripe')}
 								className='flex items-center justify-start gap-5 px-5 py-2 border cursor-pointer w-full sm:w-fit'
 							>
@@ -226,7 +229,7 @@ const PlaceOrder = () => {
 									src={assets.stripeLogo}
 									alt='stripe logo'
 								/>
-							</div>
+							</div> */}
 							<div
 								onClick={() => setPaymentMethod('razorpay')}
 								className='flex items-center justify-start gap-5 px-5 py-2 border cursor-pointer w-full sm:w-fit'

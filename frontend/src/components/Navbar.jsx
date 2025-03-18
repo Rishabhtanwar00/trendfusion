@@ -71,7 +71,7 @@ const Navbar = () => {
 						onClick={() => (!token ? navigate('/login') : null)}
 					/>
 					{token && (
-						<div className='group-hover:block hidden absolute dropdown-menu pt-4 right-0'>
+						<div className='group-hover:block hidden absolute dropdown-menu pt-4 right-0 z-10'>
 							<div className='flex flex-col gap-2 p-3 w-36 bg-slate-100 text-gray-700'>
 								<p className='cursor-pointer hover:text-black'>My Profile</p>
 								<Link to='/orders' className='cursor-pointer hover:text-black'>
@@ -103,17 +103,17 @@ const Navbar = () => {
 			</div>
 
 			<div
-				className={`absolute top-0 right-0 bottom-0 left-0 bg-white transition-all overflow-hidden ${
+				className={`absolute top-0 right-0 bottom-0 left-0 bg-white transition-all overflow-hidden z-10 ${
 					visible ? 'w-full' : 'w-0'
 				}`}
 			>
 				<div className='flex flex-col text-gray-700'>
 					<div
-						className='flex items-center gap-4 p-3 cursor-pointer'
+						className='flex items-center gap-2 p-3 cursor-pointer'
 						onClick={() => setVisible(false)}
 					>
 						<img
-							className='h-4 rotate-180'
+							className='h-3 rotate-180'
 							src={assets.backIcon}
 							alt='back icon'
 						/>

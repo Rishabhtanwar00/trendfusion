@@ -1,6 +1,7 @@
 import express from 'express';
 import {
 	getAllOrders,
+	getOrderById,
 	getUserOrders,
 	placeOrder,
 	placeOrderRazorpay,
@@ -21,6 +22,7 @@ router.post('/razorpay', userAuth, placeOrderRazorpay);
 
 //for frontend user
 router.post('/user-orders', userAuth, getUserOrders);
+router.post('/single', userAuth, getOrderById);
 
 //for admin
 router.post('/all', adminAuth, getAllOrders);

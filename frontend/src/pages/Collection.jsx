@@ -5,6 +5,7 @@ import { ShopContext } from '../context/shopContext.jsx';
 import Title from '../components/Title';
 import ProductItem from '../components/ProductItem';
 import Loader from '../components/Loader.jsx';
+import PriceRangeSlider from '../components/PriceRangeSlider.jsx';
 
 const Collection = () => {
 	const { products, search, showSearch, loading, setLoading } =
@@ -14,15 +15,7 @@ const Collection = () => {
 	const [category, setCategory] = useState([]);
 	const [subCategory, setSubCategory] = useState([]);
 	const [sortType, setSortType] = useState('relavent');
-
-	const itemsPerPage = 12;
-	const [currentPage, setCurrentPage] = useState(1);
-	const [totalPages, setTotalPages] = useState(
-		Math.ceil(products.length / itemsPerPage)
-	);
-
-	const indexOfLastItem = currentPage * itemsPerPage;
-	const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+	const [priceRange, setPriceRange] = useState([0, 10000]);
 
 	const toogleFilter = () => {
 		setShowFilter(!showFilter);
@@ -65,15 +58,19 @@ const Collection = () => {
 				subCategory.includes(item.subCategory)
 			);
 		}
-		const filteredTotalPages = Math.ceil(productsCopy.length / itemsPerPage);
-		setTotalPages(filteredTotalPages);
-		if (currentPage > filteredTotalPages) setCurrentPage(1);
-		const currentItems = productsCopy.slice(indexOfFirstItem, indexOfLastItem);
-		setFilterProducts(currentItems);
+		productsCopy = productsCopy.filter(
+			(item) =>
+				parseInt(item.price) >= priceRange[0] &&
+				parseInt(item.price) <= priceRange[1]
+		);
 
-		// setFilterProducts(productsCopy);
+		setFilterProducts(productsCopy);
 		setLoading(false);
 	};
+
+	useEffect(() => {
+		console.log(priceRange[0] + ' : ' + priceRange[1]);
+	}, [priceRange]);
 
 	const sortProducts = () => {
 		let filterProductsCopy = filterProducts.slice();
@@ -91,15 +88,11 @@ const Collection = () => {
 
 	useEffect(() => {
 		applyFilter();
-	}, [category, subCategory, search, showFilter, products, currentPage]);
+	}, [category, subCategory, search, showFilter, products, priceRange]);
 
 	useEffect(() => {
 		sortProducts();
 	}, [sortType]);
-
-	useEffect(() => {
-		window.scrollTo(0, 0);
-	}, [currentPage]);
 
 	return (
 		<div className='flex flex-col sm:flex-row gap-10 my-10'>
@@ -112,7 +105,7 @@ const Collection = () => {
 					<img
 						className={`${
 							showFilter ? 'rotate-90' : ''
-						} sm:hidden max-w-[6px] w-auto h-auto ml-2 transition-all duration-75 ease-in-out cursor-pointer`}
+						} sm:hidden max-w-[10px] w-auto h-auto ml-2 transition-all duration-75 ease-in-out cursor-pointer`}
 						src={assets.backIcon}
 						alt=''
 					/>
@@ -187,6 +180,17 @@ const Collection = () => {
 						Winterwear
 					</p>
 				</div>
+				<div
+					className={`w-[200px]  ${showFilter ? 'block' : 'hidden'} sm:block`}
+				>
+					<p className='font-semibold text-sm mt-10 mb-5'>
+						FILTER BY PRICE RANGE
+					</p>
+					<PriceRangeSlider
+						priceRange={priceRange}
+						setPriceRange={setPriceRange}
+					/>
+				</div>
 			</div>
 			<div className='w-full'>
 				<div className='flex justify-between text-xl w-full'>
@@ -201,39 +205,17 @@ const Collection = () => {
 					</select>
 				</div>
 				{!loading ? (
-					<>
-						<div className='grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-5 my-10'>
-							{filterProducts.map((item) => (
-								<ProductItem
-									key={item._id}
-									id={item._id}
-									image={item.image}
-									name={item.name}
-									price={item.price}
-								/>
-							))}
-						</div>
-						<div className='flex gap-5 mx-auto items-center justify-center my-10'>
-							<button
-								className='px-2 py-0.5 border border-black bg-pink-300 rounded'
-								disabled={currentPage === 1}
-								onClick={() => setCurrentPage(currentPage - 1)}
-							>
-								Prev
-							</button>
-							<p className='[word-spacing:8px]'>
-								Page <span className='font-bold'>{currentPage}</span> of{' '}
-								{totalPages}
-							</p>
-							<button
-								className='px-2 py-0.5 border border-black bg-pink-300 rounded'
-								disabled={currentPage === totalPages}
-								onClick={() => setCurrentPage(currentPage + 1)}
-							>
-								Next
-							</button>
-						</div>
-					</>
+					<div className='grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-5 my-10'>
+						{filterProducts.map((item) => (
+							<ProductItem
+								key={item._id}
+								id={item._id}
+								image={item.image}
+								name={item.name}
+								price={item.price}
+							/>
+						))}
+					</div>
 				) : (
 					<Loader loaderText='Loading Collection...' />
 				)}

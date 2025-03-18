@@ -4,9 +4,10 @@ import { ShopContext } from '../context/shopContext';
 import { toast } from 'react-toastify';
 import axios from 'axios';
 import Loader from '../components/Loader';
+import { Link } from 'react-router-dom';
 
 const Orders = () => {
-	const { token, backendUrl, currency, loading, setLoading } =
+	const { token, backendUrl, currency, loading, setLoading, navigate } =
 		useContext(ShopContext);
 
 	const [ordersData, setOrdersData] = useState([]);
@@ -29,6 +30,7 @@ const Orders = () => {
 
 			data.orders.map((order) =>
 				order.items.map((item) => {
+					item['orderid'] = order._id;
 					item['status'] = order.status;
 					item['payment'] = order.payment;
 					item['paymentMethod'] = order.paymentMethod;
@@ -63,11 +65,13 @@ const Orders = () => {
 							className='flex flex-col sm:flex-row items-start sm:items-center sm:justify-between border-y p-2 text-sm gap-3'
 						>
 							<div className='flex gap-3'>
-								<img
-									className='max-h-[120px] h-auto w-auto'
-									src={item.image[0]}
-									alt='product image'
-								/>
+								<Link to={`/product/${item._id}`}>
+									<img
+										className='max-h-[120px] h-auto w-auto'
+										src={item.image[0]}
+										alt='product image'
+									/>
+								</Link>
 								<div className='flex flex-col gap-3'>
 									<p className='text-base'>{item.name}</p>
 									<div className='flex gap-3'>
@@ -96,7 +100,7 @@ const Orders = () => {
 									<p>{item.status}</p>
 								</div>
 								<button
-									onClick={fetchUserOrders}
+									onClick={() => navigate(`/track-order/${item.orderid}`)}
 									className='border bg-black text-white px-3 py-2 active:scale-90 transition-all duration-150 ease-in-out'
 								>
 									Track Order

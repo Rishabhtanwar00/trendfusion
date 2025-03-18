@@ -198,6 +198,24 @@ export const getUserOrders = async (req, res) => {
 	}
 };
 
+//get order by order id
+export const getOrderById = async (req, res) => {
+	try {
+		const { orderId } = req.body;
+
+		const order = await Order.findById(orderId);
+
+		if (!order) {
+			return res.status(200).json({ error: 'Order not found.' });
+		}
+
+		return res.status(200).json({ order: order });
+	} catch (err) {
+		console.log('error in getOrderById controller: ' + err.message);
+		return res.status(500).json({ error: 'Internal server error' });
+	}
+};
+
 //update order status ( for admin )
 export const updateOrderStatus = async (req, res) => {
 	try {

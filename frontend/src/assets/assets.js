@@ -14,6 +14,9 @@ import deleteIcon from './deleteicon.png';
 import stripeLogo from './stripelogo.png';
 import razorpayLogo from './razorpaylogo.png';
 import heroImg from './heroimg.png';
+import heroImg2 from './heroimg2.jpg';
+import heroImg3 from './heroimg3.jpg';
+import heroImg4 from './heroimg4.jpg';
 import aboutImg from './aboutimg.png';
 import contactImg from './contactimg.png';
 
@@ -36,4 +39,7 @@ export const assets = {
 	deleteIcon,
 	stripeLogo,
 	razorpayLogo,
+	heroImg2,
+	heroImg3,
+	heroImg4,
 };

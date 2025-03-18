@@ -18,6 +18,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import './App.css';
 import Verify from './pages/Verify';
 import PrivateRoute from './components/PrivateRoute';
+import TrackOrder from './pages/TrackOrder';
 function App() {
 	return (
 		<div className='px-4 sm:px-[5vw] md:px-[7vw] lg:px-[9vw]'>
@@ -52,6 +53,14 @@ function App() {
 					element={
 						<PrivateRoute>
 							<PlaceOrder />
+						</PrivateRoute>
+					}
+				></Route>
+				<Route
+					path='/track-order/:orderId'
+					element={
+						<PrivateRoute>
+							<TrackOrder />
 						</PrivateRoute>
 					}
 				></Route>
