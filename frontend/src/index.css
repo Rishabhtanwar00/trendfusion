@@ -50,6 +50,15 @@ button:disabled {
 	-webkit-background-clip: text;
 	background-clip: text;
 }
+/* .no-scroll {
+	overflow: hidden;
+	height: 100vh;
+} */
+
+::selection {
+	background-color: #000;
+	color: #fff;
+}
 
 @keyframes l24 {
 	100% {

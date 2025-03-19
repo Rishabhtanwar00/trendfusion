@@ -1,6 +1,7 @@
 import trendfusionLogo from './trendfusionlogo.png';
 import searchIcon from './searchicon.png';
 import userIcon from './usericon.png';
+import profileIcon from './profileicon.png';
 import bagIcon from './bagicon.png';
 import menuIcon from './menuicon.png';
 import backIcon from './backicon.png';
@@ -24,6 +25,7 @@ export const assets = {
 	trendfusionLogo,
 	searchIcon,
 	userIcon,
+	profileIcon,
 	bagIcon,
 	menuIcon,
 	backIcon,

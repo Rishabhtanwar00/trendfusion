@@ -15,8 +15,9 @@ const ShopContextProvider = (props) => {
 	const [search, setSearch] = useState('');
 	const [showSearch, setShowSearch] = useState(false);
 	const [cartItems, setCartItems] = useState({});
-	const [token, setToken] = useState('');
+	const [token, setToken] = useState(localStorage.getItem('token') || '');
 	const [loading, setLoading] = useState(false);
+	const [refetchUserData, setRefetchUserData] = useState(false);
 	const navigate = useNavigate();
 
 	useEffect(() => {
@@ -24,12 +25,18 @@ const ShopContextProvider = (props) => {
 	}, []);
 
 	useEffect(() => {
-		if (!token && localStorage.getItem('token')) {
-			setToken(localStorage.getItem('token'));
-			fetchUserCart(localStorage.getItem('token'));
-			fetchUserData(localStorage.getItem('token'));
+		if (token) {
+			fetchUserCart(token);
+			fetchUserData(token);
 		}
 	}, [token]);
+
+	useEffect(() => {
+		if (refetchUserData) {
+			fetchUserData(token);
+			setRefetchUserData(false);
+		}
+	}, [refetchUserData]);
 
 	const fetchAllProducts = async () => {
 		setLoading(true);
@@ -70,7 +77,7 @@ const ShopContextProvider = (props) => {
 	const fetchUserData = async (token) => {
 		try {
 			const { data } = await axios.post(
-				`${backendUrl}/api/auth/user`,
+				`${backendUrl}/api/user/profile`,
 				{},
 				{ headers: { token } }
 			);
@@ -158,9 +165,11 @@ const ShopContextProvider = (props) => {
 	};
 
 	const getCartAmount = () => {
+		if (!products.length) return 0;
 		let totalAmount = 0;
 		for (const items in cartItems) {
 			const itemInfo = products.find((product) => product._id === items);
+			if (!itemInfo) continue; //sometime getting undefned error for below written code
 			for (const item in cartItems[items]) {
 				if (cartItems[items][item] > 0) {
 					totalAmount += itemInfo.price * cartItems[items][item];
@@ -191,6 +200,8 @@ const ShopContextProvider = (props) => {
 		setToken,
 		loading,
 		setLoading,
+		refetchUserData,
+		setRefetchUserData,
 	};
 
 	return (

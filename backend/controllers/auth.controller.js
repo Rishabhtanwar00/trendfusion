@@ -84,17 +84,3 @@ export const adminLogin = async (req, res) => {
 		return res.status(500).json({ error: 'Internal server error' });
 	}
 };
-
-//get user Data
-export const getUserData = async (req, res) => {
-	try {
-		const { userId } = req.body;
-
-		const user = await User.findById(userId);
-		
-		return res.status(200).json({ user });
-	} catch (err) {
-		console.log('error in getUserCart Controller: ' + err.message);
-		return res.status(500).json({ error: 'Internal server error' });
-	}
-};

@@ -73,7 +73,9 @@ const Navbar = () => {
 					{token && (
 						<div className='group-hover:block hidden absolute dropdown-menu pt-4 right-0 z-10'>
 							<div className='flex flex-col gap-2 p-3 w-36 bg-slate-100 text-gray-700'>
-								<p className='cursor-pointer hover:text-black'>My Profile</p>
+								<Link to='/profile' className='cursor-pointer hover:text-black'>
+									My Profile
+								</Link>
 								<Link to='/orders' className='cursor-pointer hover:text-black'>
 									Orders
 								</Link>

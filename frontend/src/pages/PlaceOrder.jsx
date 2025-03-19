@@ -1,11 +1,12 @@
 import Title from '../components/Title';
 import CartTotal from '../components/CartTotal';
 import { assets } from '../assets/assets';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useContext } from 'react';
 import { ShopContext } from '../context/shopContext';
 import { toast } from 'react-toastify';
 import axios from 'axios';
+import CustomDropdown from '../components/CustomDropdown';
 const PlaceOrder = () => {
 	const {
 		navigate,
@@ -16,13 +17,15 @@ const PlaceOrder = () => {
 		deliveryFee,
 		token,
 		backendUrl,
+		userData,
+		setRefetchUserData,
 	} = useContext(ShopContext);
 	const [paymentMethod, setPaymentMethod] = useState('cod');
+	const [selectedAddress, setSelectedAddress] = useState('');
 
 	const [formData, setFormData] = useState({
 		firstname: '',
 		lastname: '',
-		email: '',
 		street: '',
 		city: '',
 		state: '',
@@ -68,9 +71,40 @@ const PlaceOrder = () => {
 		rzp.open();
 	};
 
-	const handleSubmit = async (e) => {
+	const AddAddressSubmit = async (e) => {
 		e.preventDefault();
 		try {
+			const { data } = await axios.post(
+				`${backendUrl}/api/user/add-address`,
+				{ address: formData },
+				{
+					headers: {
+						token,
+					},
+				}
+			);
+
+			if (data.error) {
+				console.log('error in addrss form: ' + data.error);
+			}
+
+			toast.success('New Address saved.');
+			setRefetchUserData(true);
+		} catch (err) {
+			console.log('error in handleSubmit of address form: ' + err.message);
+		}
+	};
+
+	const handlePlaceOrder = async () => {
+		try {
+			const isFormValid = Object.values(formData).every(
+				(value) => value.trim() !== ''
+			);
+
+			if (!isFormValid) {
+				toast.error('Address fields can not be blank.');
+				return;
+			}
 			const orderItems = [];
 
 			for (const items in cartItems) {
@@ -95,11 +129,11 @@ const PlaceOrder = () => {
 			};
 
 			let url = `${backendUrl}/api/order/`;
-			
+
 			// if (paymentMethod === 'stripe') {
 			// 	url = url + 'stripe';
 			// } else
-			 if (paymentMethod === 'razorpay') {
+			if (paymentMethod === 'razorpay') {
 				url = url + 'razorpay';
 			} else {
 				url = url + 'cod';
@@ -116,12 +150,12 @@ const PlaceOrder = () => {
 				toast.success(data.mssg);
 				setCartItems({});
 				navigate('/orders');
-			} 
+			}
 			// else if (paymentMethod === 'stripe') {
 			// 	if (data.session_url) {
 			// 		window.location.replace(data.session_url);
 			// 	}
-			// } 
+			// }
 			else if (paymentMethod === 'razorpay') {
 				initPay(data.order);
 			}
@@ -131,13 +165,41 @@ const PlaceOrder = () => {
 		}
 	};
 
+	useEffect(() => {
+		if (selectedAddress) {
+			setFormData((prev) => ({
+				...prev,
+				firstname: selectedAddress.firstname,
+				lastname: selectedAddress.lastname,
+				street: selectedAddress.street,
+				city: selectedAddress.city,
+				state: selectedAddress.state,
+				pincode: selectedAddress.pincode,
+				country: selectedAddress.country,
+				phone: selectedAddress.phone,
+			}));
+		}
+	}, [selectedAddress]);
+
 	return (
-		<form onSubmit={handleSubmit} className='my-10'>
-			<div className='text-xl mb-4'>
-				<Title text1='DELIVERY' text2='INFORMATION' />
+		<div className='my-10'>
+			<div className='flex items-start justify-between gap-2 w-full sm:max-w-[480px]'>
+				<div className='text-base sm:text-xl mb-4'>
+					<Title text1='DELIVERY' text2='ADDRESS' />
+				</div>
+				{userData.addresses && (
+					<CustomDropdown
+						userData={userData}
+						selectedAddress={selectedAddress}
+						setSelectedAddress={setSelectedAddress}
+					/>
+				)}
 			</div>
 			<div className='flex flex-col sm:flex-row items-start justify-between gap-10'>
-				<div className='flex flex-col gap-4 w-full sm:max-w-[480px]'>
+				<form
+					onSubmit={AddAddressSubmit}
+					className='flex flex-col items-center gap-4 w-full sm:max-w-[480px]'
+				>
 					<div className='flex gap-4'>
 						<input
 							className='px-4 py-1.5 border border-gray-400 rounded-md w-full'
@@ -145,6 +207,7 @@ const PlaceOrder = () => {
 							placeholder='First Name'
 							required
 							onChange={(e) => handleChange('firstname', e.target.value)}
+							value={formData.firstname}
 						/>
 						<input
 							className='px-4 py-1.5 border border-gray-400 rounded-md w-full'
@@ -152,21 +215,16 @@ const PlaceOrder = () => {
 							placeholder='Last Name'
 							required
 							onChange={(e) => handleChange('lastname', e.target.value)}
+							value={formData.lastname}
 						/>
 					</div>
 					<input
 						className='px-4 py-1.5 border border-gray-400 rounded-md w-full'
-						type='email'
-						placeholder='Email Address'
-						required
-						onChange={(e) => handleChange('email', e.target.value)}
-					/>
-					<input
-						className='px-4 py-1.5 border border-gray-400 rounded-md w-full'
 						type='text'
-						placeholder='Street'
+						placeholder='House/Building/Street'
 						required
 						onChange={(e) => handleChange('street', e.target.value)}
+						value={formData.street}
 					/>
 					<div className='flex gap-4'>
 						<input
@@ -175,6 +233,7 @@ const PlaceOrder = () => {
 							placeholder='City'
 							required
 							onChange={(e) => handleChange('city', e.target.value)}
+							value={formData.city}
 						/>
 						<input
 							className='px-4 py-1.5 border border-gray-400 rounded-md w-full'
@@ -182,6 +241,7 @@ const PlaceOrder = () => {
 							placeholder='State'
 							required
 							onChange={(e) => handleChange('state', e.target.value)}
+							value={formData.state}
 						/>
 					</div>
 					<div className='flex gap-4'>
@@ -191,6 +251,7 @@ const PlaceOrder = () => {
 							placeholder='Zipcode'
 							required
 							onChange={(e) => handleChange('pincode', e.target.value)}
+							value={formData.pincode}
 						/>
 						<input
 							className='px-4 py-1.5 border border-gray-400 rounded-md w-full'
@@ -198,6 +259,7 @@ const PlaceOrder = () => {
 							placeholder='Country'
 							required
 							onChange={(e) => handleChange('country', e.target.value)}
+							value={formData.country}
 						/>
 					</div>
 					<input
@@ -206,8 +268,21 @@ const PlaceOrder = () => {
 						placeholder='Phone'
 						required
 						onChange={(e) => handleChange('phone', e.target.value)}
+						value={formData.phone}
 					/>
-				</div>
+					{!selectedAddress && (
+						<div className='relative w-full pb-[25px]'>
+							<p className='absolute bottom-0 text-sm text-gray-600 tracking-wide'>
+								*Save this address for future use.
+							</p>
+							<input
+								type='submit'
+								value='Add Address'
+								className='bg-black text-white px-5 py-2 w-full h-fit rounded text-base active:scale-90 transition-all duration-150 ease-in-out cursor-pointer'
+							/>
+						</div>
+					)}
+				</form>
 				<div className='flex flex-col gap-5 w-full sm:w-auto'>
 					<div className='w-full min-w-80'>
 						<CartTotal />
@@ -215,21 +290,6 @@ const PlaceOrder = () => {
 					<div className='w-full'>
 						<Title text1='PAYMENT' text2='METHOD' />
 						<div className='flex flex-col sm:flex-row gap-3 mt-3'>
-							{/* <div
-								onClick={() => setPaymentMethod('stripe')}
-								className='flex items-center justify-start gap-5 px-5 py-2 border cursor-pointer w-full sm:w-fit'
-							>
-								<p
-									className={`h-3 w-3 rounded-full border ${
-										paymentMethod === 'stripe' ? 'bg-orange-600' : ''
-									}`}
-								></p>
-								<img
-									className='h-5 w-fit'
-									src={assets.stripeLogo}
-									alt='stripe logo'
-								/>
-							</div> */}
 							<div
 								onClick={() => setPaymentMethod('razorpay')}
 								className='flex items-center justify-start gap-5 px-5 py-2 border cursor-pointer w-full sm:w-fit'
@@ -260,7 +320,7 @@ const PlaceOrder = () => {
 							</div>
 						</div>
 						<button
-							type='submit'
+							onClick={() => handlePlaceOrder()}
 							className='bg-black text-white px-10 py-2 mt-10 w-100% min-w-[250px] float-end active:scale-90 transition-all duration-150 ease-in-out'
 						>
 							Place Order
@@ -268,7 +328,7 @@ const PlaceOrder = () => {
 					</div>
 				</div>
 			</div>
-		</form>
+		</div>
 	);
 };
 
