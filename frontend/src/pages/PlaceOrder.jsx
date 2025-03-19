@@ -181,6 +181,18 @@ const PlaceOrder = () => {
 		}
 	}, [selectedAddress]);
 
+	useEffect(() => {
+		if (userData.addresses) {
+			const defaultAddress = userData.addresses.find(
+				(add) => add.isDefault === true
+			);
+
+			if (defaultAddress) {
+				setSelectedAddress(defaultAddress);
+			}
+		}
+	}, [userData]);
+
 	return (
 		<div className='my-10'>
 			<div className='flex items-start justify-between gap-2 w-full sm:max-w-[480px]'>
