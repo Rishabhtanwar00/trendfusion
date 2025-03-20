@@ -23,7 +23,7 @@ const Navbar = () => {
 		<div className='flex items-center justify-between py-5 font-medium tracking-[0.5px] border-b-2'>
 			<Link to='/'>
 				<img
-					className='h-auto w-auto max-h-11'
+					className='h-auto w-auto max-h-6 sm:max-h-7'
 					src={assets.trendfusionLogo}
 					alt='TrendFusion logo'
 				/>
@@ -49,7 +49,7 @@ const Navbar = () => {
 			<div className='flex items-center gap-6'>
 				<button
 					onClick={() => openAdminPanel(import.meta.env.VITE_ADMIN_URL)}
-					className='hidden sm:block px-2 py-1 border-2 border-black bg-pink-300 outline-none rounded text-xs'
+					className='hidden sm:block px-2 py-1 border-2 border-[#d41e26] bg-[#f02028] text-white outline-none rounded text-xs'
 				>
 					Admin Panel
 				</button>
@@ -68,7 +68,7 @@ const Navbar = () => {
 						className='w-5 cursor-pointer'
 						src={assets.userIcon}
 						alt='user icon'
-						onClick={() => (!token ? navigate('/login') : null)}
+						onClick={() => (!token ? navigate('/login') : navigate('/profile'))}
 					/>
 					{token && (
 						<div className='group-hover:block hidden absolute dropdown-menu pt-4 right-0 z-10'>
@@ -151,7 +151,7 @@ const Navbar = () => {
 					</NavLink>
 					<button
 						onClick={() => openAdminPanel(import.meta.env.VITE_ADMIN_URL)}
-						className='px-5 py-1.5 border-2 border-black bg-pink-300 outline-none rounded text-base w-fit mt-5 mx-auto'
+						className='px-5 py-1.5 border-2 border-black bg-[#ff005c]  text-white outline-none rounded text-base w-fit mt-5 mx-auto'
 					>
 						Admin Panel
 					</button>

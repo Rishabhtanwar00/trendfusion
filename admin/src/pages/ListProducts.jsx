@@ -148,7 +148,7 @@ const ListProducts = () => {
 	return (
 		<div>
 			<div className='heading mb-5'>
-				<h1 style={{ '--bg-color': 'rgb(239 68 68)' }}>All Products</h1>
+				<h1 style={{ '--bg-color': '#f02028' }}>All Products</h1>
 			</div>
 			<div className='flex justify-between items-start'>
 				<div className='w-fit text-left'>
@@ -215,7 +215,7 @@ const ListProducts = () => {
 			</div>
 
 			<div className=''>
-				<div className='w-full hidden sm:grid grid-cols-[1fr_3fr_1fr_1fr_1.5fr] bg-green-500 text-black px-2 py-1 mt-5 text-left tracking-wider'>
+				<div className='w-full hidden sm:grid grid-cols-[1fr_3fr_1fr_1fr_1.5fr] bg-[#f02028] text-white rounded px-2 py-1 mt-5 text-left tracking-wider'>
 					<p>Image</p>
 					<p>Name</p>
 					<p>Category</p>
@@ -225,7 +225,7 @@ const ListProducts = () => {
 				{!loading ? (
 					filterProducts.map((item, index) => (
 						<div key={index}>
-							<div className='w-full hidden sm:grid grid-cols-[1fr_3fr_1fr_1fr_1.5fr] border px-2 py-1 mt-5 text-left text-base items-center bg-white tracking-wide'>
+							<div className='w-full hidden sm:grid grid-cols-[1fr_3fr_1fr_1fr_1.5fr] border px-2 py-1 mt-5 text-left text-base items-center bg-white tracking-wide rounded'>
 								<img className='w-12' src={item.image[0]} alt='' />
 								<p>{item.name}</p>
 								<p>{item.category}</p>
@@ -236,13 +236,13 @@ const ListProducts = () => {
 								<div className='flex gap-3 justify-center'>
 									<button
 										onClick={() => navigate(`/update-product/${item._id}`)}
-										className='text-center px-2 py-0.5 bg-green-500 rounded border-2 text-white'
+										className='text-center px-2 py-0.5 bg-green-500 border-green-800 rounded border-2 text-white'
 									>
 										Update
 									</button>
 									<button
 										onClick={() => deleteProduct(item._id)}
-										className='rounded-full border-2 bg-red-500 w-fit p-2'
+										className='rounded-full border-2 bg-[#f02028] border-[#a8030a] w-fit p-2'
 									>
 										<img
 											className='w-[20px]'
@@ -265,25 +265,25 @@ const ListProducts = () => {
 										{'₹ '}
 										{item.price}
 									</p>
-									
-								<div className='flex gap-3 justify-center'>
-									<button
-										onClick={() => navigate(`/update-product/${item._id}`)}
-										className='text-center px-2 py-0.5 bg-green-500 rounded border-2 text-white'
-									>
-										Update
-									</button>
-									<button
-										onClick={() => deleteProduct(item._id)}
-										className='rounded-full border-2 bg-red-500 w-fit p-2'
-									>
-										<img
-											className='w-[20px]'
-											src={assets.deleteIcon}
-											alt='delete icon'
-										/>
-									</button>
-								</div>
+
+									<div className='flex gap-3 justify-center'>
+										<button
+											onClick={() => navigate(`/update-product/${item._id}`)}
+											className='text-center px-2 py-0.5 bg-green-500 rounded border-2 border-green-800 text-white'
+										>
+											Update
+										</button>
+										<button
+											onClick={() => deleteProduct(item._id)}
+											className='rounded-full border-2 bg-[#f02028] w-fit p-2'
+										>
+											<img
+												className='w-[20px]'
+												src={assets.deleteIcon}
+												alt='delete icon'
+											/>
+										</button>
+									</div>
 								</div>
 							</div>
 						</div>

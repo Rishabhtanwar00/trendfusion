@@ -8,7 +8,7 @@ const Footer = () => {
 				<div className='w-full sm:w-2/4'>
 					<Link to='/'>
 						<img
-							className='h-auto w-auto max-h-10 mb-5'
+							className='h-auto w-auto max-h-6 mb-5'
 							src={assets.trendfusionLogo}
 							alt='TrendFusion logo'
 						/>

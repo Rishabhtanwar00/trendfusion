@@ -9,11 +9,11 @@ const Navbar = () => {
 		<div className='flex items-center justify-between px-[5vw] py-2 border-b-2'>
 			<Link to='/' className='flex flex-col mt-2'>
 				<img
-					className='h-auto w-auto max-h-[40px]'
+					className='h-auto w-auto max-h-[25px]'
 					src={assets.trendfusionLogo}
 					alt='Trendfusion Logo'
 				/>
-				<p className='font-bold text-pink-500 tracking-wide text-xs text-right mr-0.5'>
+				<p className='font-bold text-[#f02028] tracking-wide text-xs text-right mr-0.5'>
 					ADMIN PANEL
 				</p>
 			</Link>

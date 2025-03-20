@@ -7,6 +7,7 @@ import { ShopContext } from '../context/shopContext';
 import { toast } from 'react-toastify';
 import axios from 'axios';
 import CustomDropdown from '../components/CustomDropdown';
+import BackButton from '../components/BackButton';
 const PlaceOrder = () => {
 	const {
 		navigate,
@@ -194,153 +195,156 @@ const PlaceOrder = () => {
 	}, [userData]);
 
 	return (
-		<div className='my-10'>
-			<div className='flex items-start justify-between gap-2 w-full sm:max-w-[480px]'>
-				<div className='text-base sm:text-xl mb-4'>
-					<Title text1='DELIVERY' text2='ADDRESS' />
+		<section className='mt-5 mb-10'>
+			<BackButton />
+			<div className='mt-5 mb-10'>
+				<div className='flex items-start justify-between gap-2 w-full sm:max-w-[480px]'>
+					<div className='text-base sm:text-xl mb-4'>
+						<Title text1='DELIVERY' text2='ADDRESS' />
+					</div>
+					{userData.addresses && (
+						<CustomDropdown
+							userData={userData}
+							selectedAddress={selectedAddress}
+							setSelectedAddress={setSelectedAddress}
+						/>
+					)}
 				</div>
-				{userData.addresses && (
-					<CustomDropdown
-						userData={userData}
-						selectedAddress={selectedAddress}
-						setSelectedAddress={setSelectedAddress}
-					/>
-				)}
-			</div>
-			<div className='flex flex-col sm:flex-row items-start justify-between gap-10'>
-				<form
-					onSubmit={AddAddressSubmit}
-					className='flex flex-col items-center gap-4 w-full sm:max-w-[480px]'
-				>
-					<div className='flex gap-4'>
-						<input
-							className='px-4 py-1.5 border border-gray-400 rounded-md w-full'
-							type='text'
-							placeholder='First Name'
-							required
-							onChange={(e) => handleChange('firstname', e.target.value)}
-							value={formData.firstname}
-						/>
-						<input
-							className='px-4 py-1.5 border border-gray-400 rounded-md w-full'
-							type='text'
-							placeholder='Last Name'
-							required
-							onChange={(e) => handleChange('lastname', e.target.value)}
-							value={formData.lastname}
-						/>
-					</div>
-					<input
-						className='px-4 py-1.5 border border-gray-400 rounded-md w-full'
-						type='text'
-						placeholder='House/Building/Street'
-						required
-						onChange={(e) => handleChange('street', e.target.value)}
-						value={formData.street}
-					/>
-					<div className='flex gap-4'>
-						<input
-							className='px-4 py-1.5 border border-gray-400 rounded-md w-full'
-							type='text'
-							placeholder='City'
-							required
-							onChange={(e) => handleChange('city', e.target.value)}
-							value={formData.city}
-						/>
-						<input
-							className='px-4 py-1.5 border border-gray-400 rounded-md w-full'
-							type='text'
-							placeholder='State'
-							required
-							onChange={(e) => handleChange('state', e.target.value)}
-							value={formData.state}
-						/>
-					</div>
-					<div className='flex gap-4'>
-						<input
-							className='px-4 py-1.5 border border-gray-400 rounded-md w-full'
-							type='text'
-							placeholder='Zipcode'
-							required
-							onChange={(e) => handleChange('pincode', e.target.value)}
-							value={formData.pincode}
-						/>
-						<input
-							className='px-4 py-1.5 border border-gray-400 rounded-md w-full'
-							type='text'
-							placeholder='Country'
-							required
-							onChange={(e) => handleChange('country', e.target.value)}
-							value={formData.country}
-						/>
-					</div>
-					<input
-						className='px-4 py-1.5 border border-gray-400 rounded-md w-full'
-						type='number'
-						placeholder='Phone'
-						required
-						onChange={(e) => handleChange('phone', e.target.value)}
-						value={formData.phone}
-					/>
-					{!selectedAddress && (
-						<div className='relative w-full pb-[25px]'>
-							<p className='absolute bottom-0 text-sm text-gray-600 tracking-wide'>
-								*Save this address for future use.
-							</p>
+				<div className='flex flex-col sm:flex-row items-start justify-between gap-10'>
+					<form
+						onSubmit={AddAddressSubmit}
+						className='flex flex-col items-center gap-4 w-full sm:max-w-[480px]'
+					>
+						<div className='flex gap-4'>
 							<input
-								type='submit'
-								value='Add Address'
-								className='bg-black text-white px-5 py-2 w-full h-fit rounded text-base active:scale-90 transition-all duration-150 ease-in-out cursor-pointer'
+								className='px-4 py-1.5 border border-gray-400 rounded-md w-full'
+								type='text'
+								placeholder='First Name'
+								required
+								onChange={(e) => handleChange('firstname', e.target.value)}
+								value={formData.firstname}
+							/>
+							<input
+								className='px-4 py-1.5 border border-gray-400 rounded-md w-full'
+								type='text'
+								placeholder='Last Name'
+								required
+								onChange={(e) => handleChange('lastname', e.target.value)}
+								value={formData.lastname}
 							/>
 						</div>
-					)}
-				</form>
-				<div className='flex flex-col gap-5 w-full sm:w-auto'>
-					<div className='w-full min-w-80'>
-						<CartTotal />
-					</div>
-					<div className='w-full'>
-						<Title text1='PAYMENT' text2='METHOD' />
-						<div className='flex flex-col sm:flex-row gap-3 mt-3'>
-							<div
-								onClick={() => setPaymentMethod('razorpay')}
-								className='flex items-center justify-start gap-5 px-5 py-2 border cursor-pointer w-full sm:w-fit'
-							>
-								<p
-									className={`h-3 w-3 rounded-full border ${
-										paymentMethod === 'razorpay' ? 'bg-orange-600' : ''
-									}`}
-								></p>
-								<img
-									className='h-5 w-fit'
-									src={assets.razorpayLogo}
-									alt='stripe logo'
+						<input
+							className='px-4 py-1.5 border border-gray-400 rounded-md w-full'
+							type='text'
+							placeholder='House/Building/Street'
+							required
+							onChange={(e) => handleChange('street', e.target.value)}
+							value={formData.street}
+						/>
+						<div className='flex gap-4'>
+							<input
+								className='px-4 py-1.5 border border-gray-400 rounded-md w-full'
+								type='text'
+								placeholder='City'
+								required
+								onChange={(e) => handleChange('city', e.target.value)}
+								value={formData.city}
+							/>
+							<input
+								className='px-4 py-1.5 border border-gray-400 rounded-md w-full'
+								type='text'
+								placeholder='State'
+								required
+								onChange={(e) => handleChange('state', e.target.value)}
+								value={formData.state}
+							/>
+						</div>
+						<div className='flex gap-4'>
+							<input
+								className='px-4 py-1.5 border border-gray-400 rounded-md w-full'
+								type='text'
+								placeholder='Zipcode'
+								required
+								onChange={(e) => handleChange('pincode', e.target.value)}
+								value={formData.pincode}
+							/>
+							<input
+								className='px-4 py-1.5 border border-gray-400 rounded-md w-full'
+								type='text'
+								placeholder='Country'
+								required
+								onChange={(e) => handleChange('country', e.target.value)}
+								value={formData.country}
+							/>
+						</div>
+						<input
+							className='px-4 py-1.5 border border-gray-400 rounded-md w-full'
+							type='number'
+							placeholder='Phone'
+							required
+							onChange={(e) => handleChange('phone', e.target.value)}
+							value={formData.phone}
+						/>
+						{!selectedAddress && (
+							<div className='relative w-full pb-[25px]'>
+								<p className='absolute bottom-0 text-sm text-gray-600 tracking-wide'>
+									*Save this address for future use.
+								</p>
+								<input
+									type='submit'
+									value='Add Address'
+									className='bg-black text-white px-5 py-2 w-full h-fit rounded text-base active:scale-90 transition-all duration-150 ease-in-out cursor-pointer'
 								/>
 							</div>
-							<div
-								onClick={() => setPaymentMethod('cod')}
-								className='flex items-center justify-start gap-5 px-5 py-2 border cursor-pointer w-full sm:w-fit'
-							>
-								<p
-									className={`h-3 w-3 rounded-full border ${
-										paymentMethod === 'cod' ? 'bg-orange-600' : ''
-									}`}
-								></p>
-								<p className='text-sm font-medium text-gray-500'>
-									CASH ON DELIVERY
-								</p>
-							</div>
+						)}
+					</form>
+					<div className='flex flex-col gap-5 w-full sm:w-auto'>
+						<div className='w-full min-w-80'>
+							<CartTotal />
 						</div>
-						<button
-							onClick={() => handlePlaceOrder()}
-							className='bg-black text-white px-10 py-2 mt-10 w-100% min-w-[250px] float-end active:scale-90 transition-all duration-150 ease-in-out'
-						>
-							Place Order
-						</button>
+						<div className='w-full'>
+							<Title text1='PAYMENT' text2='METHOD' />
+							<div className='flex flex-col sm:flex-row gap-3 mt-3'>
+								<div
+									onClick={() => setPaymentMethod('razorpay')}
+									className='flex items-center justify-start gap-5 px-5 py-2 border cursor-pointer w-full sm:w-fit'
+								>
+									<p
+										className={`h-3 w-3 rounded-full border ${
+											paymentMethod === 'razorpay' ? 'bg-orange-600' : ''
+										}`}
+									></p>
+									<img
+										className='h-5 w-fit'
+										src={assets.razorpayLogo}
+										alt='stripe logo'
+									/>
+								</div>
+								<div
+									onClick={() => setPaymentMethod('cod')}
+									className='flex items-center justify-start gap-5 px-5 py-2 border cursor-pointer w-full sm:w-fit'
+								>
+									<p
+										className={`h-3 w-3 rounded-full border ${
+											paymentMethod === 'cod' ? 'bg-orange-600' : ''
+										}`}
+									></p>
+									<p className='text-sm font-medium text-gray-500'>
+										CASH ON DELIVERY
+									</p>
+								</div>
+							</div>
+							<button
+								onClick={() => handlePlaceOrder()}
+								className='bg-black text-white px-10 py-2 mt-10 w-100% min-w-[250px] float-end active:scale-90 transition-all duration-150 ease-in-out'
+							>
+								Place Order
+							</button>
+						</div>
 					</div>
 				</div>
 			</div>
-		</div>
+		</section>
 	);
 };
 

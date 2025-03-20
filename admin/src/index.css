@@ -15,8 +15,9 @@ textarea {
 	border-radius: 4px;
 }
 .active {
-	background-color: rgb(34 197 94);
-	border-color: #000;
+	background-color: #f02028;
+	border-color: #a8030a;
+	color: #fff;
 }
 input:disabled,
 select:disabled {

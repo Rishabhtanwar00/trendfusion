@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { ShopContext } from '../context/shopContext';
+import BackButton from '../components/BackButton';
 
 const UpdateProduct = () => {
 	const { backendUrl, navigate, token, loading, setLoading, categories } =
@@ -150,16 +151,13 @@ const UpdateProduct = () => {
 		fetchProductData();
 	}, [productId]);
 
-	const handleBack = () => {
-		navigate(-1); // Navigates back one step in history
-	};
-
 	const sizeOptions = ['S', 'M', 'L', 'XL', '2XL'];
 
 	return (
 		<div>
-			<div className='flex gap-5 justify-center mb-5'>
-				<div className='heading'>
+			<div className='flex gap-5 justify-start mb-5'>
+				<BackButton />
+				<div className='heading ml-[20vw]'>
 					<h1 style={{ '--bg-color': 'rgb(5, 186, 5)' }}>Edit Product</h1>
 				</div>
 			</div>

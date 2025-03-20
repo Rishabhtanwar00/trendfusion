@@ -146,7 +146,7 @@ const ManageCategory = () => {
 				<div className='flex gap-2 justify-between mt-5'>
 					<button
 						title='Minimize all categories'
-						className='px-2 py-1.5 bg-blue-500 text-white active:scale-95 transition-all duration-150 ease-in-out w-fit cursor-pointer shadow rounded flex'
+						className='px-2 py-1.5 bg-blue-500 border-blue-900 text-white active:scale-95 transition-all duration-150 ease-in-out w-fit cursor-pointer shadow rounded flex'
 						onClick={() => setOpenCategories([])}
 					>
 						<p className='hidden sm:block'>Minimize Categories</p>
@@ -162,9 +162,9 @@ const ManageCategory = () => {
 						placeholder='Search category here'
 					/>
 				</div>
-				<div className='w-full hidden sm:grid grid-cols-[1.5fr_2fr] bg-green-500 text-white px-0 sm:px-2 py-1 mt-5 mb-3 text-left rounded'>
+				<div className='w-full hidden sm:grid grid-cols-[1.5fr_2fr] bg-green-500  border-green-900 text-white px-0 sm:px-2 py-1 mt-5 mb-3 text-left rounded'>
 					<p>Category</p>
-					<p className='text-center'>Action</p>
+					<p className='text-center sm:ml-[6vw]'>Action</p>
 				</div>
 				{filterCategories.length === 0 && (
 					<p className='text-center py-2'>No Category found.</p>
@@ -203,9 +203,9 @@ const ManageCategory = () => {
 									{category.name}
 								</p>
 							</div>
-							<div className='flex gap-5 my-auto pl-4 items-center justify-end sm:justify-center flex-1 flex-wrap'>
+							<div className='flex gap-5 my-auto pl-4 items-center justify-end flex-1 flex-wrap'>
 								<button
-									className='px-4 py-1.5 bg-green-500 text-white active:scale-95 transition-all duration-150 ease-in-out cursor-pointer shadow rounded w-[90px]'
+									className='px-4 py-1.5 bg-green-500 border-green-900 text-white active:scale-95 transition-all duration-150 ease-in-out cursor-pointer shadow rounded w-[90px]'
 									onClick={() => {
 										handleFocus(inputCatRef);
 										handleUpdateCategory(category._id, category.name);
@@ -214,7 +214,7 @@ const ManageCategory = () => {
 									Update
 								</button>
 								<button
-									className='px-4 py-1.5 bg-red-500 text-white active:scale-95 transition-all duration-150 ease-in-out cursor-pointer shadow rounded w-[90px]'
+									className='px-4 py-1.5 bg-[#f02028] border-[#a8030a] text-white active:scale-95 transition-all duration-150 ease-in-out cursor-pointer shadow rounded w-[90px]'
 									onClick={() => handleRemoveCategory(category._id)}
 								>
 									Remove
@@ -242,9 +242,9 @@ const ManageCategory = () => {
 
 											<p className=''>{subcategory.name}</p>
 										</div>
-										<div className='flex gap-5 my-auto items-center justify-end sm:justify-center flex-1 flex-wrap'>
+										<div className='flex gap-5 my-auto items-center justify-end flex-1 flex-wrap'>
 											<button
-												className='px-4 py-1.5 bg-green-500 text-white active:scale-95 transition-all duration-150 ease-in-out cursor-pointer shadow rounded w-[90px]'
+												className='px-4 py-1.5 bg-green-500 border-green-900 text-white active:scale-95 transition-all duration-150 ease-in-out cursor-pointer shadow rounded w-[90px]'
 												onClick={() => {
 													handleFocus(inputSubRef);
 													handleUpdateSubCategory(category, subcategory);
@@ -253,7 +253,7 @@ const ManageCategory = () => {
 												Update
 											</button>
 											<button
-												className='px-4 py-1.5 bg-red-500 text-white active:scale-95 transition-all duration-150 ease-in-out cursor-pointer shadow rounded w-[90px]'
+												className='px-4 py-1.5 bg-[#f02028] border-[#a8030a] text-white active:scale-95 transition-all duration-150 ease-in-out cursor-pointer shadow rounded w-[90px]'
 												onClick={() =>
 													handleRemoveSubCategory(category._id, subcategory._id)
 												}

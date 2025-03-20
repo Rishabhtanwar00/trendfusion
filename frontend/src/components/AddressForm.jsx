@@ -76,9 +76,11 @@ const AddressForm = ({ isOpen, onClose, addressType = 'add', address }) => {
 	// 	// Clean up on unmount
 	// 	return () => document.body.classList.remove('no-scroll');
 	// }, [isOpen]);
-	if (!isOpen) return null;
 	return (
-		<div className='fixed top-0 left-0 flex items-center justify-center w-full h-full p-2 bg-emerald-600 bg-clip-padding backdrop-filter backdrop-blur-[3px] bg-opacity-10'>
+		<div
+			className='fixed top-0 left-0 flex items-center justify-center w-full h-full p-2 bg-emerald-600 bg-clip-padding backdrop-filter backdrop-blur-[3px] bg-opacity-10 transition-transform ease-in-out duration-150'
+			style={{ transform: `${isOpen ? 'scale(1)' : 'scale(0)'}` }}
+		>
 			<div className='w-full sm:max-w-lg p-5 rounded-xl shadow bg-white'>
 				<div className='flex justify-between gap-5'>
 					<div className='text-xl mb-0'>
@@ -89,7 +91,7 @@ const AddressForm = ({ isOpen, onClose, addressType = 'add', address }) => {
 					</div>
 					<button
 						onClick={onClose}
-						className='px-2 py-0.5 bg-red-600 text-white rounded h-fit w-fit'
+						className='px-2 py-0.5 bg-[#f02028] text-white rounded h-fit w-fit'
 					>
 						close
 					</button>

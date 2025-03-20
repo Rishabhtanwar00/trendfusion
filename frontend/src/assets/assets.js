@@ -5,6 +5,7 @@ import profileIcon from './profileicon.png';
 import bagIcon from './bagicon.png';
 import menuIcon from './menuicon.png';
 import backIcon from './backicon.png';
+import arrowIcon from './arrowicon.png';
 import exchangeIcon from './exchangeicon.png';
 import returnIcon from './returnicon.png';
 import supportIcon from './supporticon.png';
@@ -29,6 +30,7 @@ export const assets = {
 	bagIcon,
 	menuIcon,
 	backIcon,
+	arrowIcon,
 	exchangeIcon,
 	returnIcon,
 	supportIcon,
