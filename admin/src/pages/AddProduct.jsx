@@ -271,8 +271,8 @@ const AddProduct = () => {
 							key={size}
 							className={`${
 								productData.sizes.includes(size)
-									? 'bg-pink-300 border-[#000] text-black'
-									: 'bg-slate-200 border-transparent'
+									? 'bg-[#f02028] text-white'
+									: 'bg-slate-200'
 							} border cursor-pointer active:scale-95 transition-all duration-50 ease-in-out`}
 							onClick={() => toggleSizes(size)}
 						>

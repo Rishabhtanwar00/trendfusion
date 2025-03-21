@@ -23,7 +23,7 @@ const Navbar = () => {
 		<div className='flex items-center justify-between py-5 font-medium tracking-[0.5px] border-b-2'>
 			<Link to='/'>
 				<img
-					className='h-auto w-auto max-h-6 sm:max-h-7'
+					className='h-auto w-auto max-h-5 sm:max-h-7'
 					src={assets.trendfusionLogo}
 					alt='TrendFusion logo'
 				/>
@@ -105,7 +105,7 @@ const Navbar = () => {
 			</div>
 
 			<div
-				className={`absolute top-0 right-0 bottom-0 left-0 bg-white transition-all overflow-hidden z-10 ${
+				className={`absolute top-0 right-0 bottom-0 left-0 bg-white transition-all overflow-hidden z-30 ${
 					visible ? 'w-full' : 'w-0'
 				}`}
 			>

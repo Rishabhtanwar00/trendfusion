@@ -17,7 +17,7 @@ const PriceRangeSlider = ({ priceRange, setPriceRange }) => {
 
 	return (
 		<div className='p-0 w-full mx-auto'>
-			<div className='mb-3'>
+			<div className='mb-1'>
 				<label className='text-[15px] text-gray-700 mb-2'>
 					Min Price:{' '}
 					<span className='text-black'>

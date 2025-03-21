@@ -11,7 +11,7 @@ select,
 input,
 textarea {
 	border: 1px solid #c2c2c2;
-	outline-color: rgb(236 72 153);
+	outline-color: #f02028;
 	border-radius: 4px;
 }
 .active {

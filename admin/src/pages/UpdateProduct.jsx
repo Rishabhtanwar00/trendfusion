@@ -234,9 +234,9 @@ const UpdateProduct = () => {
 							key={size}
 							className={`${
 								productData.sizes.includes(size)
-									? 'bg-pink-300 border-[#000] text-black'
-									: 'bg-slate-200 border-transparent'
-							} border cursor-pointer active:scale-95 transition-all duration-50 ease-in-out`}
+									? 'bg-[#f02028] text-white'
+									: 'bg-slate-200'
+							} cursor-pointer active:scale-95 transition-all duration-50 ease-in-out`}
 							onClick={() => toggleSizes(size)}
 						>
 							<p className='py-1.5 px-3.5'>{size}</p>

@@ -67,7 +67,7 @@ const Cart = () => {
 													{currency}
 													{productData.price}
 												</p>
-												<p className='bg-gray-200 text-sm text-black px-2 py-1'>
+												<p className='bg-green-500 text-sm text-white px-2 py-1'>
 													{item.size}
 												</p>
 											</div>
@@ -89,12 +89,18 @@ const Cart = () => {
 											min={1}
 											defaultValue={item.quantity}
 										/>
-										<img
+										
+
+										<button
 											onClick={() => updateQuantity(item._id, item.size, 0)}
-											className='max-h-[26px] w-auto h-auto cursor-pointer mt-[4px] ml-[5px]'
-											src={assets.deleteIcon}
-											alt=''
-										/>
+											className='rounded-full border-2 bg-[#f02028] w-fit p-2'
+										>
+											<img
+												className='w-[20px]'
+												src={assets.deleteIcon}
+												alt='delete icon'
+											/>
+										</button>
 									</div>
 								</div>
 							);

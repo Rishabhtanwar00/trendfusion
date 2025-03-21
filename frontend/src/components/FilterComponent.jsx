@@ -63,13 +63,13 @@ const FilterComponent = ({ setFilterProducts, showFilter, setShowFilter }) => {
 
 	return (
 		<div
-			className='fixed right-[-17px] top-0 h-[100vh] w-[80vw] sm:w-[350px] bg-slate-100 text-black flex flex-col p-5 transition-all ease-in-out duration-300 z-10 border-l-2 border-gray-300 overflow-y-scroll'
+			className='fixed right-[-17px] top-0 h-[100vh] w-[80vw] sm:w-[350px] bg-slate-100 text-black flex flex-col p-5 transition-all ease-in-out duration-300 z-20 border-l-2 border-gray-300 overflow-y-scroll'
 			style={{
 				transform: `${showFilter ? 'translateX(0)' : 'translateX(100vw)'}`,
 			}}
 		>
 			<button
-				className='bg-black text-white px-1.5 py-0.5 w-fit h-fit rounded'
+				className='border-2 border-[#d41e26] bg-[#f02028] text-white px-1.5 py-0.5 w-fit h-fit rounded'
 				onClick={() => setShowFilter(false)}
 			>
 				Close
@@ -78,7 +78,7 @@ const FilterComponent = ({ setFilterProducts, showFilter, setShowFilter }) => {
 				<Title text1='APPLY' text2='FILTER' />
 			</div>
 			<div className='flex flex-col gap-2 mr-[17px]'>
-				<div className='w-full min-w-[200px] text-base text-gray-500 border border-black p-3 flex flex-col gap-1 my-3'>
+				<div className='w-full min-w-[200px] text-base text-gray-500 border border-black p-3 flex flex-col gap-1 my-3 rounded'>
 					<p className=' text-black font-medium mb-1 text-sm'>CATEGORIES</p>
 					<p className=''>
 						<input
@@ -109,7 +109,7 @@ const FilterComponent = ({ setFilterProducts, showFilter, setShowFilter }) => {
 					</p>
 				</div>
 
-				<div className='w-full min-w-[200px] text-base text-gray-500 border border-black p-3 flex flex-col gap-1 my-3'>
+				<div className='w-full min-w-[200px] text-base text-gray-500 border border-black p-3 flex flex-col gap-1 my-3 rounded'>
 					<p className=' text-black font-medium mb-1 text-sm'>SUB CATEGORIES</p>
 					<p className=''>
 						<input
@@ -140,7 +140,7 @@ const FilterComponent = ({ setFilterProducts, showFilter, setShowFilter }) => {
 					</p>
 				</div>
 				<div className='w-full min-w-[200px] block'>
-					<p className='font-semibold text-sm my-5'>FILTER BY PRICE RANGE</p>
+					<p className='font-semibold text-sm my-3'>FILTER BY PRICE RANGE</p>
 					<PriceRangeSlider
 						priceRange={priceRange}
 						setPriceRange={setPriceRange}

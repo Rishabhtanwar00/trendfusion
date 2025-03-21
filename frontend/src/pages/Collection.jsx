@@ -60,7 +60,7 @@ const Collection = () => {
 							/>
 						</button>
 						<select
-							className='p-1 sm:p-2 border border-black text-xs sm:text-sm rounded-lg h-fit'
+							className='p-1 sm:p-2 border border-black text-xs sm:text-sm rounded h-fit'
 							onChange={(e) => setSortType(e.target.value)}
 						>
 							<option value={'relavent'}>Sort by: Relavent</option>
