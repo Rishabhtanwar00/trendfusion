@@ -1,39 +1,49 @@
+import { NavLink } from 'react-router-dom';
 import { assets } from '../assets/assets';
-import CustomNavLink from './CustomNavLink.jsx';
+
+const navLinksData = [
+	{
+		to: '/',
+		icon: assets.dashboardIcon,
+		label: 'Dashboard',
+	},
+	{
+		to: '/add-product',
+		icon: assets.addIcon,
+		label: 'Add Product',
+	},
+	{
+		to: '/manage-category',
+		icon: assets.categoryIcon,
+		label: 'Manage Category',
+	},
+	{
+		to: '/list-products',
+		icon: assets.productIcon,
+		label: 'List Products',
+	},
+	{
+		to: '/orders',
+		icon: assets.orderIcon,
+		label: 'Orders',
+	},
+];
 
 const Sidebar = () => {
 	return (
-		<div className='pt-10 pl-[20%] pr-0 flex flex-col gap-4'>
-			<CustomNavLink
-				to='/'
-				icon={assets.dashboardIcon}
-				activeIcon={assets.dashboardIconWhite}
-				label='Dashboard'
-			/>
-			<CustomNavLink
-				to='/add-product'
-				icon={assets.addIcon}
-				activeIcon={assets.addIconWhite}
-				label='Add Product'
-			/>
-			<CustomNavLink
-				to='/manage-category'
-				icon={assets.categoryIcon}
-				activeIcon={assets.categoryIconWhite}
-				label='Manage Category'
-			/>
-			<CustomNavLink
-				to='/list-products'
-				icon={assets.productIcon}
-				activeIcon={assets.productIconWhite}
-				label='List Products'
-			/>
-			<CustomNavLink
-				to='/orders'
-				icon={assets.orderIcon}
-				activeIcon={assets.orderIconWhite}
-				label='Orders'
-			/>
+		<div className='pr-0 flex flex-col'>
+			{navLinksData.map((item, index) => (
+				<NavLink
+					key={index}
+					to={item.to}
+					className='w-full min-h-[60px] sm:min-h-[80px] p-2 border-b border-gray-700 flex flex-col gap-2 text-white items-center justify-center bg-transparent cursor-pointer text-center'
+				>
+					<>
+						<img className='h-4 w-4' src={item.icon} alt={`icon`} />
+						<p className='hidden lg:block text-[11px]'>{item.label}</p>
+					</>
+				</NavLink>
+			))}
 		</div>
 	);
 };

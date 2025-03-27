@@ -23,11 +23,11 @@ function App() {
 			) : (
 				<>
 					<Navbar />
-					<div className='flex w-full bg-slate-100'>
-						<div className='w-[18%] min-h-screen border-r-2'>
+					<div className='flex w-full bg-slate-100 relative'>
+						<div className='w-[60px] sm:w-[80px] min-h-screen border-r-2 bg-black'>
 							<Sidebar />
 						</div>
-						<div className='w-[70%] mx-auto my-8 ml-[5vw]'>
+						<div className='w-[75vw] sm:w-[85vw] mx-auto my-8 ml-[5vw]'>
 							<Routes>
 								<Route path='/' element={<LandingPage />} />
 								<Route path='/add-product' element={<AddProduct />} />

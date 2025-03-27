@@ -4,7 +4,7 @@ const CustomNavLink = ({ to, icon, activeIcon, label }) => (
 	<NavLink
 		to={to}
 		className={({ isActive }) =>
-			`p-2 px-0 lg:px-4 border border-gray-300 border-r-0 flex gap-4 items-center justify-center lg:justify-start rounded-l bg-white cursor-pointer ${
+			`w-full min-h-[80px] p-2 border-b flex flex-col gap-2 text-white items-center justify-center bg-transparent cursor-pointer text-center ${
 				isActive ? 'active' : ''
 			}`
 		}
@@ -16,7 +16,7 @@ const CustomNavLink = ({ to, icon, activeIcon, label }) => (
 					src={isActive ? activeIcon : icon}
 					alt={`${label} Icon`}
 				/>
-				<p className='hidden lg:block'>{label}</p>
+				<p className='hidden lg:block text-sm'>{label}</p>
 			</>
 		)}
 	</NavLink>

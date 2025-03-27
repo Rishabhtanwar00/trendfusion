@@ -11,9 +11,27 @@ const ShopContextProvider = (props) => {
 	const [token, setToken] = useState(
 		localStorage.getItem('token') ? localStorage.getItem('token') : ''
 	);
+	const [products, setProducts] = useState([]);
+	const [search, setSearch] = useState('');
 	const [loading, setLoading] = useState(false);
 	const [categories, setCategories] = useState([]);
+	const [shouldFetchProducts, setShouldFetchProducts] = useState(false);
 	const [shouldFetchCategories, setShouldFetchCategories] = useState(false);
+
+	const fetchAllProducts = async () => {
+		setLoading(true);
+		try {
+			const result = await axios.get(`${backendUrl}/api/product/list`);
+			result.data.products && setProducts(result.data.products);
+		} catch (err) {
+			console.log(
+				'error in fetching all products in soap context: ' + err.message
+			);
+			toast.error('Error in getting products :(');
+			setLoading(false);
+		}
+		setLoading(false);
+	};
 
 	const fetchAllCategories = async () => {
 		try {
@@ -46,6 +64,17 @@ const ShopContextProvider = (props) => {
 	}, [shouldFetchCategories]);
 
 	useEffect(() => {
+		fetchAllProducts();
+	}, []);
+
+	useEffect(() => {
+		if (shouldFetchProducts) {
+			fetchAllProducts();
+			setShouldFetchProducts(false);
+		}
+	}, [shouldFetchProducts]);
+
+	useEffect(() => {
 		localStorage.setItem('token', token);
 	}, [token]);
 
@@ -54,10 +83,16 @@ const ShopContextProvider = (props) => {
 		navigate,
 		token,
 		setToken,
+		products,
+		setProducts,
+		search,
+		setSearch,
 		loading,
 		setLoading,
 		categories,
 		setCategories,
+		shouldFetchProducts,
+		setShouldFetchProducts,
 		shouldFetchCategories,
 		setShouldFetchCategories,
 	};

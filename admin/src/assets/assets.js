@@ -1,6 +1,6 @@
 import trendfusionLogo from './trendfusionlogo.png';
 import addIcon from './addicon.png';
-import addIconWhite from './addiconwhite.png';
+import addIconBlack from './addiconblack.png';
 import deleteIcon from './deleteicon.png';
 import backIcon from './backicon.png';
 import arrowIcon from './arrowicon.png';
@@ -8,11 +8,11 @@ import upIcon from './upicon.png';
 import searchIcon from './searchicon.png';
 import crossIcon from './crossicon.png';
 import orderIcon from './ordericon.png';
-import orderIconWhite from './ordericonwhite.png';
+import orderIconBlack from './ordericonblack.png';
 import uploadIcon from './uploadicon.png';
 import parcelIcon from './parcelicon.svg';
 import categoryIcon from './categoryicon.png';
-import categoryIconWhite from './categoryiconwhite.png';
+import categoryIconBlack from './categoryiconblack.png';
 import subcategoryIcon from './subcategoryicon.svg';
 import resetIcon from './reseticon.png';
 import minimizeIcon from './minimizeicon.png';
@@ -21,14 +21,14 @@ import customersIcon from './customersicon.png';
 import ordersIcon from './ordersicon.png';
 import revenueIcon from './revenueicon.png';
 import dashboardIcon from './dashboardicon.png';
-import dashboardIconWhite from './dashboardiconwhite.png';
+import dashboardIconBlack from './dashboardiconblack.png';
 import productIcon from './producticon.png';
-import productIconWhite from './producticonwhite.png';
+import productIconBlack from './producticonblack.png';
 
 export const assets = {
 	trendfusionLogo,
 	addIcon,
-	addIconWhite,
+	addIconBlack,
 	deleteIcon,
 	backIcon,
 	arrowIcon,
@@ -36,11 +36,11 @@ export const assets = {
 	searchIcon,
 	crossIcon,
 	orderIcon,
-	orderIconWhite,
+	orderIconBlack,
 	uploadIcon,
 	parcelIcon,
 	categoryIcon,
-	categoryIconWhite,
+	categoryIconBlack,
 	subcategoryIcon,
 	resetIcon,
 	minimizeIcon,
@@ -49,7 +49,7 @@ export const assets = {
 	ordersIcon,
 	revenueIcon,
 	dashboardIcon,
-	dashboardIconWhite,
+	dashboardIconBlack,
 	productIcon,
-	productIconWhite
+	productIconBlack
 };

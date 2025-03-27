@@ -1,79 +1,17 @@
 import { toast } from 'react-toastify';
 import axios from 'axios';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useState } from 'react';
 import Loader from '../components/Loader.jsx';
 import { assets } from '../assets/assets.js';
 import SearchBar from '../components/SearchBar.jsx';
 import { ShopContext } from '../context/shopContext.jsx';
+import FilterComponent from '../components/FilterComponent.jsx';
 
 const ListProducts = () => {
-	const { backendUrl, navigate, token, loading, setLoading, categories } =
+	const { backendUrl, navigate, token, loading, setShouldFetchCategories } =
 		useContext(ShopContext);
-	const [allProducts, setAllProducts] = useState([]);
-	const [search, setSearch] = useState('');
 	const [showFilter, setShowFilter] = useState(false);
 	const [filterProducts, setFilterProducts] = useState([]);
-	const [category, setCategory] = useState([]);
-	const [subCategory, setSubCategory] = useState([]);
-	const [subCategories, setSubCategories] = useState([]);
-
-	const toogleFilter = () => {
-		setShowFilter(!showFilter);
-	};
-
-	const handleCategory = (e) => {
-		if (category.includes(e.target.value)) {
-			setCategory((prev) => prev.filter((item) => item !== e.target.value));
-		} else {
-			setCategory((prev) => [...prev, e.target.value]);
-		}
-	};
-
-	const handleSubCategory = (e) => {
-		if (subCategory.includes(e.target.value)) {
-			setSubCategory((prev) => prev.filter((item) => item !== e.target.value));
-		} else {
-			setSubCategory((prev) => [...prev, e.target.value]);
-		}
-	};
-
-	const fetchAllProducts = async () => {
-		setLoading(true);
-		try {
-			const result = await axios.get(`${backendUrl}/api/product/list`);
-			result.data.products && setAllProducts(result.data.products);
-		} catch (err) {
-			console.log(
-				'error in fetching products in list products page: ' + err.message
-			);
-			toast.error('Error in fetching products :(');
-			setLoading(false);
-		}
-		setLoading(false);
-	};
-
-	const applyFilter = () => {
-		let productsCopy = allProducts.slice();
-
-		if (search) {
-			productsCopy = productsCopy.filter((item) =>
-				item.name.toLowerCase().includes(search.toLowerCase())
-			);
-		}
-
-		if (category.length > 0) {
-			productsCopy = productsCopy.filter((item) =>
-				category.includes(item.category)
-			);
-		}
-
-		if (subCategory.length > 0) {
-			productsCopy = productsCopy.filter((item) =>
-				subCategory.includes(item.subCategory)
-			);
-		}
-		setFilterProducts(productsCopy);
-	};
 
 	const deleteProduct = async (id) => {
 		const decision = confirm('Are you sure you want to remove this product?');
@@ -87,7 +25,7 @@ const ListProducts = () => {
 
 				if (result.data.mssg) {
 					toast.success(result.data.mssg);
-					await fetchAllProducts();
+					setShouldFetchCategories(true);
 				} else {
 					toast.error(result.data.error);
 				}
@@ -99,119 +37,32 @@ const ListProducts = () => {
 			}
 	};
 
-	const fetchSubCategories = async () => {
-		if (category.length > 0) {
-			setSubCategories([]);
-			for (let categoryItem of category) {
-				try {
-					const { data } = await axios.post(
-						`${backendUrl}/api/subcategory/all`,
-						{ category: categoryItem },
-						{ headers: { token } }
-					);
-
-					if (data.error) {
-						console.log(data.error);
-					}
-
-					// console.log(data.subcategories);
-					setSubCategories((prev) => {
-						const uniqueSubCategories = new Map();
-						[...prev, ...data.subcategories].forEach((sub) => {
-							uniqueSubCategories.set(sub._id, sub); // Overwrites duplicates
-						});
-						return Array.from(uniqueSubCategories.values());
-					});
-				} catch (err) {
-					console.log('error in fetchSubCategories: ' + err.message);
-				}
-			}
-		}
-	};
-
-	useEffect(() => {
-		fetchSubCategories();
-	}, [category]);
-
-	useEffect(() => {
-		console.log(subCategories);
-	}, [subCategories]);
-
-	useEffect(() => {
-		fetchAllProducts();
-	}, []);
-
-	useEffect(() => {
-		applyFilter();
-	}, [category, subCategory, search, showFilter, allProducts]);
-
 	return (
 		<div>
+			<FilterComponent
+				setFilterProducts={setFilterProducts}
+				showFilter={showFilter}
+				setShowFilter={setShowFilter}
+			/>
 			<div className='heading mb-5'>
 				<h1 style={{ '--bg-color': '#f02028' }}>All Products</h1>
 			</div>
-			<div className='flex justify-between items-start'>
-				<div className='w-fit text-left'>
-					<p
-						onClick={toogleFilter}
-						className='text-base text-black font-medium flex items-center'
-					>
-						FILTERS
-						<img
-							className={`${
-								showFilter ? 'rotate-90' : ''
-							} max-w-[20px] w-auto h-auto ml-0 transition-all duration-75 ease-in-out cursor-pointer`}
-							src={assets.backIcon}
-							alt=''
-						/>
-					</p>
-					<div className='flex gap-5 flex-wrap'>
-						<div
-							className={`w-[200px] h-fit text-base text-gray-500 border border-black p-3 flex flex-col gap-1 ${
-								showFilter ? 'block' : 'hidden'
-							} my-3`}
-						>
-							<p className=' text-black font-medium mb-1 text-xs'>CATEGORIES</p>
-							{categories.map((categoryItem, index) => (
-								<p key={index} className=''>
-									<input
-										className='mr-2'
-										type='checkbox'
-										value={categoryItem.name}
-										onClick={handleCategory}
-									/>
-									{categoryItem.name}
-								</p>
-							))}
-						</div>
-
-						<div
-							className={`w-[200px] text-base text-gray-500 border border-black p-3 flex flex-col gap-1 ${
-								showFilter ? 'block' : 'hidden'
-							} my-3`}
-						>
-							<p className=' text-black font-medium mb-1 text-xs'>
-								SUB CATEGORIES
-							</p>
-							{subCategories.map((subCategoryItem, index) => (
-								<p key={index} className=''>
-									<input
-										className='mr-2'
-										type='checkbox'
-										value={subCategoryItem.name}
-										onClick={handleSubCategory}
-									/>
-									{subCategoryItem.name}
-								</p>
-							))}
-						</div>
-					</div>
-				</div>
-				<SearchBar
-					search={search}
-					setSearch={setSearch}
-					placeholder='Search product here'
-				/>
+			<div className='flex justify-between items-center'>
+				
+				<button
+					onClick={() => setShowFilter(!showFilter)}
+					className='text-base text-black font-medium flex items-center'
+				>
+					FILTER
+					<img
+						className={`${
+							showFilter ? 'rotate-90' : ''
+						} max-w-[8px] w-auto h-auto ml-2 transition-all duration-75 ease-in-out cursor-pointer`}
+						src={assets.backIcon}
+						alt=''
+					/>
+				</button>
+				<SearchBar placeholder='Search product here' />
 			</div>
 
 			<div className=''>

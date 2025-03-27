@@ -62,7 +62,7 @@ const CategoryForm = ({
 		<div className='px-4 pt-4 pb-8 bg-white shadow rounded-lg'>
 			<div className='flex items-center justify-between mb-5'>
 				<div className='p-4 w-fit rounded-full bg-blue-500 border-blue-900'>
-					<img className='w-auto h-8' src={assets.categoryIconWhite} alt='' />
+					<img className='w-auto h-8' src={assets.categoryIcon} alt='' />
 				</div>
 				<div className='heading'>
 					<h1 style={{ '--bg-color': 'rgb(59 130 246)' }}>Category</h1>
