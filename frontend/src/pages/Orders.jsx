@@ -88,7 +88,7 @@ const Orders = () => {
 										<p>
 											Date:{' '}
 											<span className='text-gray-500'>
-												{new Date(item.date).toDateString()}
+												{new Date(item.date).toLocaleDateString()}
 											</span>
 										</p>
 										<p>
@@ -106,9 +106,15 @@ const Orders = () => {
 									</div>
 									<button
 										onClick={() => navigate(`/track-order/${item.orderid}`)}
-										className='border bg-black text-white px-3 py-2 active:scale-90 transition-all duration-150 ease-in-out'
+										className={`min-w-[102px] border text-white px-3 py-2 active:scale-90 transition-all duration-150 ease-in-out rounded ${
+											item.status === 'Delivered'
+												? 'bg-emerald-600'
+												: 'bg-black'
+										}`}
 									>
-										Track Order
+										{item.status === 'Delivered'
+											? 'See Details'
+											: 'Track Order'}
 									</button>
 								</div>
 							</div>

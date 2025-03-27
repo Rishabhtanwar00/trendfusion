@@ -5,6 +5,7 @@ import deleteIcon from './deleteicon.png';
 import backIcon from './backicon.png';
 import arrowIcon from './arrowicon.png';
 import upIcon from './upicon.png';
+import upIconWhite from './upiconwhite.png';
 import searchIcon from './searchicon.png';
 import crossIcon from './crossicon.png';
 import orderIcon from './ordericon.png';
@@ -33,6 +34,7 @@ export const assets = {
 	backIcon,
 	arrowIcon,
 	upIcon,
+	upIconWhite,
 	searchIcon,
 	crossIcon,
 	orderIcon,
@@ -51,5 +53,5 @@ export const assets = {
 	dashboardIcon,
 	dashboardIconBlack,
 	productIcon,
-	productIconBlack
+	productIconBlack,
 };

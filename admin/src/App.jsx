@@ -12,12 +12,16 @@ import UpdateProduct from './pages/UpdateProduct';
 import ManageCategory from './pages/ManageCategory';
 import { useContext } from 'react';
 import { ShopContext } from './context/shopContext';
+import BackToTopButton from './components/BackToTopButton';
 
 function App() {
 	const { token } = useContext(ShopContext);
 	return (
 		<div className='min-h-screen'>
 			<ToastContainer closeOnClick={true} autoClose={2000} />
+			<div className='fixed bottom-5 right-5 z-50'>
+				<BackToTopButton />
+			</div>
 			{!token ? (
 				<Login />
 			) : (

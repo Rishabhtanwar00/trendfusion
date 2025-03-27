@@ -8,17 +8,21 @@ export const ShopContext = createContext();
 const ShopContextProvider = (props) => {
 	const backendUrl = import.meta.env.VITE_BACKEND_URL;
 	const navigate = useNavigate();
+
 	const [token, setToken] = useState(
 		localStorage.getItem('token') ? localStorage.getItem('token') : ''
 	);
+
 	const [products, setProducts] = useState([]);
+	const [shouldFetchProducts, setShouldFetchProducts] = useState(false);
+	const [orders, setOrders] = useState([]);
+	const [shouldFetchOrders, setShouldFetchOrders] = useState(false);
+	const [categories, setCategories] = useState([]);
+	const [shouldFetchCategories, setShouldFetchCategories] = useState(false);
 	const [search, setSearch] = useState('');
 	const [loading, setLoading] = useState(false);
-	const [categories, setCategories] = useState([]);
-	const [shouldFetchProducts, setShouldFetchProducts] = useState(false);
-	const [shouldFetchCategories, setShouldFetchCategories] = useState(false);
 
-	const fetchAllProducts = async () => {
+	const fetchProducts = async () => {
 		setLoading(true);
 		try {
 			const result = await axios.get(`${backendUrl}/api/product/list`);
@@ -33,7 +37,7 @@ const ShopContextProvider = (props) => {
 		setLoading(false);
 	};
 
-	const fetchAllCategories = async () => {
+	const fetchCategories = async () => {
 		try {
 			const { data } = await axios.post(
 				`${backendUrl}/api/category/all`,
@@ -52,27 +56,65 @@ const ShopContextProvider = (props) => {
 		}
 	};
 
+	const fetchOrders = async () => {
+		setLoading(true);
+		try {
+			const { data } = await axios.post(
+				`${backendUrl}/api/order/all`,
+				{},
+				{ headers: { token } }
+			);
+
+			if (data.error) {
+				toast.error(data.error);
+				return;
+			}
+
+			setOrders(data.orders.reverse());
+		} catch (err) {
+			console.log('error in fetching all orders: ' + err.message);
+			toast.error('error in fetching orders :(');
+			setLoading(false);
+		}
+		setLoading(false);
+	};
+
 	useEffect(() => {
-		fetchAllCategories();
+		setSearch('');
+	}, [location.pathname]);
+
+	useEffect(() => {
+		fetchCategories();
 	}, []);
 
 	useEffect(() => {
 		if (shouldFetchCategories) {
-			fetchAllCategories();
+			fetchCategories();
 			setShouldFetchCategories(false);
 		}
 	}, [shouldFetchCategories]);
 
 	useEffect(() => {
-		fetchAllProducts();
+		fetchProducts();
 	}, []);
 
 	useEffect(() => {
 		if (shouldFetchProducts) {
-			fetchAllProducts();
+			fetchProducts();
 			setShouldFetchProducts(false);
 		}
 	}, [shouldFetchProducts]);
+
+	useEffect(() => {
+		fetchOrders();
+	}, []);
+
+	useEffect(() => {
+		if (shouldFetchOrders) {
+			fetchOrders();
+			setShouldFetchOrders(false);
+		}
+	}, [shouldFetchOrders]);
 
 	useEffect(() => {
 		localStorage.setItem('token', token);
@@ -85,6 +127,8 @@ const ShopContextProvider = (props) => {
 		setToken,
 		products,
 		setProducts,
+		orders,
+		setOrders,
 		search,
 		setSearch,
 		loading,
@@ -93,6 +137,8 @@ const ShopContextProvider = (props) => {
 		setCategories,
 		shouldFetchProducts,
 		setShouldFetchProducts,
+		shouldFetchOrders,
+		setShouldFetchOrders,
 		shouldFetchCategories,
 		setShouldFetchCategories,
 	};

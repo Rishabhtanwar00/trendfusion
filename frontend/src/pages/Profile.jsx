@@ -123,11 +123,14 @@ const Profile = () => {
 						{userData.addresses &&
 							userData.addresses.map((address, index) => (
 								<div
-									className={`flex flex-col items-start border px-5 py-4 w-[320px] rounded-lg shadow-lg ${
-										address.isDefault ? 'bg-emerald-600 text-white' : 'bg-white'
-									}`}
+									className='relative flex flex-col items-start border px-5 py-4 w-[320px] rounded-lg shadow-lg'
 									key={index}
 								>
+									{address.isDefault && (
+										<p className='absolute bg-blue-600 text-white px-2 py-0.5 rounded top-[-12px] left-[30px] text-sm'>
+											Default
+										</p>
+									)}
 									<div className='mb-2'>
 										<p>
 											{address.firstname},{address.lastname}- {address.street},
@@ -151,11 +154,7 @@ const Profile = () => {
 												setAddressType('update');
 												setAddress(address);
 											}}
-											className={`px-2 py-1 rounded w-fit h-fit ${
-												address.isDefault
-													? 'bg-white text-black'
-													: 'bg-emerald-600 text-white'
-											} active:scale-95 transition-all ease-in-out duration-150`}
+											className={`px-2 py-1 rounded w-fit h-fit  bg-emerald-600 text-white active:scale-95 transition-all ease-in-out duration-150`}
 										>
 											Edit
 										</button>

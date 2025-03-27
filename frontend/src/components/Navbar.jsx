@@ -23,7 +23,7 @@ const Navbar = () => {
 		<div className='flex items-center justify-between py-5 font-medium tracking-[0.5px] border-b-2'>
 			<Link to='/'>
 				<img
-					className='h-auto w-auto max-h-5 sm:max-h-7'
+					className='h-auto w-auto max-h-5 sm:max-h-6'
 					src={assets.trendfusionLogo}
 					alt='TrendFusion logo'
 				/>
@@ -54,7 +54,7 @@ const Navbar = () => {
 					Admin Panel
 				</button>
 				<img
-					className='w-5 cursor-pointer'
+					className='w-4 sm:w-5 cursor-pointer'
 					src={assets.searchIcon}
 					alt='search icon'
 					onClick={() => {
@@ -65,7 +65,7 @@ const Navbar = () => {
 
 				<div className='group relative'>
 					<img
-						className='w-5 cursor-pointer'
+						className='w-4 sm:w-5 cursor-pointer'
 						src={assets.userIcon}
 						alt='user icon'
 						onClick={() => (!token ? navigate('/login') : navigate('/profile'))}
@@ -91,14 +91,18 @@ const Navbar = () => {
 				</div>
 
 				<Link to='/cart' className='relative'>
-					<img className='w-5 min-w-5' src={assets.bagIcon} alt='bag icon' />
-					<p className='absolute w-4 right-[-5px] bottom-[-5px] text-center aspect-square rounded-full text-[8px] leading-4 bg-black text-white'>
+					<img
+						className='w-4 sm:w-5 min-w-4 sm:min-w-5'
+						src={assets.bagIcon}
+						alt='bag icon'
+					/>
+					<p className='absolute w-3 sm:w-4 right-[-5px] bottom-[-5px] text-center aspect-square rounded-full text-[6px] sm:text-[8px] leading-3 sm:leading-4 bg-black text-white'>
 						{getCartCount()}
 					</p>
 				</Link>
 				<img
 					onClick={() => setVisible(true)}
-					className='w-5 sm:hidden cursor-pointer'
+					className='w-4 sm:w-5 sm:hidden cursor-pointer'
 					src={assets.menuIcon}
 					alt='menu icon'
 				/>

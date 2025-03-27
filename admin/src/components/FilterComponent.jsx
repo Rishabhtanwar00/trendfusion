@@ -4,14 +4,8 @@ import { ShopContext } from '../context/shopContext';
 import axios from 'axios';
 
 const FilterComponent = ({ setFilterProducts, showFilter, setShowFilter }) => {
-	const {
-		backendUrl,
-		token,
-		products,
-		search,		
-		setLoading,
-		categories,
-	} = useContext(ShopContext);
+	const { backendUrl, token, products, search, setLoading, categories } =
+		useContext(ShopContext);
 
 	const [category, setCategory] = useState([]);
 	const [subCategory, setSubCategory] = useState([]);
@@ -66,32 +60,50 @@ const FilterComponent = ({ setFilterProducts, showFilter, setShowFilter }) => {
 	};
 
 	const fetchSubCategories = async () => {
-		if (category.length > 0) {
-			setSubCategories([]);
-			for (let categoryItem of category) {
-				try {
-					const { data } = await axios.post(
+		if (category.length === 0) {
+			setSubCategories([]); // Clear all if no category is selected
+			return;
+		}
+
+		setSubCategories((prev) => {
+			// Remove subcategories of categories that were removed
+			const activeCategories = new Set(category);
+			return prev.filter((sub) => activeCategories.has(sub.category));
+		});
+
+		const existingCategorySet = new Set(
+			subCategories.map((sub) => sub.category)
+		);
+		const newCategories = category.filter(
+			(cat) => !existingCategorySet.has(cat)
+		);
+
+		if (newCategories.length === 0) return; // No need to fetch if all are already loaded
+
+		try {
+			const responses = await Promise.all(
+				newCategories.map((categoryItem) =>
+					axios.post(
 						`${backendUrl}/api/subcategory/all`,
 						{ category: categoryItem },
 						{ headers: { token } }
-					);
+					)
+				)
+			);
 
-					if (data.error) {
-						console.log(data.error);
-					}
+			const newSubCategories = responses
+				.map(({ data }) => (data.error ? [] : data.subcategories))
+				.flat();
 
-					// console.log(data.subcategories);
-					setSubCategories((prev) => {
-						const uniqueSubCategories = new Map();
-						[...prev, ...data.subcategories].forEach((sub) => {
-							uniqueSubCategories.set(sub._id, sub); // Overwrites duplicates
-						});
-						return Array.from(uniqueSubCategories.values());
-					});
-				} catch (err) {
-					console.log('error in fetchSubCategories: ' + err.message);
-				}
-			}
+			setSubCategories((prev) => {
+				const uniqueSubCategories = new Map();
+				[...prev, ...newSubCategories].forEach((sub) => {
+					uniqueSubCategories.set(sub._id, sub);
+				});
+				return Array.from(uniqueSubCategories.values());
+			});
+		} catch (err) {
+			console.log('Error in fetchSubCategories:', err.message);
 		}
 	};
 
@@ -135,20 +147,24 @@ const FilterComponent = ({ setFilterProducts, showFilter, setShowFilter }) => {
 					))}
 				</div>
 
-				<div className='w-full min-w-[200px] text-base text-gray-500 border border-black p-3 flex flex-col gap-1 my-3 rounded'>
-					<p className=' text-black font-medium mb-1 text-sm'>SUB CATEGORIES</p>
-					{subCategories.map((subCategoryItem, index) => (
-						<p key={index} className=''>
-							<input
-								className='mr-2'
-								type='checkbox'
-								value={subCategoryItem.name}
-								onClick={handleSubCategory}
-							/>
-							{subCategoryItem.name}
+				{category.length !== 0 && (
+					<div className='w-full min-w-[200px] text-base text-gray-500 border border-black p-3 flex flex-col gap-1 my-3 rounded'>
+						<p className=' text-black font-medium mb-1 text-sm'>
+							SUB CATEGORIES
 						</p>
-					))}
-				</div>
+						{subCategories.map((subCategoryItem, index) => (
+							<p key={index} className=''>
+								<input
+									className='mr-2'
+									type='checkbox'
+									value={subCategoryItem.name}
+									onClick={handleSubCategory}
+								/>
+								{subCategoryItem.name}
+							</p>
+						))}
+					</div>
+				)}
 				<div className='w-full min-w-[200px] block'>
 					<p className='font-semibold text-sm my-3'>FILTER BY PRICE RANGE</p>
 					<PriceRangeSlider

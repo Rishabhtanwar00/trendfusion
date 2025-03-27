@@ -120,49 +120,77 @@ const TrackOrder = () => {
 							</div>
 						</div>
 					</div>
-
+					<div className='flex flex-col gap-4'>
+						
 					<div className='border p-4 rounded-lg shadow-lg h-fit'>
-						<h2 className='text-lg font-semibold mb-3'>Order Status</h2>
-						<div className='flex flex-col items-start'>
-							{statusSteps.map((step, index) => (
-								<div
-									key={step}
-									className={`min-w-[300px] flex flex-col items-start justify-start ${
-										index <= currentStatusIndex
-											? 'text-blue-500'
-											: 'text-gray-400'
-									}`}
-								>
-									<div className='flex gap-2'>
-										<div
-											className={`w-6 h-6 rounded-full flex items-center justify-center border ${
-												index <= currentStatusIndex
-													? 'bg-blue-500 text-white border-blue-500'
-													: 'bg-white border-gray-400'
-											}`}
-										>
-											{index + 1}
-										</div>
-
-										<p
-											className={`${
-												index <= currentStatusIndex && 'text-black'
-											}`}
-										>
-											{step}
-										</p>
-									</div>
-									{index < statusSteps.length - 1 && (
-										<div
-											className={`w-1 h-6 ml-[10px] ${
-												index < currentStatusIndex
-													? 'bg-blue-500'
-													: 'bg-gray-300'
-											}`}
-										></div>
-									)}
+							<h2 className='text-lg font-semibold mb-3'>Shipping Details</h2>
+							{orderData.address && (
+								<div className='flex flex-col gap-1'>
+									<p>
+										<strong>Full Name:</strong> {orderData.address.firstname}{' '}
+										{orderData.address.lastname}
+									</p>
+									<p>
+										<strong>Mobile No:</strong> {orderData.address.phone}
+									</p>
+									<p>
+										<strong>Delivery Address:</strong>{' '}
+										{orderData.address.street}
+										{', '}
+										{orderData.address.city}
+										{', '}
+										{orderData.address.state}
+										{' - '}
+										{orderData.address.pincode}
+										{', '}
+										{orderData.address.country}
+									</p>
 								</div>
-							))}
+							)}
+						</div>
+						<div className='border p-4 rounded-lg shadow-lg h-fit'>
+							<h2 className='text-lg font-semibold mb-3'>Order Status</h2>
+							<div className='flex flex-col items-start'>
+								{statusSteps.map((step, index) => (
+									<div
+										key={step}
+										className={`min-w-[300px] flex flex-col items-start justify-start ${
+											index <= currentStatusIndex
+												? 'text-blue-500'
+												: 'text-gray-400'
+										}`}
+									>
+										<div className='flex gap-2'>
+											<div
+												className={`w-6 h-6 rounded-full flex items-center justify-center border ${
+													index <= currentStatusIndex
+														? 'bg-blue-500 text-white border-blue-500'
+														: 'bg-white border-gray-400'
+												}`}
+											>
+												{index + 1}
+											</div>
+
+											<p
+												className={`${
+													index <= currentStatusIndex && 'text-black'
+												}`}
+											>
+												{step}
+											</p>
+										</div>
+										{index < statusSteps.length - 1 && (
+											<div
+												className={`w-1 h-6 ml-[10px] ${
+													index < currentStatusIndex
+														? 'bg-blue-500'
+														: 'bg-gray-300'
+												}`}
+											></div>
+										)}
+									</div>
+								))}
+							</div>
 						</div>
 					</div>
 				</div>

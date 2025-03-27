@@ -1,6 +1,6 @@
 import { toast } from 'react-toastify';
 import axios from 'axios';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import Loader from '../components/Loader.jsx';
 import { assets } from '../assets/assets.js';
 import SearchBar from '../components/SearchBar.jsx';
@@ -8,10 +8,35 @@ import { ShopContext } from '../context/shopContext.jsx';
 import FilterComponent from '../components/FilterComponent.jsx';
 
 const ListProducts = () => {
-	const { backendUrl, navigate, token, loading, setShouldFetchCategories } =
-		useContext(ShopContext);
+	const {
+		backendUrl,
+		navigate,
+		token,
+		loading,
+		setShouldFetchCategories,
+		setShouldFetchProducts,
+	} = useContext(ShopContext);
 	const [showFilter, setShowFilter] = useState(false);
 	const [filterProducts, setFilterProducts] = useState([]);
+	const [sortType, setSortType] = useState('relavent');
+
+	const sortProducts = () => {
+		let filterProductsCopy = filterProducts.slice();
+		switch (sortType) {
+			case 'low-high':
+				setFilterProducts(filterProductsCopy.sort((a, b) => a.price - b.price));
+				break;
+			case 'high-low':
+				setFilterProducts(filterProductsCopy.sort((a, b) => b.price - a.price));
+				break;
+			default:
+				setShouldFetchProducts(true);
+		}
+	};
+
+	useEffect(() => {
+		sortProducts();
+	}, [sortType]);
 
 	const deleteProduct = async (id) => {
 		const decision = confirm('Are you sure you want to remove this product?');
@@ -48,7 +73,6 @@ const ListProducts = () => {
 				<h1 style={{ '--bg-color': '#f02028' }}>All Products</h1>
 			</div>
 			<div className='flex justify-between items-center'>
-				
 				<button
 					onClick={() => setShowFilter(!showFilter)}
 					className='text-base text-black font-medium flex items-center'
@@ -70,7 +94,34 @@ const ListProducts = () => {
 					<p>Image</p>
 					<p>Name</p>
 					<p>Category</p>
-					<p>Price</p>
+					<div className='flex items-center gap-1'>
+						<p
+							className='cursor-pointer'
+							onClick={() => setSortType('relavent')}
+						>
+							Price
+						</p>
+						<div className='flex flex-col'>
+							<button onClick={() => setSortType('high-low')}>
+								<img
+									className={`w-[8px] h-auto ${
+										sortType === 'high-low' ? 'opacity-100' : 'opacity-80'
+									}`}
+									src={assets.upIconWhite}
+									alt=''
+								/>
+							</button>
+							<button onClick={() => setSortType('low-high')}>
+								<img
+									className={`w-[8px] h-auto rotate-180 ${
+										sortType === 'low-high' ? 'opacity-100' : 'opacity-80'
+									}`}
+									src={assets.upIconWhite}
+									alt=''
+								/>
+							</button>
+						</div>
+					</div>
 					<p className='text-center'>Action</p>
 				</div>
 				{!loading ? (
