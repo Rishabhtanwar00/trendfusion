@@ -63,7 +63,7 @@ const FilterComponent = ({ setFilterProducts, showFilter, setShowFilter }) => {
 
 	return (
 		<div
-			className='fixed right-[-17px] top-0 h-[100vh] w-[80vw] sm:w-[350px] bg-slate-100 text-black flex flex-col p-5 transition-all ease-in-out duration-300 z-20 border-l-2 border-gray-300 overflow-y-scroll'
+			className='fixed right-[-17px] top-[68px] sm:top-[72px] lg:top-[76px] h-[100vh] w-[80vw] sm:w-[350px] bg-slate-100 text-black flex flex-col p-5 transition-all ease-in-out duration-300 z-20 border-l-2 border-gray-300 overflow-y-scroll'
 			style={{
 				transform: `${showFilter ? 'translateX(0)' : 'translateX(100vw)'}`,
 			}}

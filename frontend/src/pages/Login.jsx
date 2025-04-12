@@ -51,8 +51,8 @@ const Login = () => {
 	}, [token]);
 
 	return (
-		<div className='my-28 flex flex-col items-center justify-center'>
-			<div className='text-3xl flex items-center gap-5'>
+		<div className='mb-16 flex flex-col items-center justify-center'>
+			<div className='mt-20 text-3xl flex items-center gap-5'>
 				<p className='prata-regular text-gray-800 font-bold'>{currentState}</p>
 				<hr className='h-[2px] w-8 bg-gray-800' />
 			</div>

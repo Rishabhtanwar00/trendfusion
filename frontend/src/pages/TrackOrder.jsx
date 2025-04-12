@@ -46,8 +46,10 @@ const TrackOrder = () => {
 	}, [orderId]);
 
 	return (
-		<section className='max-w-4xl mx-auto mt-5 mb-10'>
-			<BackButton />
+		<section className='flex flex-col max-w-4xl mx-auto mt-5 mb-10'>
+			<div className='mt-5'>
+				<BackButton />
+			</div>
 			<div className='mt-5 mb-10 p-4 sm:p-6 bg-white shadow-lg border rounded-lg tracking-wide'>
 				<div className='text-2xl'>
 					<Title text1='TRACK' text2='YOUR ORDER' />

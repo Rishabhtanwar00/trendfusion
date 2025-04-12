@@ -54,8 +54,10 @@ const Orders = () => {
 	}, [token]);
 
 	return (
-		<section className='mt-5 mb-10'>
-			<BackButton />
+		<section className='flex flex-col mt-5 mb-10'>
+			<div className='mt-5'>
+				<BackButton />
+			</div>
 			<div className='mt-5 mb-10'>
 				<div className='text-2xl'>
 					<Title text1='MY' text2='ORDERS' />

@@ -20,41 +20,50 @@ const Navbar = () => {
 	};
 
 	return (
-		<div className='flex items-center justify-between py-5 font-medium tracking-[0.5px] border-b-2'>
+		<div className='bg-white flex items-center justify-between py-5 font-medium tracking-[0.5px] px-[20px] sm:px-[40px]'>
+			<img
+					onClick={() => setVisible(true)}
+					className='w-[28px] sm:w-[32px] h-[28px] sm:h-[32px] lg:hidden cursor-pointer'
+					src={assets.menuIcon}
+					alt='menu icon'
+				/>
+			<div className="flex gap-5 items-center">
 			<Link to='/'>
 				<img
-					className='h-auto w-auto max-h-5 sm:max-h-6'
+					className='h-auto w-auto max-h-[25px] sm:max-h-[28px]'
 					src={assets.trendfusionLogo}
 					alt='TrendFusion logo'
 				/>
 			</Link>
-			<ul className='hidden sm:flex text-sm text-center gap-5 text-gray-700'>
-				<NavLink to='/' className='flex flex-col items-center gap-1'>
-					<p>HOME</p>
+			<ul className='hidden lg:flex text-[18px] font-semibold text-center gap-5 text-[#1B1B1B] ml-5 mt-1'>
+				<NavLink to='/' className='flex flex-col items-center gap-[1px]'>
+					<p>Home</p>
 					<hr className='w-1/2 border-none h-[1.5px] bg-gray-700 hidden' />
 				</NavLink>
-				<NavLink to='/collection' className='flex flex-col items-center gap-1'>
-					<p>COLLECTION</p>
+				<NavLink to='/collection' className='flex flex-col items-center gap-[1px]'>
+					<p>Collection</p>
 					<hr className='w-1/2 border-none h-[1.5px] bg-gray-700 hidden' />
 				</NavLink>
-				<NavLink to='/about' className='flex flex-col items-center gap-1'>
-					<p>ABOUT</p>
+				<NavLink to='/about' className='flex flex-col items-center gap-[1px]'>
+					<p>About</p>
 					<hr className='w-1/2 border-none h-[1.5px] bg-gray-700 hidden' />
 				</NavLink>
-				<NavLink to='/contact' className='flex flex-col items-center gap-1'>
-					<p>CONTACT</p>
+				<NavLink to='/contact' className='flex flex-col items-center gap-[1px]'>
+					<p>Contact</p>
 					<hr className='w-1/2 border-none h-[1.5px] bg-gray-700 hidden' />
 				</NavLink>
 			</ul>
-			<div className='flex items-center gap-6'>
-				<button
+			<button
 					onClick={() => openAdminPanel(import.meta.env.VITE_ADMIN_URL)}
-					className='hidden sm:block px-2 py-1 border-2 border-[#d41e26] bg-[#f02028] text-white outline-none rounded text-xs'
+					className='hidden lg:block px-2 py-1 border-2 border-[#d41e26] bg-[#f02028] text-white outline-none rounded text-[16px]'
 				>
 					Admin Panel
 				</button>
+			</div>
+			<div className='flex items-center gap-3 sm:gap-6'>
+				
 				<img
-					className='w-4 sm:w-5 cursor-pointer'
+					className='w-[28px] sm:w-[32px] h-[28px] sm:h-[32px] hidden sm:block cursor-pointer'
 					src={assets.searchIcon}
 					alt='search icon'
 					onClick={() => {
@@ -65,7 +74,7 @@ const Navbar = () => {
 
 				<div className='group relative'>
 					<img
-						className='w-4 sm:w-5 cursor-pointer'
+						className='w-[28px] sm:w-[32px] h-[28px] sm:h-[32px] cursor-pointer'
 						src={assets.userIcon}
 						alt='user icon'
 						onClick={() => (!token ? navigate('/login') : navigate('/profile'))}
@@ -92,25 +101,20 @@ const Navbar = () => {
 
 				<Link to='/cart' className='relative'>
 					<img
-						className='w-4 sm:w-5 min-w-4 sm:min-w-5'
-						src={assets.bagIcon}
+						className='w-[28px] sm:w-[32px] h-[28px] sm:h-[32px]'
+						src={assets.cartIcon}
 						alt='bag icon'
 					/>
-					<p className='absolute w-3 sm:w-4 right-[-5px] bottom-[-5px] text-center aspect-square rounded-full text-[6px] sm:text-[8px] leading-3 sm:leading-4 bg-black text-white'>
+					<p className='absolute w-3 sm:w-4 right-[-2px] top-[2px] text-center aspect-square rounded-full text-[6px] sm:text-[8px] leading-3 sm:leading-4 bg-black text-white'>
 						{getCartCount()}
 					</p>
 				</Link>
-				<img
-					onClick={() => setVisible(true)}
-					className='w-4 sm:w-5 sm:hidden cursor-pointer'
-					src={assets.menuIcon}
-					alt='menu icon'
-				/>
+				
 			</div>
 
 			<div
-				className={`absolute top-0 right-0 bottom-0 left-0 bg-white transition-all overflow-hidden z-30 ${
-					visible ? 'w-full' : 'w-0'
+				className={`absolute top-0 right-0 bottom-0 left-0 bg-white transition-all overflow-hidden z-100 h-fit min-h-[100vh] ${
+					visible ? 'w-[100vw]' : 'w-0'
 				}`}
 			>
 				<div className='flex flex-col text-gray-700'>

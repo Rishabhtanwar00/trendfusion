@@ -40,7 +40,7 @@ const Collection = () => {
 				setShowFilter={setShowFilter}
 			/>
 			<div className='w-full'>
-				<div className='mb-5'>
+				<div className='my-5'>
 					<BackButton />
 				</div>
 				<div className='flex flex-col sm:flex-row gap-2 items-center justify-between text-xl w-full'>

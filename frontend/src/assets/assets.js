@@ -2,7 +2,7 @@ import trendfusionLogo from './trendfusionlogo.png';
 import searchIcon from './searchicon.png';
 import userIcon from './usericon.png';
 import profileIcon from './profileicon.png';
-import bagIcon from './bagicon.png';
+import cartIcon from './carticon.png';
 import menuIcon from './menuicon.png';
 import backIcon from './backicon.png';
 import arrowIcon from './arrowicon.png';
@@ -15,10 +15,10 @@ import starFadedIcon from './starfadedicon.png';
 import deleteIcon from './deleteicon.png';
 import stripeLogo from './stripelogo.png';
 import razorpayLogo from './razorpaylogo.png';
-import heroImg from './heroimg.png';
-import heroImg2 from './heroimg2.jpg';
-import heroImg3 from './heroimg3.jpg';
-import heroImg4 from './heroimg4.jpg';
+import heroImg1 from './heroimg1.png';
+import heroImg2 from './heroimg2.png';
+import heroImg3 from './heroimg3.png';
+import heroImg4 from './heroimg4.png';
 import aboutImg from './aboutimg.png';
 import contactImg from './contactimg.png';
 
@@ -27,14 +27,13 @@ export const assets = {
 	searchIcon,
 	userIcon,
 	profileIcon,
-	bagIcon,
+	cartIcon,
 	menuIcon,
 	backIcon,
 	arrowIcon,
 	exchangeIcon,
 	returnIcon,
 	supportIcon,
-	heroImg,
 	aboutImg,
 	contactImg,
 	crossIcon,
@@ -43,6 +42,7 @@ export const assets = {
 	deleteIcon,
 	stripeLogo,
 	razorpayLogo,
+	heroImg1,
 	heroImg2,
 	heroImg3,
 	heroImg4,

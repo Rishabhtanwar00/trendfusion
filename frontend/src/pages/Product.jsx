@@ -32,8 +32,10 @@ const Product = () => {
 
 	return (
 		productData && (
-			<section className='mt-5 mb-10'>
+			<section className='flex flex-col mt-5 mb-10'>
+				<div className='mt-5'>
 				<BackButton />
+			</div>
 				<div className='mt-5 mb-10'>
 					<div className='flex flex-col md:flex-row gap-10'>
 						<div className='flex flex-1 flex-col-reverse md:flex-row gap-5'>

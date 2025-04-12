@@ -36,8 +36,10 @@ const Cart = () => {
 	}, [cartItems]);
 
 	return (
-		<section className='mt-5 mb-10'>
-			<BackButton />
+		<section className='flex flex-col mt-5 mb-10'>
+			<div className='mt-5'>
+				<BackButton />
+			</div>
 			<div className='mt-5 mb-10'>
 				<div className=''>
 					<div className='text-2xl'>

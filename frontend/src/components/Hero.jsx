@@ -1,16 +1,18 @@
 import { useEffect, useState } from 'react';
 import { assets } from '../assets/assets';
+import { Link } from 'react-router-dom';
 const Hero = () => {
 	const [currentIndex, setCurrentIndex] = useState(0);
 
 	const sliderData = [
 		{
 			id: 1,
-			image: assets.heroImg,
+			image: assets.heroImg1,
 			title: 'Spring Collection 2025',
 			description: 'Refresh your wardrobe with the latest trends in fashion.',
 			buttonText: 'Shop Now',
-			link: '/collections/spring-2025',
+			link: '/collection',
+			bgcolor: '#6ee7b7',
 		},
 		{
 			id: 2,
@@ -18,7 +20,8 @@ const Hero = () => {
 			title: 'Flat 50% Off',
 			description: "Exclusive deals on summer essentials. Don't miss out!",
 			buttonText: 'Grab the Deal',
-			link: '/collections/summer-sale',
+			link: '/collection',
+			bgcolor: '#f7ee65',
 		},
 		{
 			id: 3,
@@ -26,7 +29,8 @@ const Hero = () => {
 			title: 'New Arrivals',
 			description: 'Explore our latest designs tailored for comfort and style.',
 			buttonText: 'Explore Now',
-			link: '/collections/new-arrivals',
+			link: '/collection',
+			bgcolor: '#bde2da',
 		},
 		{
 			id: 4,
@@ -34,7 +38,8 @@ const Hero = () => {
 			title: 'Limited Edition',
 			description: 'Unique designs for those who love to stand out.',
 			buttonText: 'Shop Limited Edition',
-			link: '/collections/limited-edition',
+			link: '/collection',
+			bgcolor: '#fae4d7',
 		},
 	];
 
@@ -57,20 +62,30 @@ const Hero = () => {
 	}, [currentIndex]);
 
 	return (
-		<div className='relative w-full overflow-hidden'>
+		<div className='relative w-[100vw] mx-[-20px] sm:mx-[-40px] overflow-x-hidden'>
 			<div
 				className='flex transition-transform duration-700 ease-in-out'
-				style={{ transform: `translateX(-${currentIndex * 100}%)` }}
+				style={{ transform: `translateX(-${currentIndex * 100}vw)` }}
 			>
 				{sliderData.map((slider, index) => (
 					<div
 						key={index}
-						className='flex flex-col sm:flex-row border border-gray-400 mt-14 min-w-full h-[500px]'
+						className='flex flex-col sm:flex-row sm:items-center sm:justify-center min-w-[100vw] h-[100vh] sm:h-[500px]'
+						style={{ backgroundColor: slider.bgcolor }}
 					>
 						<div className='w-full sm:w-1/2 flex items-center justify-center py-10 sm:py-0'>
-							<div className='text-[#414141]'>
-								<div className='flex items-center gap-2'>
-									<p className='w-8 sm:w-11 h-[2px] bg-[#414141]'></p>
+							<div className='text-[#1b1b1b] text-center sm:text-left'>
+								<h1 className='text-3xl lg:text-5xl leading-relaxed sm:py-3 font-semibold prata-regular'>
+									{slider.title}
+								</h1>
+								<p className='font-medium text-sm md:text-base mb-10'>
+									{slider.description}
+								</p>
+								<Link to={slider.link} className='px-5 py-2 bg-transparent border-2 border-black text-base min-w-[150px] active:scale-90 transition-all ease-in-out duration-150 hover:bg-black hover:text-white'>
+									{slider.buttonText}
+								</Link>
+								{/* <div className='flex items-center gap-2'>
+									<p className='w-8 sm:w-11 h-[2px] bg-[#1b1b1b]'></p>
 									<p className='font-medium text-sm md:text-base'>
 										BEST SELLERS
 									</p>
@@ -80,15 +95,18 @@ const Hero = () => {
 								</h1>
 								<div className='flex items-center gap-2'>
 									<p className='font-semibold text-sm md:text-base'>SHOP NOW</p>
-									<p className='w-8 sm:w-11 h-[2px] bg-[#414141]'></p>
-								</div>
+									<p className='w-8 sm:w-11 h-[2px] bg-[#1b1b1b]'></p>
+								</div> */}
 							</div>
 						</div>
-						<img
-							className='w-full sm:w-1/2'
-							src={slider.image}
-							alt='hero img'
-						/>
+						<div className='w-full sm:w-1/2 flex items-center justify-center'>
+							
+								<img
+									className='w-auto h-[350px] sm:h-[500px]'
+									src={slider.image}
+									alt='hero img'
+								/>
+						</div>
 					</div>
 				))}
 			</div>
@@ -101,7 +119,7 @@ const Hero = () => {
 					<img className='rotate-180 w-[10px]' src={assets.backIcon} alt='' />
 				</button>
 			</div>
-			<div className='absolute top-1/2 right-[10px]'>
+			<div className='absolute top-1/2 right-[20px]'>
 				<button
 					className='py-1.5 px-2 bg-gray-200 rounded-full disabled:hidden'
 					onClick={handleNext}
@@ -115,7 +133,7 @@ const Hero = () => {
 					<div
 						key={index}
 						className={`w-[6px] h-[6px] rounded-full ${
-							index === currentIndex ? 'bg-gray-700' : 'bg-gray-300'
+							index === currentIndex ? 'bg-black' : 'bg-gray-500'
 						}`}
 						onClick={() => setCurrentIndex(index)}
 					></div>

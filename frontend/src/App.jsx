@@ -22,53 +22,57 @@ import TrackOrder from './pages/TrackOrder';
 import Profile from './pages/Profile';
 function App() {
 	return (
-		<div className='px-4 sm:px-[5vw] md:px-[7vw] lg:px-[9vw]'>
-			<ToastContainer closeOnClick={true} autoClose={2000} />
-			<Navbar />
-			<SearchBar />
-			<Routes>
-				<Route path='/' element={<Home />}></Route>
-				<Route path='/about' element={<About />}></Route>
-				<Route path='/collection' element={<Collection />}></Route>
-				<Route path='/contact' element={<Contact />}></Route>
-				<Route path='/login' element={<Login />}></Route>
-				<Route path='/product/:productId' element={<Product />}></Route>
-				<Route
-					path='/cart'
-					element={
-						<PrivateRoute>
-							<Cart />
-						</PrivateRoute>
-					}
-				></Route>
-				<Route
-					path='/orders'
-					element={
-						<PrivateRoute>
-							<Orders />
-						</PrivateRoute>
-					}
-				></Route>
-				<Route
-					path='/placeorder'
-					element={
-						<PrivateRoute>
-							<PlaceOrder />
-						</PrivateRoute>
-					}
-				></Route>
-				<Route
-					path='/track-order/:orderId'
-					element={
-						<PrivateRoute>
-							<TrackOrder />
-						</PrivateRoute>
-					}
-				></Route>
-				<Route path='/profile' element={<Profile />}></Route>
-				<Route path='/verify' element={<Verify />}></Route>
-			</Routes>
-			<Footer />
+		<div>
+			<div className='fixed w-[100vw] mt-[-68px] sm:mt-[-72px] lg:mt-[-76px] z-[100000] shadow'>
+				<Navbar />
+			</div>
+			<div className='mt-[68px] sm:mt-[72px] lg:mt-[76px] px-[20px] sm:px-[40px]'>
+				<ToastContainer closeOnClick={true} autoClose={2000} />
+				<SearchBar />
+				<Routes>
+					<Route path='/' element={<Home />}></Route>
+					<Route path='/about' element={<About />}></Route>
+					<Route path='/collection' element={<Collection />}></Route>
+					<Route path='/contact' element={<Contact />}></Route>
+					<Route path='/login' element={<Login />}></Route>
+					<Route path='/product/:productId' element={<Product />}></Route>
+					<Route
+						path='/cart'
+						element={
+							<PrivateRoute>
+								<Cart />
+							</PrivateRoute>
+						}
+					></Route>
+					<Route
+						path='/orders'
+						element={
+							<PrivateRoute>
+								<Orders />
+							</PrivateRoute>
+						}
+					></Route>
+					<Route
+						path='/placeorder'
+						element={
+							<PrivateRoute>
+								<PlaceOrder />
+							</PrivateRoute>
+						}
+					></Route>
+					<Route
+						path='/track-order/:orderId'
+						element={
+							<PrivateRoute>
+								<TrackOrder />
+							</PrivateRoute>
+						}
+					></Route>
+					<Route path='/profile' element={<Profile />}></Route>
+					<Route path='/verify' element={<Verify />}></Route>
+				</Routes>
+				<Footer />
+			</div>
 		</div>
 	);
 }

@@ -108,7 +108,7 @@ const OrdersFilter = ({ setFilterOrders, showFilter, setShowFilter }) => {
 				<div className='w-full min-w-[200px] text-base text-gray-500 border border-black p-3 flex flex-col gap-1 my-3 rounded'>
 					<p className=' text-black font-medium mb-1 text-sm'>PAYMENT METHOD</p>
 
-					{['COD', 'Razorpay', 'Stripe'].map((method, index) => (
+					{['COD', 'Razorpay'].map((method, index) => (
 						<p key={index} className=''>
 							<input
 								className='mr-2'
