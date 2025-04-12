@@ -73,10 +73,9 @@ const Profile = () => {
 	};
 
 	return (
-		<section className='flex flex-col max-w-3xl mx-auto my-10'>
-			<div className='mt-5'>
+		<section className='flex flex-col max-w-3xl mx-auto py-10 px-[20px] sm:px-[40px]'>
+			
 				<BackButton />
-			</div>
 			<div className='w-full my-5 p-4 sm:p-6 bg-white shadow-lg border rounded-lg tracking-wide'>
 				<AddressForm
 					isOpen={showAddForm}

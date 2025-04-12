@@ -2,7 +2,7 @@ import Title from './Title';
 
 const Chooseus = () => {
 	return (
-		<div className='text-2xl text-left my-10'>
+		<div className='text-2xl text-left py-10 px-[20px] sm:px-[40px]'>
 			<Title text1='WHY' text2='CHOOSE US' />
 			<div className='flex flex-wrap md:flex-nowrap text-sm text-gray-500 py-10'>
 				<div className='text-left w-full sm:w-fit border px-10 py-8 md:px-16 md:py-16'>

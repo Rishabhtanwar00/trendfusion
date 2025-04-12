@@ -36,10 +36,8 @@ const Cart = () => {
 	}, [cartItems]);
 
 	return (
-		<section className='flex flex-col mt-5 mb-10'>
-			<div className='mt-5'>
-				<BackButton />
-			</div>
+		<section className='bg-[#eff2f1] flex flex-col pt-5 pb-10 px-[20px] sm:px-[40px]'>
+			<BackButton />
 			<div className='mt-5 mb-10'>
 				<div className=''>
 					<div className='text-2xl'>
@@ -54,11 +52,11 @@ const Cart = () => {
 							return (
 								<div
 									key={index}
-									className='border-t border-b flex justify-between items-center mb-3 py-2 w-full'
+									className='border-t border-b flex justify-between items-center mb-3 p-2 sm:pr-10 w-full bg-white rounded'
 								>
 									<div className='flex gap-5'>
 										<img
-											className='max-h-[120px] h-auto w-auto'
+											className='max-h-[120px] h-auto w-auto rounded'
 											src={productData.image[0]}
 											alt=''
 										/>
@@ -66,16 +64,15 @@ const Cart = () => {
 											<p className='font-medium'>{productData.name}</p>
 											<div className='flex items-center gap-2 mt-2'>
 												<p className='text-gray-600'>
-													{currency}
-													{productData.price}
+													{currency} {productData.price}
 												</p>
-												<p className='bg-green-500 text-sm text-white px-2 py-1'>
+												<p className='bg-emerald-600 text-sm text-white px-2 py-1'>
 													{item.size}
 												</p>
 											</div>
 										</div>
 									</div>
-									<div className='flex justify-evenly w-[50%]'>
+									<div className='flex justify-end gap-0 sm:gap-[15vw] w-[50%]'>
 										<input
 											onChange={(e) =>
 												e.target.value !== '0' || e.target.value !== ''
@@ -91,7 +88,6 @@ const Cart = () => {
 											min={1}
 											defaultValue={item.quantity}
 										/>
-										
 
 										<button
 											onClick={() => updateQuantity(item._id, item.size, 0)}

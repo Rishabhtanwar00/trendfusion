@@ -32,12 +32,12 @@ const Product = () => {
 
 	return (
 		productData && (
-			<section className='flex flex-col mt-5 mb-10'>
-				<div className='mt-5'>
-				<BackButton />
-			</div>
+			<section className='flex flex-col pt-5 pb-10'>
+				<div className='px-[20px] sm:px-[40px]'>
+					<BackButton />
+				</div>
 				<div className='mt-5 mb-10'>
-					<div className='flex flex-col md:flex-row gap-10'>
+					<div className='flex flex-col md:flex-row gap-10 px-[20px] sm:px-[40px]'>
 						<div className='flex flex-1 flex-col-reverse md:flex-row gap-5'>
 							<div className='flex flex-row md:flex-col md:flex-nowrap gap-3 w-full sm:w-[18.7%]'>
 								{productData.image.map((item, index) => (
@@ -118,7 +118,7 @@ const Product = () => {
 						</div>
 					</div>
 					<div className='my-16'>
-						<div className='flex'>
+						<div className='flex px-[20px] sm:px-[40px]'>
 							<p className='border text-sm font-bold px-4 py-3 w-fit'>
 								Description
 							</p>
@@ -126,7 +126,7 @@ const Product = () => {
 								Reviews (35)
 							</p>
 						</div>
-						<div className='flex flex-col gap-5 border px-4 py-3 text-sm text-gray-500'>
+						<div className='flex flex-col gap-5 border px-4 py-3 text-sm text-gray-500 mx-[20px] sm:mx-[40px]'>
 							<p className=''>
 								An e-commerce website is an online platform that facilitates the
 								buying and selling of products or services over the internet. It

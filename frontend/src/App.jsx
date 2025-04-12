@@ -26,7 +26,7 @@ function App() {
 			<div className='fixed w-[100vw] mt-[-68px] sm:mt-[-72px] lg:mt-[-76px] z-[100000] shadow'>
 				<Navbar />
 			</div>
-			<div className='mt-[68px] sm:mt-[72px] lg:mt-[76px] px-[20px] sm:px-[40px]'>
+			<div className='mt-[68px] sm:mt-[72px] lg:mt-[76px]'>
 				<ToastContainer closeOnClick={true} autoClose={2000} />
 				<SearchBar />
 				<Routes>

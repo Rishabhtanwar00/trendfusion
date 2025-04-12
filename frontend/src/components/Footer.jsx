@@ -4,7 +4,7 @@ import { assets } from '../assets/assets';
 const Footer = () => {
 	return (
 		<div>
-			<div className='py-5 flex flex-wrap justify-between text-gray-600 gap-3 text-sm border-t-2'>
+			<div className='py-10 px-[20px] sm:px-[40px] flex flex-wrap justify-between text-gray-600 gap-3 text-sm border-t-2'>
 				<div className='w-full sm:w-2/4'>
 					<Link to='/'>
 						<img

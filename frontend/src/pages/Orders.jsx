@@ -54,10 +54,8 @@ const Orders = () => {
 	}, [token]);
 
 	return (
-		<section className='flex flex-col mt-5 mb-10'>
-			<div className='mt-5'>
+		<section className='bg-[#f6f4f1] flex flex-col pt-5 pb-10 px-[20px] sm:px-[40px]'>
 				<BackButton />
-			</div>
 			<div className='mt-5 mb-10'>
 				<div className='text-2xl'>
 					<Title text1='MY' text2='ORDERS' />
@@ -67,12 +65,12 @@ const Orders = () => {
 						ordersData.map((item, index) => (
 							<div
 								key={index}
-								className='flex flex-col sm:flex-row items-start sm:items-center sm:justify-between border-y p-2 text-sm gap-3'
+								className='flex flex-col sm:flex-row items-start sm:items-center sm:justify-between border-y p-2 pr-5 text-sm gap-3 bg-white rounded'
 							>
 								<div className='flex gap-3'>
 									<Link to={`/product/${item._id}`}>
 										<img
-											className='max-h-[120px] h-auto w-auto'
+											className='max-h-[120px] h-auto w-auto rounded'
 											src={item.image[0]}
 											alt='product image'
 										/>

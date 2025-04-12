@@ -78,7 +78,7 @@ const AddressForm = ({ isOpen, onClose, addressType = 'add', address }) => {
 	// }, [isOpen]);
 	return (
 		<div
-			className='fixed top-0 left-0 flex items-center justify-center w-full h-full p-2 bg-emerald-600 bg-clip-padding backdrop-filter backdrop-blur-[3px] bg-opacity-10 transition-transform ease-in-out duration-150'
+			className='fixed top-0 left-0 flex items-center justify-center w-full h-full p-2 bg-emerald-600 bg-clip-padding backdrop-filter backdrop-blur-[3px] bg-opacity-10 transition-transform ease-in-out duration-150 z-[10]'
 			style={{ transform: `${isOpen ? 'scale(1)' : 'scale(0)'}` }}
 		>
 			<div className='w-full sm:max-w-lg p-5 rounded-xl shadow bg-white'>

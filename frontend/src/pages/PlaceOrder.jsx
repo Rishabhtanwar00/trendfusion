@@ -195,10 +195,8 @@ const PlaceOrder = () => {
 	}, [userData]);
 
 	return (
-		<section className='flex flex-col mt-5 mb-10'>
-			<div className='mt-5'>
+		<section className='flex flex-col pt-5 pb-10 px-[20px] sm:px-[40px]'>
 				<BackButton />
-			</div>
 			<div className='mt-5 mb-10'>
 				<div className='flex items-start justify-between gap-2 w-full sm:max-w-[480px]'>
 					<div className='text-base sm:text-xl mb-4'>

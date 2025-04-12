@@ -9,9 +9,9 @@ const ProductItem = ({ id, image, name, price }) => {
 	return (
 		<Link
 			to={`/product/${id}`}
-			className='text-gray-700 cursor-pointer border p-2 rounded'
+			className='text-[#1b1b1b] bg-white pb-3 cursor-pointer border border-black rounded-lg overflow-hidden'
 		>
-			<div className='overflow-hidden relative'>
+			<div className='overflow-hidden relative rounded-lg mb-3'>
 				{/* <div className='absolute top-[0px] left-[0px] z-10 bg-white px-2 py-0.5'>
 					<img
 						className='w-[60px] h-auto'
@@ -25,10 +25,11 @@ const ProductItem = ({ id, image, name, price }) => {
 					alt=''
 				/>
 			</div>
+			<div className="px-2">
 			<p className='mt-3 mb-1 text-sm'>{name}</p>
 			<p className='font-medium text-sm'>
 				{currency} {price}
-			</p>
+			</p></div>
 		</Link>
 	);
 };

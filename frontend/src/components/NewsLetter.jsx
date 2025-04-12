@@ -4,20 +4,20 @@ const NewsLetter = () => {
 	};
 
 	return (
-		<div className='my-10 flex flex-col items-center text-center text-gray-800'>
-			<h3 className='font-semibold text-2xl'>Subscribe now & get 20% off</h3>
-			<p className='text-sm text-gray-500 mx-auto my-2'>
+		<div className='py-10 px-[20px] sm:px-[40px] flex flex-col items-center text-center text-[white] bg-emerald-700'>
+			<h3 className='font-semibold text-3xl'>Subscribe now & get 20% off</h3>
+			<p className='text-sm mx-auto my-2'>
 				Get e-mail updates about out latest shop and special offers.
 			</p>
-			<form className='flex my-6' onSubmit={handleSubmit}>
+			<form className='flex my-6 overflow-hidden' onSubmit={handleSubmit}>
 				<input
-					className='w-full sm:w-[500px] flex-1 px-4 py-3 border focus:outline-none'
+					className='w-full sm:w-[500px] flex-1 px-4 py-3 border-none outline-none focus:outline-none text-[#1b1b1b] rounded-l'
 					type='email'
 					placeholder='Enter your email'
 					required
 				/>
 				<button
-					className='text-base bg-black text-white p-3 px-5 hover:bg-white hover:text-black transition-all duration-300 ease-in-out border-2 border-black'
+					className='text-base bg-[#1b1b1b] text-white p-3 px-5 active:scale-95 transition-all duration-300 ease-in-out rounded-r'
 					type='submit'
 				>
 					Subscribe

@@ -62,7 +62,7 @@ const Hero = () => {
 	}, [currentIndex]);
 
 	return (
-		<div className='relative w-[100vw] mx-[-20px] sm:mx-[-40px] overflow-x-hidden'>
+		<div className='relative w-[100vw] overflow-x-hidden'>
 			<div
 				className='flex transition-transform duration-700 ease-in-out'
 				style={{ transform: `translateX(-${currentIndex * 100}vw)` }}
@@ -70,7 +70,7 @@ const Hero = () => {
 				{sliderData.map((slider, index) => (
 					<div
 						key={index}
-						className='flex flex-col sm:flex-row sm:items-center sm:justify-center min-w-[100vw] h-[100vh] sm:h-[500px]'
+						className='flex flex-col sm:flex-row sm:items-center sm:justify-center min-w-[100vw] h-[100vh] sm:h-[500px] pt-5 px-[20px] sm:px-[40px]'
 						style={{ backgroundColor: slider.bgcolor }}
 					>
 						<div className='w-full sm:w-1/2 flex items-center justify-center py-10 sm:py-0'>

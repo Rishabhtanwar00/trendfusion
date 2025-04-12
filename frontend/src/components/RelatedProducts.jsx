@@ -26,8 +26,8 @@ const RelatedProducts = ({ productId, category, subCategory }) => {
 
 	return (
 		relatedProducts && (
-			<div>
-				<div className='text-2xl text-center'>
+			<div className='bg-[#f6f4f1] py-16 px-[20px] sm:px-[40px]'>
+				<div className='text-2xl text-center pb-5'>
 					<Title text1='RELATED' text2='PRODUCTS' />
 				</div>
 				<div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 gap-y-5'>

@@ -4,7 +4,7 @@ import NewsLetter from '../components/NewsLetter';
 
 const About = () => {
 	return (
-		<div>
+		<div className=''>
 			<Aboutus />
 			<Chooseus />
 			<NewsLetter />
