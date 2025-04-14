@@ -61,7 +61,7 @@ const CategoryForm = ({
 	return (
 		<div className='px-4 pt-4 pb-8 bg-white shadow rounded-lg'>
 			<div className='flex items-center justify-between mb-5'>
-				<div className='p-4 w-fit rounded-full bg-blue-500 border-blue-900'>
+				<div className='p-4 w-fit rounded-full bg-gradient-to-r from-blue-600 to-blue-700 shadow shadow-blue-900'>
 					<img className='w-auto h-8' src={assets.categoryIcon} alt='' />
 				</div>
 				<div className='heading'>
@@ -99,14 +99,14 @@ const CategoryForm = ({
 							type='button'
 							title='Reset Form'
 							onClick={resetCategoryForm}
-							className='p-2 rounded-full border-2 bg-blue-500 border-blue-900 w-fit'
+							className='p-2 rounded-full bg-gradient-to-r from-blue-600 to-blue-700 shadow shadow-blue-900  w-fit'
 						>
 							<img className='w-5' src={assets.resetIcon} alt='' />
 						</button>
 					</div>
 				</div>
 				<input
-					className='mt-3 px-8 py-2 bg-blue-500 border-blue-900 text-white active:scale-95 transition-all duration-150 ease-in-out w-fit cursor-pointer'
+					className='mt-3 px-8 py-2 bg-gradient-to-r from-blue-600 to-blue-700 shadow shadow-blue-900 text-white active:scale-95 transition-all duration-150 ease-in-out w-fit cursor-pointer border-none'
 					type='submit'
 					value={
 						loading

@@ -6,7 +6,7 @@ import { ShopContext } from '../context/shopContext.jsx';
 const Navbar = () => {
 	const { setToken } = useContext(ShopContext);
 	return (
-		<div className='flex items-center justify-between px-[5vw] py-2 border-b border-gray-700 bg-black'>
+		<div className='flex items-center justify-between px-[5vw] py-2 border-b border-gray-700 bg-black relative z-[10]'>
 			<Link to='/' className='flex flex-col mt-2'>
 				<img
 					className='h-auto w-auto max-h-[20px]'

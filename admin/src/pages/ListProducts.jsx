@@ -90,7 +90,7 @@ const ListProducts = () => {
 			</div>
 
 			<div className=''>
-				<div className='w-full hidden sm:grid grid-cols-[1fr_3fr_1fr_1fr_1.5fr] bg-[#f02028] text-white rounded px-2 py-1 mt-5 text-left tracking-wider'>
+				<div className='w-full hidden sm:grid grid-cols-[1fr_3fr_1fr_1fr_1.5fr] bg-gradient-to-r from-red-600 to-red-700 shadow-md shadow-red-800 text-white rounded px-2 py-1 mt-5 text-left tracking-wider'>
 					<p>Image</p>
 					<p>Name</p>
 					<p>Category</p>
@@ -138,13 +138,13 @@ const ListProducts = () => {
 								<div className='flex gap-3 justify-center'>
 									<button
 										onClick={() => navigate(`/update-product/${item._id}`)}
-										className='text-center px-2 py-0.5 bg-green-500 border-green-800 rounded border-2 text-white'
+										className='text-center px-2 py-0.5 bg-gradient-to-r from-green-600 to-green-700 shadow shadow-green-800 rounded text-white'
 									>
 										Update
 									</button>
 									<button
 										onClick={() => deleteProduct(item._id)}
-										className='rounded-full border-2 bg-[#f02028] border-[#a8030a] w-fit p-2'
+										className='rounded-full bg-gradient-to-r from-red-600 to-red-700 shadow shadow-red-800 w-fit p-2'
 									>
 										<img
 											className='w-[20px]'
@@ -171,13 +171,13 @@ const ListProducts = () => {
 									<div className='flex gap-3 justify-center'>
 										<button
 											onClick={() => navigate(`/update-product/${item._id}`)}
-											className='text-center px-2 py-0.5 bg-green-500 rounded border-2 border-green-800 text-white'
+											className='text-center px-2 py-0.5 bg-gradient-to-r from-green-600 to-green-700 shadow shadow-green-800 rounded text-white'
 										>
 											Update
 										</button>
 										<button
 											onClick={() => deleteProduct(item._id)}
-											className='rounded-full border-2 bg-[#f02028] w-fit p-2'
+											className='rounded-full bg-gradient-to-r from-red-600 to-red-700 shadow shadow-red-800 w-fit p-2'
 										>
 											<img
 												className='w-[20px]'

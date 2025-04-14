@@ -81,7 +81,7 @@ const Orders = () => {
 				<SearchBar placeholder='Search by Product' />
 			</div>
 			<div className='text-sm sm:text-[15px] tracking-wide text-gray-700 mt-5'>
-				<div className='w-full hidden sm:grid grid-cols-[2fr_1fr_1fr_1fr] bg-blue-600 text-white rounded px-2 py-1 mt-5 text-left tracking-wider'>
+				<div className='w-full hidden sm:grid grid-cols-[2fr_1fr_1fr_1fr] bg-gradient-to-r from-blue-600 to-blue-700 shadow-md shadow-blue-900 text-white rounded px-2 py-1 my-5 text-left tracking-wider'>
 					<p>Order Details</p>
 					<p>Payment Details</p>
 					<div className='flex items-center gap-1'>

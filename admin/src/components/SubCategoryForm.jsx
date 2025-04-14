@@ -80,7 +80,7 @@ const SubCategoryForm = ({
 	return (
 		<div className='px-4 pt-4 pb-8 bg-white shadow rounded-lg'>
 			<div className='flex items-center justify-between mb-5'>
-				<div className='p-4 w-fit rounded-full bg-[#f02028]  border-[#a8030a]'>
+				<div className='p-4 w-fit rounded-full bg-gradient-to-r from-red-600 to-red-700 shadow shadow-red-800'>
 					<img className='w-auto h-8' src={assets.subcategoryIcon} alt='' />
 				</div>
 				<div className='heading'>
@@ -138,14 +138,14 @@ const SubCategoryForm = ({
 							type='button'
 							title='Reset Form'
 							onClick={resetSubCategoryForm}
-							className='p-2 rounded-full border-2 bg-[#f02028] border-[#a8030a] w-fit'
+							className='p-2 rounded-full bg-gradient-to-r from-red-600 to-red-700 shadow shadow-red-800 w-fit'
 						>
 							<img className='w-5' src={assets.resetIcon} alt='' />
 						</button>
 					</div>
 				</div>
 				<input
-					className='mt-3 px-8 py-2 bg-[#f02028] border-[#a8030a] text-white active:scale-95 transition-all duration-150 ease-in-out w-fit cursor-pointer'
+					className='mt-3 px-8 py-2 bg-gradient-to-r from-red-600 to-red-700 shadow shadow-red-800 border-none text-white active:scale-95 transition-all duration-150 ease-in-out w-fit cursor-pointer'
 					type='submit'
 					value={
 						loading
