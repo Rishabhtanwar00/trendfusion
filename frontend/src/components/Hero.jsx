@@ -62,7 +62,7 @@ const Hero = () => {
 	}, [currentIndex]);
 
 	return (
-		<div className='relative w-[100vw] overflow-x-hidden'>
+		<div className='relative w-[100vw] overflow-hidden'>
 			<div
 				className='flex transition-transform duration-700 ease-in-out'
 				style={{ transform: `translateX(-${currentIndex * 100}vw)` }}

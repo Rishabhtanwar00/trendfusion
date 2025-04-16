@@ -47,7 +47,6 @@ const ShopContextProvider = (props) => {
 			console.log(
 				'error in fetching all products in soap context: ' + err.message
 			);
-			toast.error('Error in getting products :(');
 			setLoading(false);
 		}
 		setLoading(false);
@@ -62,7 +61,7 @@ const ShopContextProvider = (props) => {
 			);
 
 			if (data.error) {
-				toast.error(data.error);
+				toast.error("Error in fetching User Cart, Try after some time.");
 			} else {
 				setCartItems(data.cartData);
 			}
@@ -70,7 +69,6 @@ const ShopContextProvider = (props) => {
 			console.log(
 				'error in fetching user cart in soap context: ' + err.message
 			);
-			// toast.error(err.message);
 		}
 	};
 
@@ -83,7 +81,7 @@ const ShopContextProvider = (props) => {
 			);
 
 			if (data.error) {
-				toast.error(data.error);
+				toast.error("Error in fetching user data, Try after some time.");
 			} else {
 				setUserData(data.user);
 			}
@@ -91,7 +89,6 @@ const ShopContextProvider = (props) => {
 			console.log(
 				'error in fetching user cart in soap context: ' + err.message
 			);
-			// toast.error(err.message);
 		}
 	};
 
@@ -121,7 +118,7 @@ const ShopContextProvider = (props) => {
 			);
 
 			if (data.error) {
-				toast.error(data.error);
+				toast.error("Error in adding item to cart, Try after some time.");
 			} else {
 				toast.success(data.mssg);
 			}
@@ -157,7 +154,7 @@ const ShopContextProvider = (props) => {
 			);
 
 			if (data.error) {
-				toast.error(data.error);
+				toast.error("Error in updating product quantity, Try after some time.");
 			} else {
 				toast.success(data.mssg);
 			}

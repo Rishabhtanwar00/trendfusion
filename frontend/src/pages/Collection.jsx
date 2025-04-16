@@ -33,7 +33,7 @@ const Collection = () => {
 	}, [sortType]);
 
 	return (
-		<div className='flex flex-col sm:flex-row gap-10 py-5 px-[20px] sm:px-[40px] bg-[#f6f4f1]'>
+		<div className='flex flex-col sm:flex-row gap-10 pt-5 pb-10 px-[20px] sm:px-[40px] bg-[#f6f4f1]'>
 			<FilterComponent
 				setFilterProducts={setFilterProducts}
 				showFilter={showFilter}
@@ -70,17 +70,23 @@ const Collection = () => {
 					</div>
 				</div>
 				{!loading ? (
-					<div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4  lg:grid-cols-5 gap-5 mb-10 mt-5'>
-						{filterProducts.map((item) => (
-							<ProductItem
-								key={item._id}
-								id={item._id}
-								image={item.image}
-								name={item.name}
-								price={item.price}
-							/>
-						))}
-					</div>
+					filterProducts.length > 0 ? (
+						<div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4  lg:grid-cols-5 gap-5 mb-10 mt-5'>
+							{filterProducts.map((item) => (
+								<ProductItem
+									key={item._id}
+									id={item._id}
+									image={item.image}
+									name={item.name}
+									price={item.price}
+								/>
+							))}
+						</div>
+					) : (
+						<p className='text-xl font-semibold mt-[90px] text-center'>
+							No Products Found.
+						</p>
+					)
 				) : (
 					<Loader loaderText='Loading Collection...' />
 				)}

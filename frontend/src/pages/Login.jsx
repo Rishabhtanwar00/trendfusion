@@ -28,7 +28,7 @@ const Login = () => {
 
 			const { data } = await axios.post(url, formData);
 			if (data.error) {
-				toast.error(data.error);
+				toast.error("Error in logging in, Try after some time.");
 			} else {
 				toast.success('Welcome to Trendfusion :)');
 				localStorage.setItem('token', data.token);

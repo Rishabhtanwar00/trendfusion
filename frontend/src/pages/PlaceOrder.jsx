@@ -63,7 +63,7 @@ const PlaceOrder = () => {
 					}
 				} catch (err) {
 					console.log('error in razorpay handler: ' + err.message);
-					toast.error(err.message);
+					toast.error("Error in Placing your order, Try after some time.");
 				}
 			},
 		};
@@ -143,7 +143,7 @@ const PlaceOrder = () => {
 			const { data } = await axios.post(url, orderData, { headers: { token } });
 
 			if (data.error) {
-				toast.error(data.error);
+				toast.error("Error in placing your order, Try after some time.");
 				return;
 			}
 
@@ -162,7 +162,7 @@ const PlaceOrder = () => {
 			}
 		} catch (err) {
 			console.log('error in handle submit of PlaceOrder: ' + err.message);
-			toast.error(err.message);
+			toast.error("Error in placing your order, Try after some time.");
 		}
 	};
 

@@ -96,7 +96,7 @@ const UpdateProduct = () => {
 			);
 
 			if (result.data.error) {
-				toast.error(result.data.error);
+				toast.error("Error in Updating Product, Try after some time.");
 			} else {
 				toast.success(result.data.mssg);
 				navigate('/list-products');
@@ -118,7 +118,7 @@ const UpdateProduct = () => {
 			);
 
 			if (data.error) {
-				toast.error(data.error);
+				toast.error("Error in Fetching Sub Categories, Try after some time.");
 				return;
 			}
 			const allSubCategories = data.subcategories;

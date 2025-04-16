@@ -30,9 +30,9 @@ button:disabled {
 
 .loader-container {
 	box-sizing: border-box;
-	width: 70vw;
+	width: 100vw;
 	height: fit-content;
-	background-color: rgba(255, 255, 255, 1);
+	background-color: transparent;
 	/* position: absolute; */
 	z-index: 100;
 }

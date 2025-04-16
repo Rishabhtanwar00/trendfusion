@@ -42,7 +42,7 @@ const Orders = () => {
 			);
 
 			if (data.error) {
-				toast.error(data.error);
+				toast.error("Getting Error in Fetching Order Status.");
 				return;
 			}
 
@@ -50,7 +50,7 @@ const Orders = () => {
 			setShouldFetchOrders(true);
 		} catch (err) {
 			console.log('error in updating order status: ' + err.message);
-			toast.error(err.message);
+			toast.error("Getting Error in Fetching Order Status.");
 		}
 	};
 

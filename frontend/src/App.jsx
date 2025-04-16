@@ -23,7 +23,7 @@ import Profile from './pages/Profile';
 function App() {
 	return (
 		<div>
-			<div className='fixed w-[100vw] mt-[-68px] sm:mt-[-72px] lg:mt-[-76px] z-[100000] shadow'>
+			<div className='fixed w-[100vw] mt-[-68px] sm:mt-[-72px] lg:mt-[-76px] z-[100] shadow'>
 				<Navbar />
 			</div>
 			<div className='mt-[68px] sm:mt-[72px] lg:mt-[76px]'>

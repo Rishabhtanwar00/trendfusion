@@ -47,7 +47,7 @@ function App() {
 						>
 							<Sidebar />
 						</div>
-						<div className='w-[75vw] sm:w-[85vw] mx-auto my-8 ml-[17vw]  md:ml-[15vw] lg:ml-[10vw]'>
+						<div className='w-[75vw] sm:w-[85vw] mx-auto my-8 ml-[20vw] md:ml-[13vw] lg:ml-[10vw]'>
 							<Routes>
 								<Route path='/' element={<LandingPage />} />
 								<Route path='/add-product' element={<AddProduct />} />

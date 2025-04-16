@@ -73,9 +73,8 @@ const Profile = () => {
 	};
 
 	return (
-		<section className='flex flex-col max-w-3xl mx-auto py-10 px-[20px] sm:px-[40px]'>
-			
-				<BackButton />
+		<section className='flex flex-col max-w-[800px] mx-auto py-10 px-[20px] sm:px-[40px]'>
+			<BackButton />
 			<div className='w-full my-5 p-4 sm:p-6 bg-white shadow-lg border rounded-lg tracking-wide'>
 				<AddressForm
 					isOpen={showAddForm}
@@ -87,11 +86,15 @@ const Profile = () => {
 					<div className=''>
 						<h1 className='text-[25px] sm:text-[30px] font-semibold'>
 							Hey,{' '}
-							<span className='block sm:inline-block'>{userData.name}</span>
+							<span className='block sm:inline-block'>
+								{userData.name || 'Trendfusion User'}
+							</span>
 						</h1>
-						<p className='text-sm sm:text-base'>
-							<strong>Email:</strong> {userData.email}
-						</p>
+						{userData.email && (
+							<p className='text-sm sm:text-base'>
+								<strong>Email:</strong> {userData.email}
+							</p>
+						)}
 						<p className='text-sm sm:text-base'>
 							<strong>DOB:</strong> dd/mm/yyyy
 						</p>
@@ -121,10 +124,10 @@ const Profile = () => {
 						</button>
 					</div>
 					<div className='flex flex-wrap justify-between gap-5 mt-5'>
-						{userData.addresses &&
+						{userData.addresses && userData.addresses.length > 0 ? (
 							userData.addresses.map((address, index) => (
 								<div
-									className='relative flex flex-col items-start border px-5 py-4 w-[320px] rounded-lg shadow-lg'
+									className='relative flex flex-col items-start border px-5 py-4 w-[300px] rounded-lg shadow-lg'
 									key={index}
 								>
 									{address.isDefault && (
@@ -132,7 +135,7 @@ const Profile = () => {
 											Default
 										</p>
 									)}
-									<div className='mb-2'>
+									<div className='mb-2 text-sm'>
 										<p>
 											{address.firstname},{address.lastname}- {address.street},
 											{address.city},{address.state}-{address.pincode},
@@ -167,7 +170,12 @@ const Profile = () => {
 										</button>
 									</div>
 								</div>
-							))}
+							))
+						) : (
+							<p className='text-sm font-semibold text-gray-800 mx-auto'>
+								No Address saved.
+							</p>
+						)}
 					</div>
 				</div>
 				<Link
