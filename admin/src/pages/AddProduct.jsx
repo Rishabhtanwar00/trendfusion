@@ -114,7 +114,7 @@ const AddProduct = () => {
 			}
 		} catch (err) {
 			console.log('error in handlesubmit of add product: ' + err.message);
-			toast.error(err.message);
+			toast.error('Error in Adding Product, Try after some time.');
 			setLoading(false);
 		}
 		setLoading(false);

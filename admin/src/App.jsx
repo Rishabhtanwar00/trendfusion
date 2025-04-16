@@ -40,10 +40,14 @@ function App() {
 				<>
 					<Navbar />
 					<div className='flex w-full bg-slate-100 relative'>
-						<div className={`w-[60px] sm:w-[80px] min-h-screen border-r-2 bg-black fixed ${visible ?'top-0': 'top-[60px]'}`}>
+						<div
+							className={`w-[60px] sm:w-[80px] min-h-screen border-r-2 bg-black fixed ${
+								visible ? 'top-0' : 'top-[60px]'
+							}`}
+						>
 							<Sidebar />
 						</div>
-						<div className='w-[75vw] sm:w-[85vw] mx-auto my-8 ml-[10vw]'>
+						<div className='w-[75vw] sm:w-[85vw] mx-auto my-8 ml-[17vw]  md:ml-[15vw] lg:ml-[10vw]'>
 							<Routes>
 								<Route path='/' element={<LandingPage />} />
 								<Route path='/add-product' element={<AddProduct />} />

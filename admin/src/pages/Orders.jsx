@@ -55,7 +55,7 @@ const Orders = () => {
 	};
 
 	return (
-		<div>
+		<div className='min-h-screen'>
 			<OrdersFilter
 				setFilterOrders={setFilterOrders}
 				showFilter={showFilter}
@@ -114,7 +114,9 @@ const Orders = () => {
 					</div>
 					<p>Status</p>
 				</div>
+
 				{!loading ? (
+					filterOrders.length > 0 ? (
 					filterOrders.map((order, index) => (
 						<div
 							key={index}
@@ -169,6 +171,9 @@ const Orders = () => {
 							</select>
 						</div>
 					))
+				): (
+					<p className='text-xl font-semibold text-center mt-20'>No Orders Found</p>
+				)
 				) : (
 					<Loader loaderText='Fetching Orders...' />
 				)}

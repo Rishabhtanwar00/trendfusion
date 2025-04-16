@@ -31,7 +31,6 @@ const ShopContextProvider = (props) => {
 			console.log(
 				'error in fetching all products in soap context: ' + err.message
 			);
-			toast.error('Error in getting products :(');
 			setLoading(false);
 		}
 		setLoading(false);
@@ -73,7 +72,6 @@ const ShopContextProvider = (props) => {
 			setOrders(data.orders.reverse());
 		} catch (err) {
 			console.log('error in fetching all orders: ' + err.message);
-			toast.error('error in fetching orders :(');
 			setLoading(false);
 		}
 		setLoading(false);

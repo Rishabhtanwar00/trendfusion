@@ -102,8 +102,8 @@ const UpdateProduct = () => {
 				navigate('/list-products');
 			}
 		} catch (err) {
-			console.log('error in handlesubmit of add product: ' + err.message);
-			toast.error(err.message);
+			console.log('error in handlesubmit of update product: ' + err.message);
+			toast.error('Error in Updating Product, Try after some time.');
 			setLoading(false);
 		}
 		setLoading(false);
