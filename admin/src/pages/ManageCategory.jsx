@@ -1,15 +1,19 @@
 import { useContext, useEffect, useRef, useState } from 'react';
-import { toast } from 'react-toastify';
-import axios from 'axios';
 import { ShopContext } from '../context/shopContext';
 import { assets } from '../assets/assets.js';
 import SubCategoryForm from '../components/SubCategoryForm.jsx';
 import CategoryForm from '../components/CategoryForm.jsx';
 import SearchBar from '../components/SearchBar.jsx';
+import useCategory from '../hooks/useCategory.js';
+import useDeleteCategory from '../hooks/useDeleteCategory.js';
+import useDeleteSubCategory from '../hooks/useDeleteSubCategory.js';
 
 const ManageCategory = () => {
-	const { backendUrl, token, categories, setShouldFetchCategories } =
-		useContext(ShopContext);
+	const { backendUrl, token } = useContext(ShopContext);
+	const { data: categories = [] } = useCategory();
+	const { mutate: mutateCategory } = useDeleteCategory();
+	const { mutate: mutateSubCategory } = useDeleteSubCategory();
+
 	const [search, setSearch] = useState('');
 	const [isUpdating, setIsUpdating] = useState(false);
 	const [isSubUpdating, setIsSubUpdating] = useState(false);
@@ -50,25 +54,9 @@ const ManageCategory = () => {
 	};
 
 	const handleRemoveCategory = async (categoryId) => {
-		try {
-			const response = confirm('Are you sure you want to delete this Category');
-			if (response) {
-				const { data } = await axios.post(
-					`${backendUrl}/api/category/remove`,
-					{ categoryId },
-					{ headers: { token } }
-				);
-
-				if (data.error) {
-					toast.error(data.error);
-					return;
-				}
-
-				toast.success(data.mssg);
-				setShouldFetchCategories(true);
-			}
-		} catch (err) {
-			console.log('error in handleRemoveCategory: ' + err.message);
+		const response = confirm('Are you sure you want to delete this Category');
+		if (response) {
+			mutateCategory({ backendUrl, token, categoryId });
 		}
 	};
 
@@ -78,19 +66,7 @@ const ManageCategory = () => {
 				'Are you sure you want to delete this sub-category'
 			);
 			if (response) {
-				const { data } = await axios.post(
-					`${backendUrl}/api/subcategory/remove`,
-					{ categoryId, subCategoryId },
-					{ headers: { token } }
-				);
-
-				if (data.error) {
-					toast.error(data.error);
-					return;
-				}
-
-				toast.success(data.mssg);
-				setShouldFetchCategories(true);
+				mutateSubCategory({ backendUrl, token, categoryId, subCategoryId });
 			}
 		} catch (err) {
 			console.log('error in handleRemoveSubCategory: ' + err.message);
@@ -151,9 +127,10 @@ const ManageCategory = () => {
 					>
 						<p className='hidden sm:block'>Minimize Categories</p>
 						<img
+							loading='lazy'
 							className='block w-[20px] h-auto sm:ml-2'
 							src={assets.minimizeIcon}
-							alt=''
+							alt='Minimize icon'
 						/>
 					</button>
 					<SearchBar
@@ -190,13 +167,14 @@ const ManageCategory = () => {
 								className='flex gap-2 items-center cursor-pointer h-full'
 							>
 								<img
+									loading='lazy'
 									className={`h-[7px] w-auto transition-all duration-250 ease-in-out ${
 										openCategories.includes(category._id)
 											? 'rotate-180'
 											: 'rotate-0'
 									}`}
 									src={assets.upIcon}
-									alt=''
+									alt='Up Arrow icon'
 								/>
 
 								<p className='text-black text-base font-semibold tracking-wider'>
@@ -235,9 +213,10 @@ const ManageCategory = () => {
 									>
 										<div className='flex gap-2 items-center h-full'>
 											<img
+												loading='lazy'
 												className='h-[7px] w-auto rotate-90'
 												src={assets.upIcon}
-												alt=''
+												alt='Up Arrow icon'
 											/>
 
 											<p className=''>{subcategory.name}</p>

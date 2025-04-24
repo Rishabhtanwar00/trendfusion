@@ -47,7 +47,7 @@ const TrackOrder = () => {
 
 	return (
 		<section className='flex flex-col max-w-4xl mx-auto pt-5 p-10 px-[20px] sm:px-[40px]'>
-				<BackButton />
+			<BackButton />
 			<div className='mt-5 mb-10 p-4 sm:p-6 bg-white shadow-lg border rounded-lg tracking-wide'>
 				<div className='text-2xl'>
 					<Title text1='TRACK' text2='YOUR ORDER' />
@@ -99,8 +99,9 @@ const TrackOrder = () => {
 										>
 											<Link to={`/product/${item._id}`}>
 												<img
+													loading='lazy'
 													src={item.image[0]}
-													alt={item.name}
+													alt={`${item.name} img`}
 													className='w-16 h-16 rounded-md object-cover'
 												/>
 											</Link>
@@ -121,8 +122,7 @@ const TrackOrder = () => {
 						</div>
 					</div>
 					<div className='flex flex-col gap-4'>
-						
-					<div className='border p-4 rounded-lg shadow-lg h-fit'>
+						<div className='border p-4 rounded-lg shadow-lg h-fit'>
 							<h2 className='text-lg font-semibold mb-3'>Shipping Details</h2>
 							{orderData.address && (
 								<div className='flex flex-col gap-1'>

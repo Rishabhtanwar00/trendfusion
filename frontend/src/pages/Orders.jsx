@@ -76,9 +76,10 @@ const Orders = () => {
 									<div className='flex gap-3'>
 										<Link to={`/product/${item._id}`}>
 											<img
+												loading='lazy'
 												className='max-h-[120px] h-auto w-auto rounded'
 												src={item.image[0]}
-												alt='product image'
+												alt={`${item.name} img`}
 											/>
 										</Link>
 										<div className='flex flex-col gap-3'>

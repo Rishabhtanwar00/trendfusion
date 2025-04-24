@@ -3,6 +3,7 @@ import searchIcon from './searchicon.png';
 import userIcon from './usericon.png';
 import profileIcon from './profileicon.png';
 import cartIcon from './carticon.png';
+import wishlistIcon from './wishlisticon.png';
 import menuIcon from './menuicon.png';
 import backIcon from './backicon.png';
 import arrowIcon from './arrowicon.png';
@@ -28,6 +29,7 @@ export const assets = {
 	userIcon,
 	profileIcon,
 	cartIcon,
+	wishlistIcon,
 	menuIcon,
 	backIcon,
 	arrowIcon,

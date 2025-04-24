@@ -39,7 +39,12 @@ const Sidebar = () => {
 					className='w-full min-h-[60px] sm:min-h-[80px] p-2 border-b border-gray-700 flex flex-col gap-2 text-white items-center justify-center bg-transparent cursor-pointer text-center'
 				>
 					<>
-						<img className='h-4 w-4' src={item.icon} alt={`icon`} />
+						<img
+							loading='lazy'
+							className='h-4 w-4'
+							src={item.icon}
+							alt={`${item.label} icon`}
+						/>
 						<p className='hidden lg:block text-[11px]'>{item.label}</p>
 					</>
 				</NavLink>

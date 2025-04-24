@@ -1,9 +1,16 @@
 import { useContext, useEffect, useState } from 'react';
 import PriceRangeSlider from './PriceRangeSlider';
 import { ShopContext } from '../context/shopContext';
+import { useCallback } from 'react';
 
-const OrdersFilter = ({ setFilterOrders, showFilter, setShowFilter }) => {
-	const { orders, setLoading, search } = useContext(ShopContext);
+const OrdersFilter = ({
+	orders,
+	setFilterOrders,
+	showFilter,
+	setShowFilter,
+	search,
+}) => {
+	const { setLoading } = useContext(ShopContext);
 
 	const [orderStatus, setOrderStatus] = useState([]);
 	const [paymentMethod, setPaymentMethod] = useState([]);
@@ -27,7 +34,7 @@ const OrdersFilter = ({ setFilterOrders, showFilter, setShowFilter }) => {
 		);
 	};
 
-	const applyOrdersFilter = () => {
+	const applyOrdersFilter = useCallback(() => {
 		setLoading(true);
 		let ordersCopy = orders.slice();
 
@@ -60,11 +67,11 @@ const OrdersFilter = ({ setFilterOrders, showFilter, setShowFilter }) => {
 
 		setFilterOrders(ordersCopy);
 		setLoading(false);
-	};
+	},[orders, search, orderStatus, paymentMethod, amountRange])
 
 	useEffect(() => {
 		applyOrdersFilter();
-	}, [search, orders, orderStatus, paymentMethod, amountRange]);
+	}, [search, orderStatus, paymentMethod, amountRange]);
 
 	return (
 		<div

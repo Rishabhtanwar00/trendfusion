@@ -1,8 +1,8 @@
 import { useContext, useEffect, useState } from 'react';
 import { assets } from '../assets/assets';
 import { ShopContext } from '../context/shopContext';
-import axios from 'axios';
-import { toast } from 'react-toastify';
+import useCategory from '../hooks/useCategory';
+import useAddUpdateSubCategory from '../hooks/useAddUpdateSubCategory';
 
 const SubCategoryForm = ({
 	inputRef,
@@ -11,46 +11,26 @@ const SubCategoryForm = ({
 	isSubUpdating,
 	setIsSubUpdating,
 }) => {
-	const { backendUrl, token, categories, setShouldFetchCategories } =
-		useContext(ShopContext);
+	const { backendUrl, token } = useContext(ShopContext);
+	const { data: categories = [] } = useCategory();
+	const { mutate } = useAddUpdateSubCategory();
 	const [loading, setLoading] = useState(false);
 
 	const handleAddUpdateSubmit = async (e) => {
 		e.preventDefault();
 		try {
 			setLoading(true);
-			let apiEndPoint = `${backendUrl}/api/subcategory/add`;
-			let subCategoryJSONData = {
-				categoryName: subCategoryData.category,
-				name: subCategoryData.subCategory.trim(),
-			};
-
-			if (isSubUpdating) {
-				apiEndPoint = `${backendUrl}/api/subcategory/update`;
-				subCategoryJSONData = {
-					categoryId: subCategoryData.categoryId,
-					subCategoryId: subCategoryData.subCategoryId,
-					name: subCategoryData.subCategory.trim(),
-				};
-			}
-
-			const { data } = await axios.post(apiEndPoint, subCategoryJSONData, {
-				headers: { token },
+			mutate({
+				backendUrl,
+				token,
+				category: subCategoryData.category,
+				subCategory: subCategoryData.subCategory,
+				categoryId: subCategoryData.categoryId,
+				subCategoryId: subCategoryData.subCategoryId,
+				isSubUpdating,
 			});
 
-			if (data.error) {
-				console.log(data.error);
-				toast.error(data.error);
-				setLoading(false);
-				resetSubCategoryForm();
-				return;
-			}
-
-			if (data.mssg) {
-				toast.success(data.mssg);
-				resetSubCategoryForm();
-			}
-			setShouldFetchCategories(true);
+			resetSubCategoryForm();
 			setLoading(false);
 		} catch (err) {
 			setLoading(false);
@@ -81,7 +61,12 @@ const SubCategoryForm = ({
 		<div className='px-4 pt-4 pb-8 bg-white shadow rounded-lg'>
 			<div className='flex items-center justify-between mb-5'>
 				<div className='p-4 w-fit rounded-full bg-gradient-to-r from-red-600 to-red-700 shadow shadow-red-800'>
-					<img className='w-auto h-8' src={assets.subcategoryIcon} alt='' />
+					<img
+						loading='lazy'
+						className='w-auto h-8'
+						src={assets.subcategoryIcon}
+						alt='SubCategory icon'
+					/>
 				</div>
 				<div className='heading'>
 					<h1 style={{ '--bg-color': '#f02028' }}>SubCategory</h1>
@@ -140,7 +125,12 @@ const SubCategoryForm = ({
 							onClick={resetSubCategoryForm}
 							className='p-2 rounded-full bg-gradient-to-r from-red-600 to-red-700 shadow shadow-red-800 w-fit'
 						>
-							<img className='w-5' src={assets.resetIcon} alt='' />
+							<img
+								loading='lazy'
+								className='w-5'
+								src={assets.resetIcon}
+								alt='Reset icon'
+							/>
 						</button>
 					</div>
 				</div>

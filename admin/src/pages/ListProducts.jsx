@@ -1,21 +1,18 @@
 import { toast } from 'react-toastify';
-import axios from 'axios';
 import { useContext, useEffect, useState } from 'react';
-import Loader from '../components/Loader.jsx';
 import { assets } from '../assets/assets.js';
 import SearchBar from '../components/SearchBar.jsx';
 import { ShopContext } from '../context/shopContext.jsx';
 import FilterComponent from '../components/FilterComponent.jsx';
+import useProducts from '../hooks/useProducts.js';
+import ProductSkeleton from '../components/ProductSkeleton.jsx';
+import useDeleteProduct from '../hooks/useDeleteProduct.js';
 
 const ListProducts = () => {
-	const {
-		backendUrl,
-		navigate,
-		token,
-		loading,
-		setShouldFetchCategories,
-		setShouldFetchProducts,
-	} = useContext(ShopContext);
+	const { backendUrl, navigate, token } = useContext(ShopContext);
+	const { data: products = [], isLoading: productsLoading } = useProducts();
+	const { mutate } = useDeleteProduct();
+	const [search, setSearch] = useState('');
 	const [showFilter, setShowFilter] = useState(false);
 	const [filterProducts, setFilterProducts] = useState([]);
 	const [sortType, setSortType] = useState('relavent');
@@ -30,7 +27,8 @@ const ListProducts = () => {
 				setFilterProducts(filterProductsCopy.sort((a, b) => b.price - a.price));
 				break;
 			default:
-				setShouldFetchProducts(true);
+				setFilterProducts(products);
+				break;
 		}
 	};
 
@@ -38,22 +36,34 @@ const ListProducts = () => {
 		sortProducts();
 	}, [sortType]);
 
+	useEffect(() => {
+		if (
+			products &&
+			JSON.stringify(products) !== JSON.stringify(filterProducts)
+		) {
+			setFilterProducts(products);
+		}
+	}, [products]);
+
 	const deleteProduct = async (id) => {
 		const decision = confirm('Are you sure you want to remove this product?');
 		if (decision)
 			try {
-				const result = await axios.post(
-					`${backendUrl}/api/product/remove`,
-					{ id },
-					{ headers: { token } }
+				mutate(
+					{
+						backendUrl,
+						token,
+						id,
+					},
+					{
+						onError: () => {
+							toast.error('Getting error in deleting product.');
+						},
+						onSuccess: () => {
+							toast.success('Product deleted successfully.');
+						},
+					}
 				);
-
-				if (result.data.mssg) {
-					toast.success(result.data.mssg);
-					setShouldFetchCategories(true);
-				} else {
-					toast.error(result.data.error);
-				}
 			} catch (err) {
 				console.log(
 					'error in deleting product in list products page: ' + err.message
@@ -64,11 +74,15 @@ const ListProducts = () => {
 
 	return (
 		<div className='min-h-screen'>
-			<FilterComponent
-				setFilterProducts={setFilterProducts}
-				showFilter={showFilter}
-				setShowFilter={setShowFilter}
-			/>
+			{showFilter && (
+				<FilterComponent
+					products={products}
+					setFilterProducts={setFilterProducts}
+					showFilter={showFilter}
+					setShowFilter={setShowFilter}
+					search={search}
+				/>
+			)}
 			<div className='heading mb-5'>
 				<h1 style={{ '--bg-color': '#f02028' }}>All Products</h1>
 			</div>
@@ -79,14 +93,19 @@ const ListProducts = () => {
 				>
 					FILTER
 					<img
+						loading='lazy'
 						className={`${
 							showFilter ? 'rotate-90' : ''
 						} max-w-[8px] w-auto h-auto ml-2 transition-all duration-75 ease-in-out cursor-pointer`}
 						src={assets.backIcon}
-						alt=''
+						alt='Arrow icon'
 					/>
 				</button>
-				<SearchBar placeholder='Search product here' />
+				<SearchBar
+					placeholder='Search product here'
+					search={search}
+					setSearch={setSearch}
+				/>
 			</div>
 
 			<div className=''>
@@ -104,32 +123,39 @@ const ListProducts = () => {
 						<div className='flex flex-col'>
 							<button onClick={() => setSortType('high-low')}>
 								<img
+									loading='lazy'
 									className={`w-[8px] h-auto ${
 										sortType === 'high-low' ? 'opacity-100' : 'opacity-80'
 									}`}
 									src={assets.upIconWhite}
-									alt=''
+									alt='Up Arrow icon'
 								/>
 							</button>
 							<button onClick={() => setSortType('low-high')}>
 								<img
+									loading='lazy'
 									className={`w-[8px] h-auto rotate-180 ${
 										sortType === 'low-high' ? 'opacity-100' : 'opacity-80'
 									}`}
 									src={assets.upIconWhite}
-									alt=''
+									alt='Up Arrow icon'
 								/>
 							</button>
 						</div>
 					</div>
 					<p className='text-center'>Action</p>
 				</div>
-				{!loading ? (
+				{!productsLoading ? (
 					filterProducts.length > 0 ? (
 						filterProducts.map((item, index) => (
 							<div key={index}>
 								<div className='w-full hidden sm:grid grid-cols-[1fr_3fr_1fr_1fr_1.5fr] border px-2 py-1 mt-5 text-left text-base items-center bg-white tracking-wide rounded'>
-									<img className='w-12' src={item.image[0]} alt='' />
+									<img
+										loading='lazy'
+										className='w-12'
+										src={item.image[0]}
+										alt={`${item.name} img`}
+									/>
 									<p>{item.name}</p>
 									<p>{item.category}</p>
 									<p>
@@ -148,6 +174,7 @@ const ListProducts = () => {
 											className='rounded-full bg-gradient-to-r from-red-600 to-red-700 shadow shadow-red-800 w-fit p-2'
 										>
 											<img
+												loading='lazy'
 												className='w-[20px]'
 												src={assets.deleteIcon}
 												alt='delete icon'
@@ -157,7 +184,12 @@ const ListProducts = () => {
 								</div>
 								<div className='w-full flex-col items-center justify-center sm:hidden border px-2 py-1 mt-5 text-left text-base'>
 									<div className='flex justify-start gap-5'>
-										<img className='w-12' src={item.image[0]} alt='' />
+										<img
+											loading='lazy'
+											className='w-12'
+											src={item.image[0]}
+											alt={`${item.name} img`}
+										/>
 										<div className=''>
 											<p>{item.name}</p>
 											<p className='text-gray-600'>Category: {item.category}</p>
@@ -181,6 +213,7 @@ const ListProducts = () => {
 												className='rounded-full bg-gradient-to-r from-red-600 to-red-700 shadow shadow-red-800 w-fit p-2'
 											>
 												<img
+													loading='lazy'
 													className='w-[20px]'
 													src={assets.deleteIcon}
 													alt='delete icon'
@@ -197,7 +230,11 @@ const ListProducts = () => {
 						</p>
 					)
 				) : (
-					<Loader loading={loading} loaderText='Fetching Products...' />
+					<>
+						{[...Array(8)].map((_, index) => (
+							<ProductSkeleton key={index} />
+						))}
+					</>
 				)}
 			</div>
 		</div>

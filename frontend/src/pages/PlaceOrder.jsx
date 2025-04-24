@@ -63,7 +63,7 @@ const PlaceOrder = () => {
 					}
 				} catch (err) {
 					console.log('error in razorpay handler: ' + err.message);
-					toast.error("Error in Placing your order, Try after some time.");
+					toast.error('Error in Placing your order, Try after some time.');
 				}
 			},
 		};
@@ -143,7 +143,7 @@ const PlaceOrder = () => {
 			const { data } = await axios.post(url, orderData, { headers: { token } });
 
 			if (data.error) {
-				toast.error("Error in placing your order, Try after some time.");
+				toast.error('Error in placing your order, Try after some time.');
 				return;
 			}
 
@@ -162,7 +162,7 @@ const PlaceOrder = () => {
 			}
 		} catch (err) {
 			console.log('error in handle submit of PlaceOrder: ' + err.message);
-			toast.error("Error in placing your order, Try after some time.");
+			toast.error('Error in placing your order, Try after some time.');
 		}
 	};
 
@@ -196,7 +196,7 @@ const PlaceOrder = () => {
 
 	return (
 		<section className='flex flex-col pt-5 pb-10 px-[20px] sm:px-[40px]'>
-				<BackButton />
+			<BackButton />
 			<div className='mt-5 mb-10'>
 				<div className='flex items-start justify-between gap-2 w-full sm:max-w-[480px]'>
 					<div className='text-base sm:text-xl mb-4'>
@@ -315,6 +315,7 @@ const PlaceOrder = () => {
 										}`}
 									></p>
 									<img
+										loading='lazy'
 										className='h-5 w-fit'
 										src={assets.razorpayLogo}
 										alt='stripe logo'

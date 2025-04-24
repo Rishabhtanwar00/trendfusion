@@ -101,9 +101,10 @@ const Profile = () => {
 					</div>
 					<div className=''>
 						<img
+							loading='lazy'
 							className='h-[60px] sm:h-[80px] w-auto'
 							src={assets.profileIcon}
-							alt=''
+							alt='Profile img'
 						/>
 					</div>
 				</div>
@@ -188,7 +189,29 @@ const Profile = () => {
 							(You can View/Track or Cancel you order here)
 						</p>
 					</div>
-					<img className='h-[15px] w-auto' src={assets.backIcon} alt='' />
+					<img
+						loading='lazy'
+						className='h-[15px] w-auto'
+						src={assets.backIcon}
+						alt='Arrow icon'
+					/>
+				</Link>
+				<Link
+					to='/wishlist'
+					className='mt-5 flex justify-between items-center w-full p-4 sm:p-6 bg-white shadow-lg border rounded-lg tracking-wider cursor-pointer'
+				>
+					<div className=''>
+						<p className='font-medium text-xl'>My Wishlist</p>
+						<p className='text-gray-600 text-sm mt-1'>
+							(You can View/edit your Wishlisted items here)
+						</p>
+					</div>
+					<img
+						loading='lazy'
+						className='h-[15px] w-auto'
+						src={assets.backIcon}
+						alt='Arrow icon'
+					/>
 				</Link>
 				<div
 					onClick={() => handleLogout()}
@@ -200,7 +223,12 @@ const Profile = () => {
 							(You will be logged out from this device)
 						</p>
 					</div>
-					<img className='h-[15px] w-auto' src={assets.backIcon} alt='' />
+					<img
+						loading='lazy'
+						className='h-[15px] w-auto'
+						src={assets.backIcon}
+						alt='Arrow icon'
+					/>
 				</div>
 			</div>
 		</section>

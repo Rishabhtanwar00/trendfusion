@@ -20,6 +20,7 @@ import Verify from './pages/Verify';
 import PrivateRoute from './components/PrivateRoute';
 import TrackOrder from './pages/TrackOrder';
 import Profile from './pages/Profile';
+import Wishlist from './pages/Wishlist';
 function App() {
 	return (
 		<div>
@@ -49,6 +50,14 @@ function App() {
 						element={
 							<PrivateRoute>
 								<Orders />
+							</PrivateRoute>
+						}
+					></Route>
+					<Route
+						path='/wishlist'
+						element={
+							<PrivateRoute>
+								<Wishlist />
 							</PrivateRoute>
 						}
 					></Route>

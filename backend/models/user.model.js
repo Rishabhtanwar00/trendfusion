@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose, { Mongoose } from 'mongoose';
 
 const addressSchema = new mongoose.Schema({
 	firstname: {
@@ -59,6 +59,7 @@ const UserSchema = new mongoose.Schema(
 			type: Object,
 			default: {},
 		},
+		wishlist: [{ type: mongoose.Schema.Types.ObjectId, ref: 'product' }],
 	},
 	{
 		minimize: false,

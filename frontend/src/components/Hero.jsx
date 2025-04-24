@@ -81,7 +81,10 @@ const Hero = () => {
 								<p className='font-medium text-sm md:text-base mb-10'>
 									{slider.description}
 								</p>
-								<Link to={slider.link} className='px-5 py-2 bg-transparent border-2 border-black text-base min-w-[150px] active:scale-90 transition-all ease-in-out duration-150 hover:bg-black hover:text-white'>
+								<Link
+									to={slider.link}
+									className='px-5 py-2 bg-transparent border-2 border-black text-base min-w-[150px] active:scale-90 transition-all ease-in-out duration-150 hover:bg-black hover:text-white'
+								>
 									{slider.buttonText}
 								</Link>
 								{/* <div className='flex items-center gap-2'>
@@ -100,12 +103,12 @@ const Hero = () => {
 							</div>
 						</div>
 						<div className='w-full sm:w-1/2 flex items-center justify-center'>
-							
-								<img
-									className='w-auto h-[350px] sm:h-[500px]'
-									src={slider.image}
-									alt='hero img'
-								/>
+							<img
+								loading='lazy'
+								className='w-auto h-[350px] sm:h-[500px]'
+								src={slider.image}
+								alt='hero img'
+							/>
 						</div>
 					</div>
 				))}
@@ -116,7 +119,12 @@ const Hero = () => {
 					onClick={handlePrev}
 					disabled={currentIndex === 0}
 				>
-					<img className='rotate-180 w-[10px]' src={assets.backIcon} alt='' />
+					<img
+						loading='lazy'
+						className='rotate-180 w-[10px]'
+						src={assets.backIcon}
+						alt='Arrow icon'
+					/>
 				</button>
 			</div>
 			<div className='absolute top-1/2 right-[20px]'>
@@ -125,7 +133,12 @@ const Hero = () => {
 					onClick={handleNext}
 					disabled={currentIndex === sliderData.length - 1}
 				>
-					<img className='w-[10px]' src={assets.backIcon} alt='' />
+					<img
+						loading='lazy'
+						className='w-[10px]'
+						src={assets.backIcon}
+						alt='Arrow icon'
+					/>
 				</button>
 			</div>
 			<div className='absolute bottom-4 left-1/2 flex gap-1 transform translate-x-[-50%]'>

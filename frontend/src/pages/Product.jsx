@@ -42,42 +42,53 @@ const Product = () => {
 							<div className='flex flex-row md:flex-col md:flex-nowrap gap-3 w-full sm:w-[18.7%]'>
 								{productData.image.map((item, index) => (
 									<img
+										loading='lazy'
 										className='w-[22.5%] sm:w-full flex-shrink-0 cursor-pointer'
 										key={index}
 										src={item}
-										alt='product img'
+										alt={`${productData.name} img`}
 										onClick={() => setImage(item)}
 									/>
 								))}
 							</div>
 							<div className='w-full sm:w-[80%]'>
-								<img className='w-full h-auto' src={image} alt='' />
+								<img
+									loading='lazy'
+									className='w-full h-auto'
+									src={image}
+									alt='Product img'
+								/>
 							</div>
 						</div>
 						<div className='flex flex-1 flex-col gap-5'>
 							<p className='font-medium text-2xl'>{productData.name}</p>
 							<div className='flex gap-1 items-center'>
 								<img
+									loading='lazy'
 									className='w-[15px] h-fit'
 									src={assets.starIcon}
 									alt='star icon'
 								/>
 								<img
+									loading='lazy'
 									className='w-[15px] h-fit'
 									src={assets.starIcon}
 									alt='star icon'
 								/>
 								<img
+									loading='lazy'
 									className='w-[15px] h-fit'
 									src={assets.starIcon}
 									alt='star icon'
 								/>
 								<img
+									loading='lazy'
 									className='w-[15px] h-fit'
 									src={assets.starIcon}
 									alt='star icon'
 								/>
 								<img
+									loading='lazy'
 									className='w-[15px] h-fit'
 									src={assets.starFadedIcon}
 									alt='star icon'

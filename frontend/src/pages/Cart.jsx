@@ -61,7 +61,12 @@ const Cart = () => {
 						onClick={() => setShowMessage(false)}
 						className='rounded bg-white p-[5px] h-fit'
 					>
-						<img className='h-2 w-2' src={assets.crossIcon} alt='' />
+						<img
+							loading='lazy'
+							className='h-2 w-2'
+							src={assets.crossIcon}
+							alt='Cross icon'
+						/>
 					</button>
 				</div>
 			)}
@@ -85,9 +90,10 @@ const Cart = () => {
 									>
 										<div className='flex gap-5'>
 											<img
+												loading='lazy'
 												className='max-h-[120px] h-auto w-auto rounded'
 												src={productData.image[0]}
-												alt=''
+												alt={`${productData.name} img`}
 											/>
 											<div className=''>
 												<p className='font-medium'>{productData.name}</p>
@@ -123,6 +129,7 @@ const Cart = () => {
 												className='rounded-full border-2 bg-[#f02028] w-fit p-2'
 											>
 												<img
+													loading='lazy'
 													className='w-[20px]'
 													src={assets.deleteIcon}
 													alt='delete icon'

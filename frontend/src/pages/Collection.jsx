@@ -52,11 +52,12 @@ const Collection = () => {
 						>
 							FILTER
 							<img
+								loading='lazy'
 								className={`${
 									showFilter ? 'rotate-90' : ''
 								} max-w-[8px] w-auto h-auto ml-2 transition-all duration-75 ease-in-out cursor-pointer`}
 								src={assets.backIcon}
-								alt=''
+								alt='Arrow icon'
 							/>
 						</button>
 						<select
@@ -71,7 +72,7 @@ const Collection = () => {
 				</div>
 				{!loading ? (
 					filterProducts.length > 0 ? (
-						<div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4  lg:grid-cols-5 gap-5 mb-10 mt-5'>
+						<div className='grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3  lg:grid-cols-4 xl:grid-cols-5 gap-5 mb-10 mt-5'>
 							{filterProducts.map((item) => (
 								<ProductItem
 									key={item._id}
@@ -79,6 +80,7 @@ const Collection = () => {
 									image={item.image}
 									name={item.name}
 									price={item.price}
+									sizes={item.sizes}
 								/>
 							))}
 						</div>

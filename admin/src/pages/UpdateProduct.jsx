@@ -4,9 +4,12 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import { ShopContext } from '../context/shopContext';
 import BackButton from '../components/BackButton';
+import useCategory from '../hooks/useCategory';
+import useUpdateProduct from '../hooks/useUpdateProduct';
+import useSubCategoryByCategory from '../hooks/useSubCategoryByCategory';
 
 const UpdateProduct = () => {
-	const { backendUrl, navigate, token, loading, setLoading, categories } =
+	const { backendUrl, navigate, token, loading, setLoading } =
 		useContext(ShopContext);
 	const { productId } = useParams();
 	const [productData, setProductData] = useState({
@@ -19,7 +22,12 @@ const UpdateProduct = () => {
 		sizes: [],
 		quantity: '',
 	});
-	const [subCategories, setSubCategories] = useState([]);
+
+	const { mutate } = useUpdateProduct();
+	const { data: categories = [] } = useCategory();
+	const { data: subCategories = [] } = useSubCategoryByCategory(
+		productData.category
+	);
 
 	const fetchProductData = async () => {
 		const { data } = await axios.post(`${backendUrl}/api/product/single`, {
@@ -66,86 +74,34 @@ const UpdateProduct = () => {
 	};
 
 	const handleSubmit = async (e) => {
+		e.preventDefault();
 		try {
-			e.preventDefault();
 			setLoading(true);
-			const formData = new FormData();
-
-			if (productData.sizes.length === 0) {
-				toast.error('Select at least 1 size.');
-				setLoading(false);
-				return;
-			}
-
-			Object.entries(productData).forEach(([key, value]) => {
-				if (key === 'sizes') {
-					formData.append(key, JSON.stringify(value));
-				} else {
-					formData.append(key, value);
+			mutate(
+				{
+					backendUrl,
+					token,
+					productId,
+					productData,
+				},
+				{
+					onError: () => {
+						toast.error('Error in Updating Product, Try after some time.');
+					},
+					onSuccess: () => {
+						toast.success('Product updated successfully.');
+						navigate('/list-products');
+					},
 				}
-			});
-			formData.append('productId', productId);
-			Object.entries(productData).forEach(([key, value]) => {
-				console.log(key + ': ' + value);
-			});
-
-			const result = await axios.post(
-				`${backendUrl}/api/product/update`,
-				formData,
-				{ headers: { token } }
 			);
-
-			if (result.data.error) {
-				toast.error("Error in Updating Product, Try after some time.");
-			} else {
-				toast.success(result.data.mssg);
-				navigate('/list-products');
-			}
 		} catch (err) {
 			console.log('error in handlesubmit of update product: ' + err.message);
 			toast.error('Error in Updating Product, Try after some time.');
 			setLoading(false);
-		}
-		setLoading(false);
-	};
-
-	const fetchAllSubCategoriesAgainstCategory = async (category) => {
-		try {
-			const { data } = await axios.post(
-				`${backendUrl}/api/subcategory/all`,
-				{ category },
-				{ headers: { token } }
-			);
-
-			if (data.error) {
-				toast.error("Error in Fetching Sub Categories, Try after some time.");
-				return;
-			}
-			const allSubCategories = data.subcategories;
-			console.log(allSubCategories);
-			setSubCategories(allSubCategories);
-			// if (allSubCategories.length > 0) {
-			// 	setProductData((prev) => ({
-			// 		...prev,
-			// 		subCategory: allSubCategories[0]?.name || '',
-			// 	}));
-			// }
-		} catch (err) {
-			console.log('error in getAllCategories: ' + err.message);
+		} finally {
+			setLoading(false);
 		}
 	};
-	useEffect(() => {
-		// if (categories.length > 0) {
-		// 	setProductData((prev) => ({
-		// 		...prev,
-		// 		category: categories[0]?.name || '',
-		// 	}));
-		// }
-	}, [categories]);
-
-	useEffect(() => {
-		fetchAllSubCategoriesAgainstCategory(productData.category);
-	}, [productData.category]);
 
 	useEffect(() => {
 		fetchProductData();
@@ -195,11 +151,12 @@ const UpdateProduct = () => {
 							onChange={(e) => handleChange('category', e.target.value)}
 							value={productData.category}
 						>
-							{categories.map((category, index) => (
-								<option key={index} value={category.name}>
-									{category.name}
-								</option>
-							))}
+							{categories &&
+								categories.map((category, index) => (
+									<option key={index} value={category.name}>
+										{category.name}
+									</option>
+								))}
 						</select>
 					</div>
 					<div className='flex flex-col gap-2 w-full'>
@@ -209,11 +166,12 @@ const UpdateProduct = () => {
 							onChange={(e) => handleChange('subCategory', e.target.value)}
 							value={productData.subCategory}
 						>
-							{subCategories.map((subCategory, index) => (
-								<option key={index} value={subCategory.name}>
-									{subCategory.name}
-								</option>
-							))}
+							{subCategories &&
+								subCategories.map((subCategory, index) => (
+									<option key={index} value={subCategory.name}>
+										{subCategory.name}
+									</option>
+								))}
 						</select>
 					</div>
 					<div className='flex flex-col gap-2 w-full'>

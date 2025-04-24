@@ -14,7 +14,12 @@ const BackButton = () => {
 			onClick={() => navigate(-1)}
 			className='flex items-center bg-gradient-to-r from-red-500 to-red-700 shadow shadow-red-800 text-white px-2 py-1 w-fit h-fit rounded active:scale-95 transition-all ease-in-out duration-150 text-sm'
 		>
-			<img className='h-[10px] w-auto mr-1' src={assets.arrowIcon} alt='' />
+			<img
+				loading='lazy'
+				className='h-[10px] w-auto mr-1'
+				src={assets.arrowIcon}
+				alt='Arrow icon'
+			/>
 			<span>Back</span>
 		</button>
 	);

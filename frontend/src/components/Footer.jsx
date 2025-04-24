@@ -8,13 +8,16 @@ const Footer = () => {
 				<div className='w-full sm:w-2/4'>
 					<Link to='/'>
 						<img
+							loading='lazy'
 							className='h-auto w-auto max-h-6 mb-5'
 							src={assets.trendfusionLogo}
 							alt='TrendFusion logo'
 						/>
 					</Link>
 					<p className='w-full sm:w-3/4'>
-					TrendFusion – Your go-to fashion destination for the latest trends and timeless styles. Shop with ease, enjoy secure payments, fast delivery, and hassle-free returns!
+						TrendFusion – Your go-to fashion destination for the latest trends
+						and timeless styles. Shop with ease, enjoy secure payments, fast
+						delivery, and hassle-free returns!
 					</p>
 				</div>
 				<div>

@@ -24,9 +24,10 @@ const CustomDropdown = ({ userData, selectedAddress, setSelectedAddress }) => {
 						'Select Address'}
 				</span>
 				<img
+					loading='lazy'
 					className='absolute right-[10px] h-[10px] rotate-90'
 					src={assets.backIcon}
-					alt=''
+					alt='Arrow icon'
 				/>
 			</div>
 

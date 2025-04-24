@@ -1,16 +1,19 @@
 import { useContext, useEffect, useState } from 'react';
 import { assets } from '../assets/assets.js';
 import { toast } from 'react-toastify';
-import axios from 'axios';
 import { ShopContext } from '../context/shopContext.jsx';
+import useCategory from '../hooks/useCategory.js';
+import useSubCategoryByCategory from '../hooks/useSubCategoryByCategory.js';
+import useAddProduct from '../hooks/useAddProduct.js';
 
 const ImageUploader = ({ id, image, setImage }) => {
 	return (
 		<label htmlFor={id} className=''>
 			<img
+				loading='lazy'
 				className='w-20'
 				src={image ? URL.createObjectURL(image) : assets.uploadIcon}
-				alt=''
+				alt='Upload icon'
 				onError={(e) => {
 					e.target.src = assets.uploadIcon;
 				}}
@@ -26,8 +29,9 @@ const ImageUploader = ({ id, image, setImage }) => {
 };
 
 const AddProduct = () => {
-	const { backendUrl, navigate, token, loading, setLoading, categories } =
+	const { backendUrl, navigate, token, loading, setLoading } =
 		useContext(ShopContext);
+
 	const [productData, setProductData] = useState({
 		image1: null,
 		image2: null,
@@ -43,7 +47,11 @@ const AddProduct = () => {
 		sizes: [],
 		quantity: '',
 	});
-	const [subCategories, setSubCategories] = useState([]);
+	const { mutate } = useAddProduct();
+	const { data: categories = [] } = useCategory();
+	const { data: subCategories = [] } = useSubCategoryByCategory(
+		productData.category
+	);
 
 	const handleChange = (field, value) => {
 		setProductData((prev) => ({ ...prev, [field]: value }));
@@ -62,87 +70,43 @@ const AddProduct = () => {
 		try {
 			e.preventDefault();
 			setLoading(true);
-			const formData = new FormData();
+			mutate(
+				{
+					backendUrl,
+					token,
+					productData,
+				},
+				{
+					onError: () => {
+						toast.error('Getting some error in adding product.');
+					},
+					onSuccess: () => {
+						toast.success('Product added successfully.');
+						setProductData({
+							image1: null,
+							image2: null,
+							image3: null,
+							image4: null,
 
-			if (productData.sizes.length === 0) {
-				toast.error('Select at least 1 size.');
-				setLoading(false);
-				return;
-			}
-
-			if (productData.image1 === null) {
-				toast.error('Upload at least 1 image.');
-				setLoading(false);
-				return;
-			}
-
-			Object.entries(productData).forEach(([key, value]) => {
-				if (key.startsWith('image') && value) {
-					formData.append(key, value);
-				} else if (key === 'sizes') {
-					formData.append(key, JSON.stringify(value));
-				} else {
-					formData.append(key, value);
+							name: '',
+							description: '',
+							price: '',
+							category: (categories.length > 0 && categories[0]?.name) || '',
+							subCategory:
+								(subCategories.length > 0 && subCategories[0]?.name) || '',
+							bestseller: false,
+							sizes: [],
+							quantity: '',
+						});
+					},
 				}
-			});
-
-			const result = await axios.post(
-				`${backendUrl}/api/product/add`,
-				formData,
-				{ headers: { token } }
 			);
-
-			if (result.data.error) {
-				toast.error(result.data.error);
-			} else {
-				toast.success(result.data.mssg);
-				setProductData({
-					image1: null,
-					image2: null,
-					image3: null,
-					image4: null,
-
-					name: '',
-					description: '',
-					price: '',
-					category: '',
-					subCategory: '',
-					bestseller: false,
-					sizes: [],
-					quantity: '',
-				});
-			}
 		} catch (err) {
 			console.log('error in handlesubmit of add product: ' + err.message);
 			toast.error('Error in Adding Product, Try after some time.');
 			setLoading(false);
-		}
-		setLoading(false);
-	};
-
-	const fetchAllSubCategoriesAgainstCategory = async (category) => {
-		try {
-			const { data } = await axios.post(
-				`${backendUrl}/api/subcategory/all`,
-				{ category },
-				{ headers: { token } }
-			);
-
-			if (data.error) {
-				toast.error(data.error);
-				return;
-			}
-			const allSubCategories = data.subcategories;
-			console.log(allSubCategories);
-			setSubCategories(allSubCategories);
-			if (allSubCategories.length > 0) {
-				setProductData((prev) => ({
-					...prev,
-					subCategory: allSubCategories[0]?.name || '',
-				}));
-			}
-		} catch (err) {
-			console.log('error in getAllCategories: ' + err.message);
+		} finally {
+			setLoading(false);
 		}
 	};
 
@@ -156,8 +120,13 @@ const AddProduct = () => {
 	}, [categories]);
 
 	useEffect(() => {
-		fetchAllSubCategoriesAgainstCategory(productData.category);
-	}, [productData.category]);
+		if (subCategories.length > 0) {
+			setProductData((prev) => ({
+				...prev,
+				subCategory: subCategories[0]?.name || '',
+			}));
+		}
+	}, [subCategories]);
 
 	const sizeOptions = ['S', 'M', 'L', 'XL', '2XL'];
 
@@ -209,11 +178,12 @@ const AddProduct = () => {
 							className='px-3 py-2 rounded w-full sm:w-fit min-w-[130px]'
 							onChange={(e) => handleChange('category', e.target.value)}
 						>
-							{categories.map((category, index) => (
-								<option key={index} value={category.name}>
-									{category.name}
-								</option>
-							))}
+							{categories &&
+								categories.map((category, index) => (
+									<option key={index} value={category.name}>
+										{category.name}
+									</option>
+								))}
 						</select>
 					</div>
 					<div className='flex flex-col gap-2 w-full'>
@@ -222,11 +192,12 @@ const AddProduct = () => {
 							className='px-3 py-2 rounded w-full sm:w-fit min-w-[130px]'
 							onChange={(e) => handleChange('subCategory', e.target.value)}
 						>
-							{subCategories.map((subCategory, index) => (
-								<option key={index} value={subCategory.name}>
-									{subCategory.name}
-								</option>
-							))}
+							{subCategories &&
+								subCategories.map((subCategory, index) => (
+									<option key={index} value={subCategory.name}>
+										{subCategory.name}
+									</option>
+								))}
 						</select>
 					</div>
 					<button

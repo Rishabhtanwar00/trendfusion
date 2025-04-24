@@ -1,16 +1,24 @@
 import { useContext, useEffect, useState } from 'react';
 import PriceRangeSlider from './PriceRangeSlider';
 import { ShopContext } from '../context/shopContext';
-import axios from 'axios';
+import useCategory from '../hooks/useCategory';
+import useSubCategoryByCategories from '../hooks/useSubCategoryByCategories';
 
-const FilterComponent = ({ setFilterProducts, showFilter, setShowFilter }) => {
-	const { backendUrl, token, products, search, setLoading, categories } =
-		useContext(ShopContext);
+const FilterComponent = ({
+	products,
+	setFilterProducts,
+	showFilter,
+	setShowFilter,
+	search,
+}) => {
+	const { setLoading } = useContext(ShopContext);
 
 	const [category, setCategory] = useState([]);
 	const [subCategory, setSubCategory] = useState([]);
 	const [priceRange, setPriceRange] = useState([0, 10000]);
-	const [subCategories, setSubCategories] = useState([]);
+
+	const { data: categories = [], isLoading: categoryLoading } = useCategory();
+	const { data: subCategories = [] } = useSubCategoryByCategories(category);
 
 	const handleCategory = (e) => {
 		if (category.includes(e.target.value)) {
@@ -59,61 +67,9 @@ const FilterComponent = ({ setFilterProducts, showFilter, setShowFilter }) => {
 		setLoading(false);
 	};
 
-	const fetchSubCategories = async () => {
-		if (category.length === 0) {
-			setSubCategories([]); // Clear all if no category is selected
-			return;
-		}
-
-		setSubCategories((prev) => {
-			// Remove subcategories of categories that were removed
-			const activeCategories = new Set(category);
-			return prev.filter((sub) => activeCategories.has(sub.category));
-		});
-
-		const existingCategorySet = new Set(
-			subCategories.map((sub) => sub.category)
-		);
-		const newCategories = category.filter(
-			(cat) => !existingCategorySet.has(cat)
-		);
-
-		if (newCategories.length === 0) return; // No need to fetch if all are already loaded
-
-		try {
-			const responses = await Promise.all(
-				newCategories.map((categoryItem) =>
-					axios.post(
-						`${backendUrl}/api/subcategory/all`,
-						{ category: categoryItem },
-						{ headers: { token } }
-					)
-				)
-			);
-
-			const newSubCategories = responses
-				.map(({ data }) => (data.error ? [] : data.subcategories))
-				.flat();
-
-			setSubCategories((prev) => {
-				const uniqueSubCategories = new Map();
-				[...prev, ...newSubCategories].forEach((sub) => {
-					uniqueSubCategories.set(sub._id, sub);
-				});
-				return Array.from(uniqueSubCategories.values());
-			});
-		} catch (err) {
-			console.log('Error in fetchSubCategories:', err.message);
-		}
-	};
-
-	useEffect(() => {
-		fetchSubCategories();
-	}, [category]);
-
 	useEffect(() => {
 		applyFilter();
-	}, [category, subCategory, search, products, priceRange]);
+	}, [category, subCategory, search, priceRange]);
 
 	return (
 		<div
@@ -134,17 +90,18 @@ const FilterComponent = ({ setFilterProducts, showFilter, setShowFilter }) => {
 			<div className='flex flex-col gap-2 mr-[17px]'>
 				<div className='w-full min-w-[200px] text-base text-gray-500 border border-black p-3 flex flex-col gap-1 my-3 rounded'>
 					<p className=' text-black font-medium mb-1 text-sm'>CATEGORIES</p>
-					{categories.map((categoryItem, index) => (
-						<p key={index} className=''>
-							<input
-								className='mr-2'
-								type='checkbox'
-								value={categoryItem.name}
-								onClick={handleCategory}
-							/>
-							{categoryItem.name}
-						</p>
-					))}
+					{!categoryLoading &&
+						categories.map((categoryItem, index) => (
+							<p key={index} className=''>
+								<input
+									className='mr-2'
+									type='checkbox'
+									value={categoryItem.name}
+									onClick={handleCategory}
+								/>
+								{categoryItem.name}
+							</p>
+						))}
 				</div>
 
 				{category.length !== 0 && (

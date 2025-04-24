@@ -12,6 +12,7 @@ const CustomNavLink = ({ to, icon, activeIcon, label }) => (
 		{({ isActive }) => (
 			<>
 				<img
+					loading='lazy'
 					className='h-5 w-5'
 					src={isActive ? activeIcon : icon}
 					alt={`${label} Icon`}

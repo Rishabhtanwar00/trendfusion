@@ -61,7 +61,7 @@ const ShopContextProvider = (props) => {
 			);
 
 			if (data.error) {
-				toast.error("Error in fetching User Cart, Try after some time.");
+				toast.error('Error in fetching User Cart, Try after some time.');
 			} else {
 				setCartItems(data.cartData);
 			}
@@ -81,7 +81,7 @@ const ShopContextProvider = (props) => {
 			);
 
 			if (data.error) {
-				toast.error("Error in fetching user data, Try after some time.");
+				toast.error('Error in fetching user data, Try after some time.');
 			} else {
 				setUserData(data.user);
 			}
@@ -118,7 +118,7 @@ const ShopContextProvider = (props) => {
 			);
 
 			if (data.error) {
-				toast.error("Error in adding item to cart, Try after some time.");
+				toast.error('Error in adding item to cart, Try after some time.');
 			} else {
 				toast.success(data.mssg);
 			}
@@ -154,7 +154,7 @@ const ShopContextProvider = (props) => {
 			);
 
 			if (data.error) {
-				toast.error("Error in updating product quantity, Try after some time.");
+				toast.error('Error in updating product quantity, Try after some time.');
 			} else {
 				toast.success(data.mssg);
 			}
@@ -174,6 +174,23 @@ const ShopContextProvider = (props) => {
 			}
 		}
 		return totalAmount;
+	};
+
+	const addToWishlist = async (productId) => {
+		if (token) {
+			const { data } = await axios.post(
+				`${backendUrl}/api/user/add-wishlist`,
+				{ productId },
+				{ headers: { token } }
+			);
+
+			if (data.error) {
+				toast.error(data.error);
+			} else {
+				toast.success(data.msg);
+			}
+			setRefetchUserData(true);
+		}
 	};
 
 	const value = {
@@ -199,6 +216,7 @@ const ShopContextProvider = (props) => {
 		setLoading,
 		refetchUserData,
 		setRefetchUserData,
+		addToWishlist,
 	};
 
 	return (
