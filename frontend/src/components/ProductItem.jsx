@@ -1,17 +1,27 @@
-import { useContext, useState } from 'react';
+import { useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ShopContext } from '../context/shopContext';
 import { assets } from '../assets/assets';
 // import { assets } from '../assets/assets';
 
-const ProductItem = ({ id, image, name, price, sizes }) => {
+const ProductItem = ({
+	id,
+	image,
+	name,
+	price,
+	sizes,
+	activeSizeItemId,
+	setActiveSizeItemId,
+}) => {
 	const { currency, addToCart, addToWishlist } = useContext(ShopContext);
-	const [showSizes, setShowSizes] = useState(false);
-
 	const handleSizeClick = (sizeValue) => {
 		addToCart(id, sizeValue);
-		setShowSizes(false);
+		setActiveSizeItemId(null);
 	};
+
+	useEffect(() => {
+		setActiveSizeItemId(null);
+	}, [id]);
 
 	return (
 		<div className='text-[#1b1b1b] bg-white pb-5 cursor-pointer border border-black rounded-lg overflow-hidden relative flex flex-col justify-between h-fit'>
@@ -61,19 +71,21 @@ const ProductItem = ({ id, image, name, price, sizes }) => {
 			</div>
 			<button
 				onClick={() => addToWishlist(id)}
-				className='absolute top-[0px] right-[8px] rounded-full bg-gray-100 text-white p-2 w-fit mt-3 active:scale-90 transition-all ease-in-out duration-150 shadow-gray-600 shadow-sm'
+				className='absolute top-[0px] right-[8px] rounded-full bg-gray-100 text-white p-1 sm:p-2 w-fit mt-3 active:scale-90 transition-all ease-in-out duration-150 shadow-gray-600 shadow-sm'
 			>
 				<img className='h-4 w-4' src={assets.wishlistIcon} alt='' />
 			</button>
 			<button
-				onClick={() => setShowSizes(true)}
-				className='absolute bottom-[40px] sm:bottom-[10px] right-[8px] rounded-full bg-gray-100 text-white p-3 w-fit mt-3 active:scale-90 transition-all ease-in-out duration-150 shadow-black shadow-sm'
+				onClick={() => setActiveSizeItemId(id)}
+				className='absolute bottom-[40px] sm:bottom-[10px] right-[8px] rounded-full bg-gray-100 text-white p-2 sm:p-3 w-fit mt-3 active:scale-90 transition-all ease-in-out duration-150 shadow-black shadow-sm'
 			>
 				<img className='h-5 w-5' src={assets.cartIcon} alt='' />
 			</button>
 			<div
-				className='absolute bottom-[10px] right-[8px] flex gap-2 bg-white shadow-gray-500 shadow-sm p-2 rounded transition-all ease-in-out duration-150 origin-bottom-right'
-				style={{ transform: `${showSizes ? 'scale(1)' : 'scale(0)'}` }}
+				className='absolute bottom-[38px] sm:bottom-[10px] right-[8px] flex gap-2 bg-white shadow-gray-500 shadow-sm p-2 rounded transition-all ease-in-out duration-150 origin-bottom-right'
+				style={{
+					transform: `${activeSizeItemId === id ? 'scale(1)' : 'scale(0)'}`,
+				}}
 			>
 				{sizes.map((size, index) => (
 					<p
@@ -85,7 +97,7 @@ const ProductItem = ({ id, image, name, price, sizes }) => {
 					</p>
 				))}
 				<button
-					onClick={() => setShowSizes(false)}
+					onClick={() => setActiveSizeItemId(null)}
 					className='absolute top-[-5px] right-[-5px] p-1 rounded-full shadow bg-gray-100 active:scale-90 transition-all ease-in-out duration-150'
 				>
 					<img className='w-2 h-2' src={assets.crossIcon} alt='' />

@@ -13,6 +13,7 @@ const Collection = () => {
 	const [showFilter, setShowFilter] = useState(false);
 	const [filterProducts, setFilterProducts] = useState([]);
 	const [sortType, setSortType] = useState('relavent');
+	const [activeSizeItemId, setActiveSizeItemId] = useState(null);
 
 	const sortProducts = () => {
 		let filterProductsCopy = filterProducts.slice();
@@ -81,6 +82,8 @@ const Collection = () => {
 									name={item.name}
 									price={item.price}
 									sizes={item.sizes}
+									activeSizeItemId={activeSizeItemId}
+									setActiveSizeItemId={setActiveSizeItemId}
 								/>
 							))}
 						</div>

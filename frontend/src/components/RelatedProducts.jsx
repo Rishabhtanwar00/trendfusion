@@ -5,6 +5,7 @@ import ProductItem from './ProductItem';
 const RelatedProducts = ({ productId, category, subCategory }) => {
 	const { products } = useContext(ShopContext);
 	const [relatedProducts, setRelatedProducts] = useState([]);
+	const [activeSizeItemId, setActiveSizeItemId] = useState(null);
 
 	const fetchRelatedProducts = async () => {
 		if (products.length > 0) {
@@ -39,6 +40,8 @@ const RelatedProducts = ({ productId, category, subCategory }) => {
 							name={item.name}
 							price={item.price}
 							sizes={item.sizes}
+							activeSizeItemId={activeSizeItemId}
+							setActiveSizeItemId={setActiveSizeItemId}
 						/>
 					))}
 				</div>

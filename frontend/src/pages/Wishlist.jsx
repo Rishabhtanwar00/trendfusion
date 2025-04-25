@@ -16,12 +16,12 @@ const Wishlist = () => {
 		setRefetchUserData,
 		addToCart,
 	} = useContext(ShopContext);
-	const [showSizes, setShowSizes] = useState(false);
+	const [activeSizeItemId, setActiveSizeItemId] = useState(null);
 
 	const handleSizeClick = (id, sizeValue) => {
 		addToCart(id, sizeValue);
 		RemoveItemFromWishlist(id);
-		setShowSizes(false);
+		setActiveSizeItemId(null);
 	};
 	const RemoveItemFromWishlist = async (productId) => {
 		if (token) {
@@ -63,7 +63,9 @@ const Wishlist = () => {
 								</div>
 								<div className='relative w-full mt-2 overflow-hidden rounded'>
 									<p
-										onClick={() => setShowSizes(true)}
+										onClick={() => {
+											setActiveSizeItemId(item._id);
+										}}
 										className='w-full p-2 bg-emerald-600 text-white text-center mb-2 text-sm rounded cursor-pointer'
 									>
 										Move to Cart
@@ -72,7 +74,9 @@ const Wishlist = () => {
 										className='absolute top-0 w-full h-fit flex items-center justify-center gap-2 bg-emerald-600 px-2 py-1 rounded transition-all ease-in-out duration-150 origin-top'
 										style={{
 											transform: `${
-												showSizes ? 'translateY(0)' : 'translateY(-100px)'
+												activeSizeItemId === item._id
+													? 'translateY(0)'
+													: 'translateY(-100px)'
 											}`,
 										}}
 									>
@@ -87,10 +91,12 @@ const Wishlist = () => {
 										))}
 									</div>
 									<button
-										onClick={() => setShowSizes(false)}
+										onClick={() => {
+											setActiveSizeItemId(null);
+										}}
 										className='absolute top-[0px] right-[0px] p-1 shadow bg-white active:scale-90 transition-all ease-in-out duration-150'
 										style={{
-											opacity: `${showSizes ? '1' : '0'}`,
+											opacity: `${activeSizeItemId === item._id ? '1' : '0'}`,
 										}}
 									>
 										<img className='w-2 h-2' src={assets.crossIcon} alt='' />

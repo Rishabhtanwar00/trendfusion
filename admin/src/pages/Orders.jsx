@@ -80,7 +80,7 @@ const Orders = () => {
 			<div className='heading mb-5'>
 				<h1 style={{ '--bg-color': 'rgb(37 99 235)' }}>All Orders</h1>
 			</div>
-			<div className='flex justify-between'>
+			<div className='flex justify-between items-center'>
 				<button
 					onClick={() => setShowFilter(!showFilter)}
 					className='text-base text-black font-medium flex items-center'

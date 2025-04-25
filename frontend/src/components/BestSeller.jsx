@@ -6,6 +6,7 @@ import ProductItem from './ProductItem';
 const BestSeller = () => {
 	const { products } = useContext(ShopContext);
 	const [bestSeller, setBestSeller] = useState([]);
+	const [activeSizeItemId, setActiveSizeItemId] = useState(null);
 
 	useEffect(() => {
 		setBestSeller(products.filter((item) => item.bestseller).slice(0, 5));
@@ -30,6 +31,8 @@ const BestSeller = () => {
 						name={item.name}
 						price={item.price}
 						sizes={item.sizes}
+						activeSizeItemId={activeSizeItemId}
+						setActiveSizeItemId={setActiveSizeItemId}
 					/>
 				))}
 			</div>
