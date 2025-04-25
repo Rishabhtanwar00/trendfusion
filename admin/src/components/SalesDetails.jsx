@@ -1,0 +1,58 @@
+import { assets } from '../assets/assets';
+
+const SalesDetails = () => {
+	return (
+		<div className='grid grid-cols-[1fr] sm:grid-cols-[1fr_1fr] lg:grid-cols-[1fr_1fr_1fr_1fr] gap-5 xl:gap-10'>
+			<div className='flex flex-wrap items-center justify-center p-5 gap-8 text-white bg-gradient-to-r from-red-500 to-red-800 shadow-md shadow-red-900'>
+				<img
+					loading='lazy'
+					className='h-[40px]'
+					src={assets.salesIcon}
+					alt='Sales icon'
+				/>
+				<div className='text-center xl:text-left'>
+					<p>Total Sales</p>
+					<p className='ml-1'>₹ 1,50,000</p>
+				</div>
+			</div>
+			<div className='flex flex-wrap items-center justify-center p-5 gap-8 text-white bg-gradient-to-r from-emerald-500 to-emerald-800 shadow-md shadow-emerald-900'>
+				<img
+					loading='lazy'
+					className='h-[40px]'
+					src={assets.customersIcon}
+					alt='Customers icon'
+				/>
+				<div className='text-center xl:text-left'>
+					<p>New Customers</p>
+					<p className='ml-1'>93</p>
+				</div>
+			</div>
+			<div className='flex flex-wrap items-center justify-center p-5 gap-8 text-white bg-gradient-to-r from-blue-600 to-blue-800 shadow-md shadow-blue-900'>
+				<img
+					loading='lazy'
+					className='h-[40px]'
+					src={assets.ordersIcon}
+					alt='Orders icon'
+				/>
+				<div className='text-center xl:text-left'>
+					<p>New Orders</p>
+					<p className='ml-1'>100</p>
+				</div>
+			</div>
+			<div className='flex flex-wrap items-center justify-center p-5 gap-8 text-white bg-gradient-to-r from-orange-500 to-orange-800 shadow-md shadow-orange-900'>
+				<img
+					loading='lazy'
+					className='h-[40px]'
+					src={assets.revenueIcon}
+					alt='Revenue icon'
+				/>
+				<div className='text-center xl:text-left'>
+					<p>Total Profit</p>
+					<p className='ml-1'>₹ 1,00,000</p>
+				</div>
+			</div>
+		</div>
+	);
+};
+
+export default SalesDetails;

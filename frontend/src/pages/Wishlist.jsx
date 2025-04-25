@@ -94,7 +94,7 @@ const Wishlist = () => {
 										onClick={() => {
 											setActiveSizeItemId(null);
 										}}
-										className='absolute top-[0px] right-[0px] p-1 shadow bg-white active:scale-90 transition-all ease-in-out duration-150'
+										className='absolute top-[0px] right-[0px] p-1 shadow bg-white border border-black rounded active:scale-90 transition-all ease-in-out duration-150'
 										style={{
 											opacity: `${activeSizeItemId === item._id ? '1' : '0'}`,
 										}}

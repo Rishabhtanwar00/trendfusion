@@ -6,17 +6,12 @@ import CartTotal from '../components/CartTotal';
 import { toast } from 'react-toastify';
 import BackButton from '../components/BackButton';
 import { Link } from 'react-router-dom';
+import CartItem from '../components/CartItem';
 const Cart = () => {
-	const {
-		products,
-		currency,
-		cartItems,
-		updateQuantity,
-		getCartAmount,
-		navigate,
-	} = useContext(ShopContext);
+	const { products, currency, cartItems, getCartAmount, navigate } =
+		useContext(ShopContext);
 	const [cartData, setCartData] = useState([]);
-	const [showMessage, setShowMessage] = useState(true);
+	const [showMessage, setShowMessage] = useState(false);
 
 	const loadCartData = () => {
 		let productData = [];
@@ -38,19 +33,31 @@ const Cart = () => {
 	}, [cartItems]);
 
 	useEffect(() => {
-		const interval = setInterval(() => {
-			setShowMessage(false);
-		}, [10000]);
-		return () => clearInterval(interval);
-	}, [showMessage]);
+		let showMessageTimeout;
+
+		// Show the message 5 seconds after mount or cart updates,
+		// only if cart amount is less than 1000
+		if (getCartAmount() < 1000) {
+			showMessageTimeout = setTimeout(() => {
+				setShowMessage(true);
+			}, 5000);
+		}
+
+		return () => clearTimeout(showMessageTimeout);
+	}, [getCartAmount]);
 
 	useEffect(() => {
-		if (getCartAmount() < 1000) {
-			setShowMessage(true);
-		} else {
-			setShowMessage(false);
+		let hideMessageTimeout;
+
+		// Auto-hide message after 10 seconds (only when shown)
+		if (showMessage) {
+			hideMessageTimeout = setTimeout(() => {
+				setShowMessage(false);
+			}, 10000);
 		}
-	}, [getCartAmount]);
+
+		return () => clearTimeout(hideMessageTimeout);
+	}, [showMessage]);
 
 	return (
 		<section className='relative bg-[#eff2f1] flex flex-col pt-5 pb-10 px-[20px] sm:px-[40px]'>
@@ -82,61 +89,8 @@ const Cart = () => {
 								const productData = products.find(
 									(product) => product._id === item._id
 								);
-
 								return (
-									<div
-										key={index}
-										className='border-t border-b flex justify-between items-center gap-5 mb-3 p-2 sm:pr-10 w-full bg-white rounded'
-									>
-										<div className='flex gap-5'>
-											<img
-												loading='lazy'
-												className='max-h-[120px] h-auto w-auto rounded'
-												src={productData.image[0]}
-												alt={`${productData.name} img`}
-											/>
-											<div className=''>
-												<p className='font-medium'>{productData.name}</p>
-												<div className='flex items-center gap-2 mt-2'>
-													<p className='text-gray-600'>
-														{currency} {productData.price}
-													</p>
-													<p className='bg-emerald-600 text-sm text-white px-2 py-1'>
-														{item.size}
-													</p>
-												</div>
-											</div>
-										</div>
-										<div className='flex flex-col sm:flex-row items-end sm:items-center justify-center gap-5 xl:gap-10'>
-											<input
-												onChange={(e) =>
-													e.target.value !== '0' || e.target.value !== ''
-														? updateQuantity(
-																item._id,
-																item.size,
-																Number(e.target.value)
-														  )
-														: null
-												}
-												className='border border-gray-400 rounded py-1 px-2 w-16 h-fit'
-												type='number'
-												min={1}
-												defaultValue={item.quantity}
-											/>
-
-											<button
-												onClick={() => updateQuantity(item._id, item.size, 0)}
-												className='rounded-full border-2 bg-[#f02028] w-fit p-2'
-											>
-												<img
-													loading='lazy'
-													className='w-[20px]'
-													src={assets.deleteIcon}
-													alt='delete icon'
-												/>
-											</button>
-										</div>
-									</div>
+									<CartItem key={index} item={item} productData={productData} />
 								);
 							})
 						) : (

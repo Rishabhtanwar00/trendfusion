@@ -48,14 +48,12 @@ function App() {
 
 			<div className='flex w-full bg-slate-100 relative'>
 				<div
-					className={`w-[60px] sm:w-[80px] min-h-screen border-r-2 bg-black fixed ${
-						moveSidebar ? 'top-0' : 'top-[60px]'
-					}`}
+					className={`w-[50px] top-0 sm:w-[80px] min-h-screen border-r-2 bg-black fixed `}
 				>
-					<Sidebar />
+					<Sidebar moveSidebar={moveSidebar} />
 				</div>
 
-				<div className='w-[75vw] sm:w-[85vw] mx-auto my-8 ml-[20vw] md:ml-[13vw] lg:ml-[10vw]'>
+				<div className='w-[75vw] sm:w-[85vw] mx-auto my-8 ml-[18vw] md:ml-[13vw] lg:ml-[10vw]'>
 					<Routes>
 						<Route path='/' element={<LandingPage />} />
 						<Route path='/add-product' element={<AddProduct />} />

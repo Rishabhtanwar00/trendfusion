@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from 'react';
 import Title from './Title';
 import { ShopContext } from '../context/shopContext';
 import ProductItem from './ProductItem';
+import ProductItemSkeleton from './ProductItemSkeleton';
 const RelatedProducts = ({ productId, category, subCategory }) => {
 	const { products } = useContext(ShopContext);
 	const [relatedProducts, setRelatedProducts] = useState([]);
@@ -31,8 +32,8 @@ const RelatedProducts = ({ productId, category, subCategory }) => {
 				<div className='text-2xl text-center pb-5'>
 					<Title text1='RELATED' text2='PRODUCTS' />
 				</div>
-				<div className='grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3  lg:grid-cols-4 xl:grid-cols-5 gap-3 gap-y-5 items-center'>
-					{relatedProducts.map((item, index) => (
+				<div className='grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3  lg:grid-cols-4 xl:grid-cols-5 gap-2 sm:gap-5 gap-y-5 items-center'>
+					{relatedProducts.length!==0?relatedProducts.map((item, index) => (
 						<ProductItem
 							key={index}
 							id={item._id}
@@ -43,7 +44,13 @@ const RelatedProducts = ({ productId, category, subCategory }) => {
 							activeSizeItemId={activeSizeItemId}
 							setActiveSizeItemId={setActiveSizeItemId}
 						/>
-					))}
+					)): (
+						<>
+							{[...Array(5)].map((_, index) => (
+								<ProductItemSkeleton key={index} />
+							))}
+						</>
+					)}
 				</div>
 			</div>
 		)

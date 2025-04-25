@@ -4,9 +4,9 @@ import { useContext } from 'react';
 import { ShopContext } from '../context/shopContext.jsx';
 import Title from '../components/Title';
 import ProductItem from '../components/ProductItem';
-import Loader from '../components/Loader.jsx';
 import FilterComponent from '../components/FilterComponent.jsx';
 import BackButton from '../components/BackButton.jsx';
+import ProductItemSkeleton from '../components/ProductItemSkeleton.jsx';
 
 const Collection = () => {
 	const { loading } = useContext(ShopContext);
@@ -71,10 +71,10 @@ const Collection = () => {
 						</select>
 					</div>
 				</div>
-				{!loading ? (
-					filterProducts.length > 0 ? (
-						<div className='grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3  lg:grid-cols-4 xl:grid-cols-5 gap-5 mb-10 mt-5'>
-							{filterProducts.map((item) => (
+				<div className='grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3  lg:grid-cols-4 xl:grid-cols-5 gap-2 sm:gap-5 mb-10 mt-5'>
+					{!loading ? (
+						filterProducts.length > 0 ? (
+							filterProducts.map((item) => (
 								<ProductItem
 									key={item._id}
 									id={item._id}
@@ -85,16 +85,20 @@ const Collection = () => {
 									activeSizeItemId={activeSizeItemId}
 									setActiveSizeItemId={setActiveSizeItemId}
 								/>
-							))}
-						</div>
+							))
+						) : (
+							<p className='text-xl font-semibold mt-[90px] text-center'>
+								No Products Found.
+							</p>
+						)
 					) : (
-						<p className='text-xl font-semibold mt-[90px] text-center'>
-							No Products Found.
-						</p>
-					)
-				) : (
-					<Loader loaderText='Loading Collection...' />
-				)}
+						<>
+							{[...Array(10)].map((_, index) => (
+								<ProductItemSkeleton key={index} />
+							))}
+						</>
+					)}
+				</div>
 			</div>
 		</div>
 	);
