@@ -1,32 +1,14 @@
 import { useContext, useEffect, useState } from 'react';
-import { assets } from '../assets/assets.js';
 import { toast } from 'react-toastify';
 import { ShopContext } from '../context/shopContext.jsx';
 import useCategory from '../hooks/useCategory.js';
 import useSubCategoryByCategory from '../hooks/useSubCategoryByCategory.js';
 import useAddProduct from '../hooks/useAddProduct.js';
-
-const ImageUploader = ({ id, image, setImage }) => {
-	return (
-		<label htmlFor={id} className=''>
-			<img
-				loading='lazy'
-				className='w-20'
-				src={image ? URL.createObjectURL(image) : assets.uploadIcon}
-				alt='Upload icon'
-				onError={(e) => {
-					e.target.src = assets.uploadIcon;
-				}}
-			/>
-			<input
-				onChange={(e) => setImage(e.target.files[0])}
-				id={id}
-				type='file'
-				hidden
-			/>
-		</label>
-	);
-};
+import ImageUploader from '../components/ImageUploader.jsx';
+import InputComponent from '../components/InputComponent.jsx';
+import CheckboxComponent from '../components/CheckboxComponent.jsx';
+import SizeSelector from '../components/SizeSelector.jsx';
+import SelectionInputComponent from '../components/SelectionInputComponent.jsx';
 
 const AddProduct = () => {
 	const { backendUrl, navigate, token, loading, setLoading } =
@@ -128,8 +110,6 @@ const AddProduct = () => {
 		}
 	}, [subCategories]);
 
-	const sizeOptions = ['S', 'M', 'L', 'XL', '2XL'];
-
 	return (
 		<div className=''>
 			<form
@@ -149,17 +129,15 @@ const AddProduct = () => {
 						))}
 					</div>
 				</div>
-				<div className='flex flex-col gap-2'>
-					<p className=''>Product Name</p>
-					<input
-						type='text'
-						className='px-3 py-2 w-full sm:w-[500px] rounded'
-						placeholder='Enter Product Name'
-						onChange={(e) => handleChange('name', e.target.value)}
-						value={productData.name}
-						required
-					/>
-				</div>
+				<InputComponent
+					label='Product Name'
+					value={productData.name}
+					placeholder='Enter Product Name'
+					type='text'
+					onChange={(e) => handleChange('name', e.target.value)}
+					required={true}
+				/>
+
 				<div className='flex flex-col gap-2'>
 					<p className=''>Product Description</p>
 					<textarea
@@ -172,100 +150,59 @@ const AddProduct = () => {
 					/>
 				</div>
 				<div className='flex gap-8 items-end flex-wrap sm:flex-nowrap mr-auto'>
-					<div className='flex flex-col gap-2 w-full'>
-						<p className=''>Product Category</p>
-						<select
-							className='px-3 py-2 rounded w-full sm:w-fit min-w-[130px]'
-							onChange={(e) => handleChange('category', e.target.value)}
-						>
-							{categories &&
-								categories.map((category, index) => (
-									<option key={index} value={category.name}>
-										{category.name}
-									</option>
-								))}
-						</select>
-					</div>
-					<div className='flex flex-col gap-2 w-full'>
-						<p className=''> Sub Category</p>
-						<select
-							className='px-3 py-2 rounded w-full sm:w-fit min-w-[130px]'
-							onChange={(e) => handleChange('subCategory', e.target.value)}
-						>
-							{subCategories &&
-								subCategories.map((subCategory, index) => (
-									<option key={index} value={subCategory.name}>
-										{subCategory.name}
-									</option>
-								))}
-						</select>
-					</div>
+					<SelectionInputComponent
+						label='Category'
+						onChange={(e) => handleChange('category', e.target.value)}
+						value={productData.category}
+						options={categories}
+					/>
+					<SelectionInputComponent
+						label='Sub Category'
+						onChange={(e) => handleChange('subCategory', e.target.value)}
+						value={productData.subCategory}
+						options={subCategories}
+					/>
 					<button
 						type='button'
 						onClick={() => navigate('/manage-category')}
-						className='px-2 py-2 h-fit bg-black text-white rounded min-w-[130px]'
+						className='px-2 py-2 h-fit bg-green-300 text-black border-2 border-green-500 rounded min-w-[130px]'
 					>
-						Manage Categories
+						Manage
 					</button>
 				</div>
-				<p className='text-sm'>
-					*You can Add,Remove or Update Category/ Sub Category using Manage
-					Categories
-				</p>
 				<div className='flex gap-8 flex-wrap sm:flex-nowrap mr-auto'>
-					<div className='flex flex-col gap-2 w-full'>
-						<p className=''>Price</p>
-						<input
-							type='number'
-							className='px-3 py-2 w-full sm:w-[150px] rounded'
-							placeholder='e.g. 200'
-							onChange={(e) => handleChange('price', e.target.value)}
-							value={productData.price}
-							required
-						/>
-					</div>
-					<div className='flex flex-col gap-2 w-full'>
-						<p className=''>Quantity</p>
-						<input
-							type='number'
-							className='px-3 py-2 w-full sm:w-[150px] rounded'
-							placeholder='e.g. 5'
-							onChange={(e) => handleChange('quantity', e.target.value)}
-							value={productData.quantity}
-							required
-						/>
-					</div>
+					<InputComponent
+						label='Price'
+						value={productData.price}
+						placeholder='e.g. 200'
+						type='number'
+						onChange={(e) => handleChange('price', e.target.value)}
+						required={true}
+						small
+					/>
+					<InputComponent
+						label='Quantity'
+						value={productData.quantity}
+						placeholder='e.g. 5'
+						type='number'
+						onChange={(e) => handleChange('quantity', e.target.value)}
+						required={true}
+						small
+					/>
 				</div>
-				<div className='flex gap-2'>
-					{sizeOptions.map((size) => (
-						<div
-							key={size}
-							className={`${
-								productData.sizes.includes(size)
-									? 'bg-[#f02028] text-white'
-									: 'bg-slate-200'
-							} border cursor-pointer active:scale-95 transition-all duration-50 ease-in-out`}
-							onClick={() => toggleSizes(size)}
-						>
-							<p className='py-1.5 px-3.5'>{size}</p>
-						</div>
-					))}
-				</div>
+				<SizeSelector
+					selectedSizes={productData.sizes}
+					toggleSizes={toggleSizes}
+				/>
 				<div className='flex gap-8 items-end flex-wrap sm:flex-nowrap mr-auto'>
-					<div className='flex gap-2 items-center'>
-						<input
-							id='checkbox'
-							type='checkbox'
-							checked={productData.bestseller}
-							onChange={() =>
-								handleChange('bestseller', !productData.bestseller)
-							}
-						/>
-						<label htmlFor='checkbox'>Add to bestseller</label>
-					</div>
+					<CheckboxComponent
+						label='Add to bestseller'
+						checked={productData.bestseller}
+						onChange={() => handleChange('bestseller', !productData.bestseller)}
+					/>
 				</div>
 				<input
-					className='mt-3 px-8 py-2 bg-black text-white active:scale-95 transition-all duration-150 ease-in-out w-fit cursor-pointer'
+					className='mt-3 px-8 py-2 bg-blue-600 text-white border-2 border-blue-700 active:scale-95 transition-all duration-150 ease-in-out w-fit cursor-pointer'
 					type='submit'
 					value={loading ? 'Adding Product' : 'Add Product'}
 					disabled={loading}

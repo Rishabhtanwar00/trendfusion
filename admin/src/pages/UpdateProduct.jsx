@@ -7,6 +7,11 @@ import BackButton from '../components/BackButton';
 import useCategory from '../hooks/useCategory';
 import useUpdateProduct from '../hooks/useUpdateProduct';
 import useSubCategoryByCategory from '../hooks/useSubCategoryByCategory';
+import InputComponent from '../components/InputComponent';
+import CheckboxComponent from '../components/CheckboxComponent';
+import SizeSelector from '../components/SizeSelector';
+import SelectionInputComponent from '../components/SelectionInputComponent';
+import TextareaComponent from '../components/TextareaComponent';
 
 const UpdateProduct = () => {
 	const { backendUrl, navigate, token, loading, setLoading } =
@@ -107,8 +112,6 @@ const UpdateProduct = () => {
 		fetchProductData();
 	}, [productId]);
 
-	const sizeOptions = ['S', 'M', 'L', 'XL', '2XL'];
-
 	return (
 		<div>
 			<div className='flex gap-5 justify-start mb-5'>
@@ -121,112 +124,67 @@ const UpdateProduct = () => {
 				onSubmit={handleSubmit}
 				className='flex flex-col gap-5 text-base text-gray-700'
 			>
-				<div className='flex flex-col gap-2'>
-					<p className=''>Product Name</p>
-					<input
-						type='text'
-						className='px-3 py-2 w-full sm:w-[500px] rounded'
-						placeholder='Enter Product Name'
-						onChange={(e) => handleChange('name', e.target.value)}
-						value={productData.name}
-						required
-					/>
-				</div>
-				<div className='flex flex-col gap-2'>
-					<p className=''>Product Description</p>
-					<textarea
-						className='px-3 py-2 w-full sm:w-[500px] rounded'
-						placeholder='Enter Product Description'
-						onChange={(e) => handleChange('description', e.target.value)}
-						value={productData.description}
-						required
-						rows={3}
-					/>
-				</div>
+				<InputComponent
+					label='Product Name'
+					value={productData.name}
+					placeholder='Enter Product Name'
+					type='text'
+					onChange={(e) => handleChange('name', e.target.value)}
+					required={true}
+				/>
+				<TextareaComponent
+					label='Product Description'
+					placeholder='Enter Product Description'
+					onChange={(e) => handleChange('description', e.target.value)}
+					value={productData.description}
+					required={true}
+					rows={3}
+				/>
 				<div className='flex gap-8 flex-wrap sm:flex-nowrap mr-auto'>
-					<div className='flex flex-col gap-2 w-full'>
-						<p className=''>Product Category</p>
-						<select
-							className='px-3 py-2 rounded w-full sm:w-fit'
-							onChange={(e) => handleChange('category', e.target.value)}
-							value={productData.category}
-						>
-							{categories &&
-								categories.map((category, index) => (
-									<option key={index} value={category.name}>
-										{category.name}
-									</option>
-								))}
-						</select>
-					</div>
-					<div className='flex flex-col gap-2 w-full'>
-						<p className=''> Sub category</p>
-						<select
-							className='px-3 py-2 rounded w-full sm:w-fit min-w-[130px]'
-							onChange={(e) => handleChange('subCategory', e.target.value)}
-							value={productData.subCategory}
-						>
-							{subCategories &&
-								subCategories.map((subCategory, index) => (
-									<option key={index} value={subCategory.name}>
-										{subCategory.name}
-									</option>
-								))}
-						</select>
-					</div>
-					<div className='flex flex-col gap-2 w-full'>
-						<p className=''>Price</p>
-						<input
-							type='number'
-							className='px-3 py-2 w-full sm:w-fit min-w-[50px] rounded'
-							placeholder='e.g. 200'
-							onChange={(e) => handleChange('price', e.target.value)}
-							value={productData.price}
-							required
-						/>
-					</div>
+					<SelectionInputComponent
+						label='Category'
+						onChange={(e) => handleChange('category', e.target.value)}
+						value={productData.category}
+						options={categories}
+					/>
+					<SelectionInputComponent
+						label='Sub Category'
+						onChange={(e) => handleChange('subCategory', e.target.value)}
+						value={productData.subCategory}
+						options={subCategories}
+					/>
+					<InputComponent
+						label='Price'
+						value={productData.price}
+						placeholder='e.g. 200'
+						type='number'
+						onChange={(e) => handleChange('price', e.target.value)}
+						required={true}
+						small
+					/>
 				</div>
-				<div className='flex gap-2'>
-					{sizeOptions.map((size) => (
-						<div
-							key={size}
-							className={`${
-								productData.sizes.includes(size)
-									? 'bg-[#f02028] text-white'
-									: 'bg-slate-200'
-							} cursor-pointer active:scale-95 transition-all duration-50 ease-in-out`}
-							onClick={() => toggleSizes(size)}
-						>
-							<p className='py-1.5 px-3.5'>{size}</p>
-						</div>
-					))}
-				</div>
+				<SizeSelector
+					selectedSizes={productData.sizes}
+					toggleSizes={toggleSizes}
+				/>
 				<div className='flex gap-8 items-end flex-wrap sm:flex-nowrap mr-auto'>
-					<div className='flex flex-col gap-2'>
-						<p className=''>Quantity</p>
-						<input
-							type='number'
-							className='px-3 py-2 w-full sm:w-[150px] rounded'
-							placeholder='e.g. 5'
-							onChange={(e) => handleChange('quantity', e.target.value)}
-							value={productData.quantity}
-							required
-						/>
-					</div>
-					<div className='flex gap-2 items-center'>
-						<input
-							id='checkbox'
-							type='checkbox'
-							checked={productData.bestseller}
-							onChange={() =>
-								handleChange('bestseller', !productData.bestseller)
-							}
-						/>
-						<label htmlFor='checkbox'>Add to bestseller</label>
-					</div>
+					<InputComponent
+						label='Quantity'
+						value={productData.quantity}
+						placeholder='e.g. 5'
+						type='number'
+						onChange={(e) => handleChange('quantity', e.target.value)}
+						required={true}
+						small
+					/>
+					<CheckboxComponent
+						label='Add to bestseller'
+						checked={productData.bestseller}
+						onChange={() => handleChange('bestseller', !productData.bestseller)}
+					/>
 				</div>
 				<input
-					className='mt-3 px-8 py-2 bg-black text-white active:scale-95 transition-all duration-150 ease-in-out w-fit cursor-pointer'
+					className='mt-3 px-8 py-2 bg-blue-600 text-white border-2 border-blue-700 active:scale-95 transition-all duration-150 ease-in-out w-fit cursor-pointer'
 					type='submit'
 					value={loading ? 'Updating Product' : 'Update Product'}
 					disabled={loading}
