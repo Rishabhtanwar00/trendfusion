@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { assets } from '../assets/assets.js';
 import SearchBar from '../components/SearchBar.jsx';
 import FilterComponent from '../components/FilterComponent.jsx';
@@ -29,6 +29,21 @@ const ListProducts = () => {
 		}
 	};
 
+	const searchProducts = useCallback(() => {
+		let productsCopy = products.slice();
+		// Filter by search query
+		if (search) {
+			productsCopy = productsCopy.filter((item) =>
+				item.name.toLowerCase().includes(search.toLowerCase())
+			);
+		}
+		setFilterProducts(productsCopy);
+	}, [products, search]);
+
+	useEffect(() => {
+		searchProducts();
+	}, [search]);
+
 	useEffect(() => {
 		sortProducts();
 	}, [sortType]);
@@ -50,7 +65,6 @@ const ListProducts = () => {
 					setFilterProducts={setFilterProducts}
 					showFilter={showFilter}
 					setShowFilter={setShowFilter}
-					search={search}
 				/>
 			)}
 			<div className='heading mb-5'>

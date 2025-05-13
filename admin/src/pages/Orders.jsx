@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import { assets } from '../assets/assets.js';
 
@@ -31,9 +31,28 @@ const Orders = () => {
 		}
 	};
 
+	const searchOrders = useCallback(() => {
+		let ordersCopy = orders.slice();
+
+		// Filter by search query
+		if (search) {
+			console.log(search);
+			ordersCopy = ordersCopy.filter((order) =>
+				order.items.some((product) =>
+					product.name.toLowerCase().includes(search.toLowerCase())
+				)
+			);
+		}
+		setFilterOrders(ordersCopy);
+	}, [orders, search]);
+
 	useEffect(() => {
 		sortOrders();
 	}, [sortType]);
+
+	useEffect(() => {
+		searchOrders();
+	}, [search]);
 
 	useEffect(() => {
 		if (orders && JSON.stringify(orders) !== JSON.stringify(filterOrders)) {
@@ -49,7 +68,6 @@ const Orders = () => {
 					setFilterOrders={setFilterOrders}
 					showFilter={showFilter}
 					setShowFilter={setShowFilter}
-					search={search}
 				/>
 			)}
 			<div className='heading mb-5'>

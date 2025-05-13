@@ -20,7 +20,7 @@ const Navbar = () => {
 			</Link>
 			<button
 				onClick={() => setToken('')}
-				className='border-2 border-[#d41e26] bg-[#f02028] text-gray-100 px-1.5 py-0.5 w-fit h-fit active:scale-90 transition-all duration-150 ease-in-out rounded'
+				className='text-white bg-gradient-to-r from-red-500 to-red-700 shadow-md shadow-red-800 px-1.5 py-0.5 w-fit h-fit active:scale-90 transition-all duration-150 ease-in-out rounded'
 			>
 				Logout
 			</button>

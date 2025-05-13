@@ -18,6 +18,7 @@ textarea {
 	background-color: #f02028;
 	border-color: #a8030a;
 	color: #fff;
+	background-image: linear-gradient(to right, #ef4444, #bd2828);
 }
 input:disabled,
 select:disabled {

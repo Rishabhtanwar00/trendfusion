@@ -9,7 +9,6 @@ const FilterComponent = ({
 	setFilterProducts,
 	showFilter,
 	setShowFilter,
-	search,
 }) => {
 	const { setLoading } = useContext(ShopContext);
 
@@ -40,12 +39,6 @@ const FilterComponent = ({
 		setLoading(true);
 		let productsCopy = products.slice();
 
-		if (search) {
-			productsCopy = productsCopy.filter((item) =>
-				item.name.toLowerCase().includes(search.toLowerCase())
-			);
-		}
-
 		if (category.length > 0) {
 			productsCopy = productsCopy.filter((item) =>
 				category.includes(item.category)
@@ -69,7 +62,7 @@ const FilterComponent = ({
 
 	useEffect(() => {
 		applyFilter();
-	}, [category, subCategory, search, priceRange]);
+	}, [category, subCategory, priceRange]);
 
 	return (
 		<div

@@ -8,7 +8,6 @@ const OrdersFilter = ({
 	setFilterOrders,
 	showFilter,
 	setShowFilter,
-	search,
 }) => {
 	const { setLoading } = useContext(ShopContext);
 
@@ -38,15 +37,6 @@ const OrdersFilter = ({
 		setLoading(true);
 		let ordersCopy = orders.slice();
 
-		// Filter by search query
-		if (search) {
-			ordersCopy = ordersCopy.filter((order) =>
-				order.items.some((product) =>
-					product.name.toLowerCase().includes(search.toLowerCase())
-				)
-			);
-		}
-
 		if (orderStatus.length > 0) {
 			ordersCopy = ordersCopy.filter((order) =>
 				orderStatus.includes(order.status.trim())
@@ -67,11 +57,11 @@ const OrdersFilter = ({
 
 		setFilterOrders(ordersCopy);
 		setLoading(false);
-	},[orders, search, orderStatus, paymentMethod, amountRange])
+	}, [orders, orderStatus, paymentMethod, amountRange]);
 
 	useEffect(() => {
 		applyOrdersFilter();
-	}, [search, orderStatus, paymentMethod, amountRange]);
+	}, [orderStatus, paymentMethod, amountRange]);
 
 	return (
 		<div
