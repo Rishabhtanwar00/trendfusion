@@ -37,7 +37,7 @@ const Navbar = () => {
 						alt='TrendFusion logo'
 					/>
 				</Link>
-				<ul className='hidden lg:flex text-[18px] font-semibold text-center gap-5 text-[#1B1B1B] ml-5 mt-1'>
+				<div className='hidden lg:flex text-[18px] font-semibold text-center gap-5 text-[#1B1B1B] ml-5 mt-1'>
 					<NavLink to='/' className='flex flex-col items-center gap-[1px]'>
 						<p>Home</p>
 						<hr className='w-1/2 border-none h-[1.5px] bg-gray-700 hidden' />
@@ -60,10 +60,10 @@ const Navbar = () => {
 						<p>Contact</p>
 						<hr className='w-1/2 border-none h-[1.5px] bg-gray-700 hidden' />
 					</NavLink>
-				</ul>
+				</div>
 				<button
 					onClick={() => openAdminPanel(import.meta.env.VITE_ADMIN_URL)}
-					className='hidden lg:block px-2 py-1 border-2 border-[#d41e26] bg-[#f02028] text-white outline-none rounded text-[16px]'
+					className='hidden lg:block px-2 py-1 bg-gradient-to-r from-red-500 to-red-700 shadow shadow-red-800 text-white outline-none rounded text-[16px]'
 				>
 					Admin Panel
 				</button>

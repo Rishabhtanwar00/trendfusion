@@ -104,7 +104,6 @@ const Hero = () => {
 						</div>
 						<div className='w-full sm:w-1/2 flex items-center justify-center'>
 							<img
-								loading='lazy'
 								className='w-auto h-[350px] sm:h-[500px]'
 								src={slider.image}
 								alt='hero img'
@@ -115,6 +114,7 @@ const Hero = () => {
 			</div>
 			<div className='absolute top-1/2 left-[10px]'>
 				<button
+					name='Prev btn'
 					className='py-1.5 px-2 bg-gray-200 rounded-full disabled:hidden'
 					onClick={handlePrev}
 					disabled={currentIndex === 0}
@@ -129,6 +129,7 @@ const Hero = () => {
 			</div>
 			<div className='absolute top-1/2 right-[20px]'>
 				<button
+					name='Next btn'
 					className='py-1.5 px-2 bg-gray-200 rounded-full disabled:hidden'
 					onClick={handleNext}
 					disabled={currentIndex === sliderData.length - 1}

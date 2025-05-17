@@ -72,12 +72,14 @@ const ProductItem = ({
 				</div>
 			</div>
 			<button
+				name='Wishlist btn'
 				onClick={() => addToWishlist(id)}
 				className='absolute top-[0px] right-[8px] rounded-full bg-blue-100 text-white p-1 sm:p-2 w-fit mt-3 active:scale-90 transition-all ease-in-out duration-150'
 			>
 				<img className='h-4 w-4' src={assets.wishlistIcon} alt='' />
 			</button>
 			<button
+				name='Add to cart btn'
 				onClick={() => setActiveSizeItemId(id)}
 				className='absolute bottom-[10px] right-[8px] rounded-full bg-blue-200 text-white p-2 sm:p-3 w-fit mt-3 active:scale-90 transition-all ease-in-out duration-150'
 			>
@@ -99,6 +101,7 @@ const ProductItem = ({
 					</p>
 				))}
 				<button
+					name='Close btn'
 					onClick={() => setActiveSizeItemId(null)}
 					className='absolute top-[-8px] right-[-8px] p-1 rounded-full shadow bg-white border border-black active:scale-90 transition-all ease-in-out duration-150'
 				>
